@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>window</title>
+</head>
+<body>
+  <h1>window</h1>
+  <button onclick="test1();">window</button>
+  <button onclick="test2();">open</button>
+  <script>
+  /**
+   * open(url, target(name), spec) : window
+   * - 새로운 탭/팝업을 여는 메소드
+   * - 생성된 window객체를 반환
+   */
+  const test2 = () => {
+    // open('https://naver.com');
+    // open('./01_hellojs.html', 'hellojs');
+    // open('./01_hellojs.html', '_self'); // 현재창에 open
+    const popup = open('./01_hellojs.html', 'popup', 'width=500px, height=500px, left=100px, top=100px');
+    console.log(popup);
+    setTimeout(() => {
+      // popup.alert('ㅋㅋㅋㅋ');
+      // popup.close();
+      popup.document.body.innerHTML = '<h1>엄마 말을 잘듣자</h1>';
+    }, 3000);
+  };
+  
+  /**
+   * window 
+   * - browser의 탭별로 존재하는 최상위객체 
+   * - BOM(Browser Object Model) - location, navigator, history... 
+   * - DOM document객체 
+   * - Javascript객체 
+   * - WebAPI객체 webstorage...
+   * - this, window, globalThis키워드로 접근이 가능 
+   * - 대부분의 경우 window. 생략이 가능하다.
+   */
+  const test1 = () => {
+    console.log(window);
+    console.log(this);
+    console.log(globalThis);
+  };
+  </script>
+  
+  <h2>Timer API</h2>
+  <button onclick="test3();">setTimeout</button>
+  <button onclick="if(timeoutId) { clearTimeout(timeoutId); console.log(`${timeoutId}번 timeout 취소!`);}">clearTimeout</button>
+
+  <button onclick="test4();">setInterval</button>
+  <button onclick="clearInterval(intervalId); console.log(`${intervalId}번 인터벌 취소!`);">clearInterval</button>
+
+  <button onclick="test5();">@실습문제 - 카운트다운</button>
+  <span id="cnt" style="font-size: 2em;">10</span>
+  <h1 id="clock"></h1>
+  <script>
+  /**
+   * 페이지가 로드되면 바로 시계가 작동하도록 setTimeout/setInterval
+   */
+  (() => {
+    const f = (n) => n < 10 ? "0" + n : n;
+    const tick = () => {
+      const d = new Date();
+      const hour = f(d.getHours());
+      const minute = f(d.getMinutes());
+      const second = f(d.getSeconds());
+      document.querySelector("#clock").innerHTML = `${hour}:${minute}:${second}`; 
+      setTimeout(tick, 1000);
+    };
+    tick();
+
+
+    // setInterval(() => {
+    //   const d = new Date();
+    //   const hour = f(d.getHours());
+    //   const minute = f(d.getMinutes());
+    //   const second = f(d.getSeconds());
+    //   document.querySelector("#clock").innerHTML = `${hour}:${minute}:${second}`;
+    // }, 1000);
+  })();
+
+
+  /**
+   * @실습문제 - 카운트다운
+   * - 10초 카운팅, 10초후 종료메세지 출력 
+   */
+  const test5 = () => {
+    let num = 10;
+    const intervalId = setInterval(() => {
+      document.querySelector("#cnt").innerHTML = --num;
+      if(num == 0) {
+        clearInterval(intervalId);
+        alert('시간이 종료되었습니다.');
+      }
+    }, 1000);
+  }
+
+  /**
+   * setInterval(callbackFunction, millis) : number(id)
+   *  - millis초후부터 millis초마다 콜백함수 실행
+   * clearInterval(id)
+   *  - interval중지
+   */
+  let intervalId;
+  const test4 = () => {
+    let n = 1;
+    intervalId = setInterval(() => { 
+      console.log(n++);
+    }, 1000);
+    console.log(`${intervalId}번 인터벌 생성!`);
+  };
+  
+  /**
+   * setTimeout(callbackFunction, millis) : number(id)
+   * clearTimeout(id)
+   *  - 지정한 timeout함수호출 중지
+   */
+  let timeoutId;
+  const test3 = () => {
+    timeoutId = setTimeout(() => {
+      alert('메롱');
+    }, 2000);
+    console.log(timeoutId);
+  };
+  </script>
+
+
+
+
+
+
+
+
+
+</body>
+</html>

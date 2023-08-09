@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>클로져함수</title>
+</head>
+<body>
+  <h1>클로져함수</h1>
+  <button onclick="test1();">자유변수</button>
+  <button onclick="test2();">클로져함수</button>
+  <script>
+  /**
+   * 클로져 함수 Closure Function 
+   * - 닫힘 함수 
+   * - 참조하는 환경을 가지고 외부로부터 닫힌 함수 
+   * - 자유변수를 포함한 함수
+   */
+  const test2 = () => {
+    function foo(){
+      const num = 100;
+      return () => {
+          console.log(`num = ${num}`);
+      }
+    }
+    const num = 200;
+    const too = foo(); 
+    console.dir(too); 
+    too(); // 100
+  };
+
+  /**
+   * 자유변수 Free Variable 
+   * - 함수 지역범위 밖에 선언된 변수 
+   */
+  const say2 = "돈 좀 있니?";
+
+  const hello = (name) => {
+    const say = "안녕";
+    console.log(`${say}, ${name}! ${say2}`);
+  };
+
+  const test1 = () => {
+    hello("철수");
+  };
+  </script>
+  <br>
+
+  <fieldset>
+    <button onclick="test3();">전역카운터</button>
+    <span id="globalCounterVal">0</span>
+    <br>
+    <button onclick="test4();">클로져카운터</button>
+    <span id="closureCounterVal">0</span>
+  </fieldset>
+  <script>
+  let gcnt = 0;
+  const test3 = () => {
+    gcnt++;
+    globalCounterVal.innerHTML = gcnt;
+  };
+
+  const counterMaker = () => {
+    let cnt = 0;
+    return () => {
+      cnt++;
+      closureCounterVal.innerHTML = cnt;
+    };
+  };
+  const test4 = counterMaker();
+
+  </script>
+
+  <fieldset>
+    <legend>폰트크기변경</legend>
+    <button onclick="fontTo16()">16</button>
+    <button onclick="fontTo24()">24</button>
+    <button onclick="fontTo32()">32</button>
+  </fieldset>
+  <script>
+  const fontChanger = (fontSize) => () => document.body.style.fontSize = `${fontSize}px`;  
+  const fontTo16 = fontChanger(16);
+  const fontTo24 = fontChanger(24);
+  const fontTo32 = fontChanger(32);
+  
+  </script>
+
+
+  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+</body>
+</html>

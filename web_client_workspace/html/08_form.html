@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>폼관련</title>
+</head>
+<body>
+  <h1>폼관련</h1>
+  <!--
+    폼태그는 사용자가 입력할 수 있는 여러 양식의 input태그를 제공.
+    사용자입력값을 폼을 통해 서버로 전송.
+    - action : 폼을 제출할 서버주소. 생략하면 현재url
+    - method : 전송방식
+      - GET(기본값) 사용자입력값을 url뒤에 query string으로 전송함
+        (사용자입력값이 http메세지 헤더에 기록)
+        - 조회/검색시 사용 (DQL)
+      - POST 사용자입력값을 http메세지 바디에 기록. 쉽게 노출되지 않음.
+        - 등록/수정/삭제시 사용 (DML)
+  -->
+
+  <!-- 
+    http://192.168.20.8:5500/html/08_form.html?username=honggd&password=1234
+
+    ?usernamename=honggd&password=1234 query string
+
+  -->
+  <form action="" method="get">
+    <!-- label input태그에 대한 이름표 label.for = input.id -->
+    <label for="username">username : </label> 
+    <!-- 
+      input태그의 name속성이 폼전송시 사용되는 속성이름이다. 
+      input태그의 value속성에 사용자 입력값이 기록된다.
+      name속성값=value속성값 형식으로 전송된다.
+
+      input태그의 type에 따라 다양한 양식 입력이 가능하다.
+      (text가 기본값)
+    -->
+    <input type="text" id="username" name="usernamename" value="sinsa">
+    <br>
+    <label for="password">password : </label>
+    <input type="password" id="password" name="password">
+    <br>
+    <input type="submit" value="로그인">
+  </form>
+
+  <h2>input</h2>
+  <form action="" method="GET">
+    <!-- 
+      fieldset 입력값을 그룹핑하기 위한 태그 (시각적인 효과)
+      legend fieldset의 이름
+    -->
+    <fieldset>
+      <legend>text관련</legend>
+      <!-- input[type=text] -->
+      <input 
+        type="text" name="userId" id="userId" 
+        maxlength="8"
+        placeholder="아이디를 입력하세요"
+        value="honggd"
+        readonly>
+      <br>
+      <!-- input:p -->
+     <input type="password" name="user-pw" id="user-pw" value="1234" placeholder="비밀번호" required>
+      <br>
+      <input type="email" name="user-email" id="user-email" placeholder="이메일">
+      <br>
+      <input type="search" name="query" id="query" placeholder="검색어를 입력하세요">
+      <br>
+      <input type="url" name="homepage" id="homepage" placeholder="홈페이지 주소를 입력하세요">
+      <br>
+      <input 
+        type="tel" 
+        name="phone" id="phone" placeholder="전화번호를 입력하세요" 
+        value="01012341234">
+      <br>
+      <!-- 여러줄 입력이 가능 -->
+      <textarea 
+        name="memo" id="memo" 
+        cols="30" rows="10" 
+        style="resize: none;"
+        placeholder="메모를 입력하세요.">안녕
+잘가
+반가웠어
+ㅋㅋㅋ
+      </textarea>
+
+    </fieldset>
+
+    <input type="submit" value="제출">
+    <input type="reset" value="초기화">
+  </form>
+
+  <form action="">
+    <!-- fieldset>legend -->
+    <fieldset>
+      <legend>숫자관련</legend>
+      <input 
+        type="number" name="amount" id="amount" 
+        min="1" max="10" step="2"
+        style="width: 150px;"
+        value="3"
+        placeholder="수량을 입력하세요.">
+      <br>
+      <input 
+        type="range" name="score" id="score" 
+        min="0" max="100" step="5"
+        placeholder="점수를 입력하세요.">
+    </fieldset>
+
+    <fieldset>
+      <legend>날짜/시각관련</legend>
+      <input type="date" name="birthday" id="birthday" value="1999-09-09">
+      <br>
+      <input type="time" name="time" id="time" value="20:00">
+      <br>
+      <input type="datetime-local" name="when" id="when" value="2023-05-18T18:00">
+    </fieldset>
+
+    <input type="submit" value="제출">
+    <input type="reset" value="초기화"> <!-- 사용자 입력값 초기값으로 초기화 -->
+  </form>
+
+  <form action="">
+    <fieldset>
+      <legend>선택관련</legend>
+      <!-- 단일선택 radio -->      
+      <div>
+        성별 : 
+        <input type="radio" name="gender" id="gender-M" value="M" checked>
+        <label for="gender-M">남</label>
+        <input type="radio" name="gender" id="gender-F" value="F">
+        <label for="gender-F">여</label>
+      </div>
+
+      <!-- 복수선택 checkbox -->
+      <!-- (input:checkbox#hobby$+label[for=hobby$])*3 -->
+      <input type="checkbox" name="hobby" id="hobby1" value="축구" required checked><label for="hobby1">축구</label>
+      <input type="checkbox" name="hobby" id="hobby2" value="야구"><label for="hobby2">야구</label>
+      <input type="checkbox" name="hobby" id="hobby3" value="농구"><label for="hobby3">농구</label>
+
+      <br>
+      <!-- 단일선택에 checkbox 사용. value기본값 on -->
+      <label for="wantMsg">문자메세지 수신</label>
+      <input type="checkbox" name="wantMsg" id="wantMsg">
+
+      <br>
+      <label for="nation">국적</label>
+      <select name="nation" id="nation">
+        <option value="">선택하세요</option>
+        <option value="kor">한국</option>
+        <option value="jap">일본</option>
+        <option value="chn">중국</option>
+      </select>
+
+      <br>
+
+      <!-- input + datalist 옵션과 직접입력을 동시에 처리 -->
+      <input type="text" name="browser" id="browser" list="browser-list" placeholder="브라우져를 선택하세요. 없으면 입력!">
+      <datalist id="browser-list">
+        <option value="chrome"/>
+        <option value="edge"/>
+        <option value="safari"/>
+      </datalist>
+
+    </fieldset>
+    <input type="submit" value="제출">
+  </form>
+
+  <!-- form>fieldset>legend -->
+  <form action="">
+    <fieldset>
+      <legend>기타</legend>
+      <input type="color" name="color" id="color" value="#00bfff">
+      <br>
+      <input type="file" name="profile" id="profile">
+      <br>
+      <input type="hidden" name="secret" value="23456789">
+      <input type="text" name="member_name" id="member_name" value="홍길동" disabled="disabled">
+
+    </fieldset>
+    <input type="button" value="버튼">
+    <input type="submit" value="제출">
+    <input type="reset" value="초기화">
+    <br>
+    <button type="button" onclick="alert('안녕');">버튼</button>
+    <button>제출</button> <!-- button.type 기본값 submit -->
+    <button type="submit">제출</button>
+    <button type="reset">초기화</button>
+    
+
+  </form>
+
+
+  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+</body>
+</html>

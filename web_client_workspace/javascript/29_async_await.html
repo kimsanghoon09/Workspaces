@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>async | await</title>
+  <script>
+  /**
+   * await 탑레벨(전역)에 사용이 불가하다.  
+   * (async함수안에서만 사용가능)
+   */
+  (async () => {
+    await new Promise((resolve) => {
+      setTimeout(() => resolve(), 3000);
+    });
+    console.log('Hello world');
+  })();
+
+  </script>
+</head>
+<body>
+  <h1>async | await</h1>
+  <button id="btn1">async</button>
+  <button id="btn2">await</button>
+  <button id="btn3">DOM</button>
+  <button id="btn4">Timer API</button>
+  <div class="box"></div>
+  <style>
+  .box { 
+    border: 1px solid #000;
+    width: 100px;
+    height: 100px;
+    margin: 30px 0 10px;
+  }
+  </style>
+  <script>
+  /**
+   * 배경색변경
+   */
+   btn4.onclick = async () => {
+    await changeBGColor('red');
+    await changeBGColor('orange');
+    await changeBGColor('yellow');
+    await changeBGColor('green');
+    await changeBGColor('blue');
+  };
+  
+  const changeBGColor = (color) => new Promise((resolve) => {
+    document.querySelector(".box").style.backgroundColor = color;
+    setTimeout(() => resolve(), 1000);
+  });
+
+  /**
+   * DOM
+   */    
+  btn3.onclick = async () => {
+    await loadScript('js/func.js'); // load 이벤트발생시까지 기다림. 
+    abc();
+  };
+
+  const loadScript = (src) => new Promise((resolve) => {
+    const script = document.createElement('script');
+    script.src = src;
+    script.onload = () => resolve();
+    document.head.append(script);
+  });
+
+
+  /**
+   * await Promise-then구문을 세련되게 작성할 수 있는 문법
+   * - 반드시 async함수 안에서만 사용이 가능
+   * - Promise가 이행(fulfilled)될때까지 기다렸다 Promise의 result값을 반환
+   * - 생산코드내에 resolve()코드를 호출까지 기다린다.
+   */
+  btn2.onclick = async () => {
+    // new Promise((resolve) => {
+    //   setTimeout(() => resolve(123), 1000);
+    // })
+    // .then((result) => console.log(result));
+
+    const result = await new Promise((resolve) => {
+      setTimeout(() => resolve(123), 1000);
+    });
+    console.log(result);
+
+  };
+  
+  /**
+   * async 일반함수의 프라미스화를 지원하는 문법 
+   * - 일반함수가 프로미스를 반환한것 같이 사용가능
+   */
+  btn1.onclick = () => {
+    const promise = foo();
+    console.log(promise); // Promise {<fulfilled>: 100}
+
+    promise.then((result) => console.log(result));
+  };
+  const foo = async () => 100;
+  // const foo = async function(){ return 100; };
+  // const foo = () => new Promise((resolve) => resolve(100));
+  </script>
+
+  <br><br>
+
+  <button id="btn6">avatar</button>
+  <button id="btn7">dog</button>
+  <div class="img-wrapper"></div>
+  <!-- head안, body종료태그 직전 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.js"></script>
+  <script>
+
+  /**
+   * 추가문제 img 노출후 3초후 제거
+   */
+  btn7.onclick = async () => {
+    const dog_url = 'https://dog.ceo/api/breeds/image/random';
+    const response = await axios.get(dog_url);
+    const {data : {message}} = response;
+    await new Promise((resolve) => {
+      const img = document.createElement('img');
+      img.src = message;
+      const wrapper = document.querySelector(".img-wrapper");
+      wrapper.innerHTML = '';
+      wrapper.append(img);
+      img.onload = () => {
+        setTimeout(() => resolve(), 3000);
+      };
+    });
+    document.querySelector(".img-wrapper img").remove();
+
+    return;
+    axios.get(dog_url)
+      .then((response) => {
+        const {data : {message}} = response;
+        const img = document.createElement('img');
+        img.src = message;
+        const wrapper = document.querySelector(".img-wrapper");
+        wrapper.innerHTML = '';
+        wrapper.append(img);
+        img.onload = () => {
+          setTimeout(() => img.remove(), 3000);
+        }
+      })
+  }
+  /**
+   * 1. fetch 버젼 이미지 출력 
+   * 2. async/await 버젼 
+   *   - async함수 안에서 await 사용가능
+   *   - await Promise-then을 간결히 작성하는 문법
+   */
+  btn6.onclick = async () => {
+    const GITHUB_URL = `https://api.github.com/users/shqkel`;
+    const response = await fetch(GITHUB_URL);
+    const data = await response.json();
+    const {avatar_url} = data;
+    await new Promise((resolve) => {
+      const {avatar_url} = data;
+      const img = document.createElement('img');
+      img.src = avatar_url;
+      img.style.width = '200px';
+      img.style.borderRadius = '50%';
+      img.onload = () => {
+        setTimeout(() => resolve(), 3000);
+      }
+      document.querySelector('.img-wrapper').append(img);
+    });
+    document.querySelector('.img-wrapper img').remove();
+    
+    
+    // fetch(GITHUB_URL)
+    // .then((response) => {
+    //   console.log(response);
+    //   return response.json();
+    // })
+    // .then((data) => {
+    //   return new Promise((resolve) => {
+    //     const {avatar_url} = data;
+    //     const img = document.createElement('img');
+    //     img.src = avatar_url;
+    //     img.style.width = '200px';
+    //     img.style.borderRadius = '50%';
+    //     img.onload = () => {
+    //       setTimeout(() => resolve(), 3000);
+    //     }
+    //     document.querySelector('.img-wrapper').append(img);
+    //   });
+    // })
+    // .then(() => {
+    //   document.querySelector('.img-wrapper img').remove();
+    // });
+  };
+  </script>
+
+  <br><br>
+  <button id="btn8">async method</button>
+  <script>
+  /**
+   * 생성자함수, 클래스안에서 사용이 가능
+   */
+  btn8.onclick = async () => {
+    // new PizzaZip().order('루꼴라피자')
+    //   .then((value) => console.log(`${value}가 완성되었습니다.`));
+    
+    const pizzaName = await new PizzaZip().order('루꼴라피자');
+    console.log(`${pizzaName}가 완성되었습니다.`);
+    
+    const pizzaName2 = await new PizzaZip().order2('슈프림피자');
+    console.log(`${pizzaName2}가 완성되었습니다.`);
+    
+  };
+
+  class PizzaZip {
+    order(name) {
+      console.log(`${name} 주문이 완료되었습니다.`);
+      return new Promise((resolve) => {
+        setTimeout(() => resolve(name), 3000);
+      })
+    }
+    /**
+     * async 일반함수의 promise화를 지원
+     */
+    async order2(name) {
+      console.log(`${name} 주문이 완료되었습니다.`);
+      return await new Promise((resolve) => {
+        setTimeout(() => resolve(name), 3000);
+      });      
+    }
+  }
+
+  (async () => {
+    await new Promise((resolve) => {
+      setTimeout(() => {
+        console.log('3초 지남!');
+        // resolve();
+      }, 3000);
+    });
+    console.log('promise 이행!');
+  })();
+
+  </script>
+
+
+
+  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+</body>
+</html>

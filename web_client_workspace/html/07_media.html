@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>미디어관련</title>
+</head>
+<body>
+  <h1>미디어관련</h1>
+  <!--
+    html5이전에는 플러그인, 액티브엑스, 플래쉬 등을 이용해서만 음원/영상 재생이 가능했다.
+    html5 audio, video태그를 통해 손쉽게 재생이 가능하다.
+  -->
+  <h2>audio</h2>
+  <!-- 
+    속성명=속성값이 같은 경우 속성값을 생략할 수 있다.
+    - controls="controls"
+    - consrols
+
+    autoplay 브라우져에 의해서 차단되는 경우가 많다.
+
+  -->
+  <audio src="../sample/audio/major.mp3" controls autoplay muted></audio>
+
+  <audio controls autoplay muted>
+    <source src="../sample/audio/major.mp3">      
+    귀하의 브라우져는 HTML5의 audio태그를 지원하지 않습니다. <!-- fallback 문자 -->
+  </audio>
+  
+  <h2>video</h2>
+  <video 
+    src="../sample/video/small.mp4" 
+    controls 
+    muted 
+    style="width:300px"
+    poster="../sample/image/flower1.PNG"></video>
+
+  <h2>유투브영상 embed</h2>
+  <iframe 
+    width="560" 
+    height="315" 
+    src="https://www.youtube.com/embed/FyzlhpMFxok" 
+    title="YouTube video player" 
+    frameborder="0" 
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+    allowfullscreen></iframe>
+
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/Bkp9bDGDd1w" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+
+  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+</body>
+</html>

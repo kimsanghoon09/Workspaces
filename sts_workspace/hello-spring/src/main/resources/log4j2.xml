@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO">
+	<Appenders>
+		<Console name="console" target="SYSTEM_OUT">
+			<PatternLayout pattern="[%-5level] %c{1.}.%M - %msg%n"/>
+		</Console>
+	</Appenders><Loggers>
+	    <Root level="INFO">
+      		<AppenderRef ref="console"/>
+    	</Root>
+    	<Logger name="com.sh.spring" level="DEBUG"></Logger>
+    	<!-- 3rdparty Loggers -->
+		<Logger name="org.springframework.core" level="DEBUG"></Logger>
+		<Logger name="org.springframework.beans" level="INFO"></Logger>
+		<Logger name="org.springframework.context" level="INFO"></Logger>
+		<Logger name="org.springframework.web" level="INFO"></Logger>
+	</Loggers>
+</Configuration>

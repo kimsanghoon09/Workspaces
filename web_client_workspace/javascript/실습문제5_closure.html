@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>실습문제_closure</title>
+</head>
+<body>
+    <h4>@실습문제1 : 눈코딩</h4>
+	<button onclick="aoo()();">aoo</button><!--100--> 
+	<button onclick="boo()();">boo1</button><!--undefined--> 
+	<button onclick="boo()(999);">boo2</button><!--999--> 
+	<button onclick="coo(3)(5);">coo1</button><!--15-->
+	<button onclick="coo()(5);">coo2</button><!--NaN-->
+	<script>
+	const a = 1;
+	const aoo = () => {
+		const a = 100;
+		return () => console.log(a);
+	}
+
+	const b = 9;
+	const boo = () => {
+		const b = 99;
+		return (b) => console.log(b);
+	}
+
+	const coo = (c) => {
+		return (n) => {
+		  console.log(c * n);
+		}
+	}
+	</script>
+
+	<h3>@실습문제2</h3>
+	<!-- 
+		임의의 숫자를 더해가는 가산기를 만들어보자. 
+		사용자는 input#myadder를 통해 값을 입력하고, 
+		가산기는 입력값만큼 증가시켜서 #result에 현재까지의 합을 출력.
+	-->
+	</pi>
+	<fieldset>
+		<legend>가산기</legend>
+		<input type="number" id="myadder" placeholder="숫자를 입력하세요." >
+		<button onclick="addFunc();">+</button>
+		<p id="result"></p>
+	</fieldset>
+
+	<script>
+	const mkAddFunc = () => {
+		let sum = 0;
+		return () => {
+			// 숫자, '', null은 false반환. 문자열, undefined등 숫자변환불가인 값은 true를 반환
+			if(isNaN(myadder.value)) return;	
+			//input타입과 상관없이 value의 타입은 string임.
+			sum += Number(myadder.value);
+			result.innerHTML = sum;
+		};	
+	};
+	const addFunc = mkAddFunc();
+
+	</script>
+</body>
+</html>

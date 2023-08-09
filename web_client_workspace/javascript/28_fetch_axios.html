@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>fetch | axios</title>
+  <style>
+  table {
+    border: 1px solid #000;
+    border-collapse: collapse; 
+    margin: 20px; 
+  }
+  table#tbl-user {
+    display: none;
+  }
+  th, td {
+    border: 1px solid #000;
+    padding: 5px; 
+  }
+  </style>
+</head>
+<body>
+  <h1>fetch</h1>
+  <button id="btn1">fetch</button>
+  <table id="tbl-user">
+    <tr>
+      <th>이름</th>
+      <td class="id"></td>
+    </tr>
+    <tr>
+      <th>교육원</th>
+      <td class="company"></td>
+    </tr>
+    <tr>
+      <th>강의장</th>
+      <td class="classroom"></td>
+    </tr>
+    <tr>
+      <th>개수</th>
+      <td class="cnt"></td>
+    </tr>
+  </table>
+  <script>
+  /**
+   * - 네트워크요청은 비동기처리 
+   * - 1. XMLHttpRequest객체 
+   * - 2. fetch (Promise기반) 
+   *  - fetch호출을 Promise반환 
+   *  - Promise의 result값으로 http 응답객체를 전달해준다. 
+   *  - 실제 메세지가 적힌 body속성값은 바로 열람할수 없다.
+   *  - text() 또는 json() 호출해 반환해야한다. 프라미스체인 사용
+   */
+  btn1.onclick = () => {
+    const USER_URL = "https://asia-northeast3-focal-elf-326215.cloudfunctions.net/user";
+
+    fetch(USER_URL)
+    .then((response) => {
+      // 소비코드 
+      console.log(response);
+      // return response.text(); // html, text인 경우
+      return response.json(); // 암묵적 promise의 result값으로 사용
+    })
+    .then((data) => {
+      // JSON.parse 리턴값 : js객체 
+      console.log(data);
+      const {id, company, classroom, cnt} = data;
+      const table = document.querySelector("table#tbl-user");
+      table.querySelector(".id").innerHTML = id;
+      table.querySelector(".company").innerHTML = company;
+      table.querySelector(".classroom").innerHTML = classroom;
+      table.querySelector(".cnt").innerHTML = cnt;
+      table.style.display = 'block';
+    });
+  };
+  </script>
+
+  <button id="btn2">github avatar</button>
+  <div class="img-wrapper"></div>
+  <style>
+  .img-wrapper img, .animal-wrapper img {
+    width: 300px;
+    border-radius: 50%;
+  }
+  .animal-wrapper {
+    margin: 20px 0;
+    display: flex;
+    justify-content: space-around;
+  }
+  .animal-wrapper .card {
+    width: 30vw;
+    padding: 5px;
+    border: 1px solid #bbb;
+  }
+  .animal-wrapper .card img {
+    width: 100%;
+    border-radius: 20%;
+  }
+  </style>
+  <script>
+  /**
+   * 사용자로부터 github아이디를 입력받고, 프로필사진을 렌더하기
+   * - prompt
+   * - url요청
+   * - img태그 
+   * - 3초 노출후 제거
+   */
+  btn2.onclick = () => {
+    const id = prompt('github아이디를 입력하세요', 'shqkel');
+    const GITHUB_URL = `https://api.github.com/users/${id}`;
+    requestUrl(GITHUB_URL)
+    .then(({avatar_url}) => {
+      console.log(avatar_url);
+      const img = document.createElement('img');
+      img.src = avatar_url;
+      document.querySelector('.img-wrapper').append(img);
+      img.onload = () => {
+        setTimeout(() => {
+          img.remove();
+        }, 3000);
+      }
+    });
+  };
+
+  const requestUrl = (url) => fetch(url).then(response => response.json());
+  </script>
+
+  <h1>axios</h1>
+  <button id="btn3">axios</button>
+  <button id="btn4">dog</button>
+  <button id="btn5">cat</button>
+  <div class="animal-wrapper">
+    <div class="card">
+      <img src="https://cdn2.thecatapi.com/images/_I6AsfuMg.png" alt="">
+      <h3>스핑크스고양이</h3>
+      <p>이집트</p>
+    </div>
+    <div class="card">
+      <img src="https://cdn2.thecatapi.com/images/_I6AsfuMg.png" alt="">
+      <h3>스핑크스고양이</h3>
+      <p>이집트</p>
+    </div>
+    <div class="card">
+      <img src="https://cdn2.thecatapi.com/images/_I6AsfuMg.png" alt="">
+      <h3>스핑크스고양이</h3>
+      <p>이집트</p>
+    </div>
+  </div>
+  <script 
+    src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.js"></script>
+  <script>
+  /**
+   * 랜덤 고양이 사진
+   */
+  btn5.onclick = () => {
+    const api_key = '202de7b9-d66f-4322-a946-75c4119ae02d';
+    const cat_url = `https://api.thecatapi.com/v1/images/search`;
+    axios.get(cat_url, {
+      params : {
+        has_breeds : 1,
+        limit : 3,
+        api_key 
+      }
+    })
+    .then((response) => {
+      console.log(response);
+      const {data} = response;
+      console.log(data); // [{…}, {…}, {…}]
+      const wrapper = document.querySelector(".animal-wrapper");
+      wrapper.innerHTML = '';
+      data.forEach((cat => {
+        const {breeds : [{name, origin}], url} = cat;
+        console.log(name, origin, url); 
+        wrapper.innerHTML += `
+        <div class="card">
+          <img src="${url}" alt="">
+          <h3>${name}</h3>
+          <p>${origin}</p>
+        </div>
+        `;
+      }));
+    })
+  };
+  
+  /**
+   *  랜덤 강아지 사진
+   */
+  btn4.onclick = () => {
+    const dog_url = 'https://dog.ceo/api/breeds/image/random';
+    axios.get(dog_url)
+      .then((response) => {
+        console.log(response);
+        const {data : {message}} = response;
+        console.log(message);
+
+        const img = document.createElement('img');
+        img.src = message;
+        const wrapper = document.querySelector(".animal-wrapper");
+        wrapper.innerHTML = '';
+        wrapper.append(img);
+
+      })
+  }
+
+
+  /**
+   * axios
+   * - XMLHttpRequest / promise기반의 웹요청 라이브러리
+   * - cdn으로 js 로드후 사용(js표준이 아니다.)
+   * - fetch사용했을때 응답메세지에서 body를 추출하는 프라미스단계 제거
+   * - 최종적으로 promise가 반환 then 구문을 연결할 수 있다.
+   */
+  btn3.onclick = () => {
+    axios.get('https://api.github.com/users/shqkel', {
+      headers: {
+        Authorization: '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'
+      }
+    })
+      .then((response) => {
+        console.log(response);
+        console.log(response.data);
+        console.log(response.data.avatar_url);
+      });
+  };
+  </script>
+</body>
+</html>

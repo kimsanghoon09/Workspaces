@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<!-- scope : prototype 단일빈을 관리(싱글턴패턴) -->
+	<!-- scope : prototype 빈요청시마다 객체 생성 -->
+	<bean id="samsungTv" class="com.sh.app.tv.SamsungTv" scope="singleton" lazy-init="true"></bean>
+	<bean id="LgTv" class="com.sh.app.tv.LgTv" scope="prototype"></bean>
+
+	<bean id="xiaomiRemocon" class="com.sh.app.tv.XiaomiRemocon">
+		<!-- 기본생성자 + setTv -->
+		<!--  <property name="tv" ref="samsingTv"></property> -->
+		
+		<!-- 파라미터 생성자 -->
+		<constructor-arg ref="LgTv" index="0"/>
+	</bean>
+</beans>

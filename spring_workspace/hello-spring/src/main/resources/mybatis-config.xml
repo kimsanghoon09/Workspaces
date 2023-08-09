@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+  <settings>
+  	<setting name="mapUnderscoreToCamelCase" value="true"/>
+  	<setting name="jdbcTypeForNull" value="NULL"/>
+  	<setting name="callSettersOnNulls" value="true"/>
+  </settings>
+  
+  <typeAliases>
+  	<!-- 패키지하위 모든 클래스를 소문자로 시작하는 alias 등록 -->
+  	<package name="com.sh.spring"/>
+  </typeAliases>
+  
+  <typeHandlers>
+  	<!--  <typeHandler handler="com.sh.spring.common.typehandler.StringListTypeHandler"/> -->
+  	<package name="com.sh.spring.common.typehandler"/>
+  </typeHandlers>
+</configuration>

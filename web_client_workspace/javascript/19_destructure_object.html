@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>구조분해할당 - 객체</title>
+  </head>
+  <body>
+    <h1>구조분해할당 - 객체</h1>
+    <button onclick="test1();">구조분해할당</button>
+    <button onclick="test2();">중첩객체</button>
+    <button onclick="test3();">매개변수부 | 리턴값</button>
+    <button onclick="test4();">@실습문제 - 교육원정보</button>
+    <button onclick="test5();">나머지파라미터 | 전개연산자</button>
+    <button onclick="test6();">@실습문제 - 가족관계</button>
+    <script>
+      const persons = [
+        {
+          name: "홍길동",
+          family: {
+            father: "홍석천",
+            mother: "홍진경",
+            sister: "홍수아",
+          },
+          age: 35,
+        },
+        {
+          name: "신사임당",
+          family: {
+            father: "신동엽",
+            mother: "고두심",
+            brother: "신하균",
+          },
+          age: 25,
+        },
+        {
+          name: "이순신",
+          family: {
+            father: "이경영",
+            mother: "이영자",
+            brother: "이승환",
+            sister: "아이유",
+          },
+          age: 33,
+        },
+      ];
+      const test6 = () => {
+        persons.forEach(person => {
+          // console.log(person);
+          const {name, family : {father, mother, ...siblings}} = person;
+          // console.log(name, father, mother, Object.values(siblings));
+          console.log(`이름 : ${name}, 아빠 : ${father}, 엄마 : ${mother}, 
+                        형제자매 : ${Object.values(siblings)}`);
+        });
+
+        /* 
+          이름 : 홍길동, 아빠 : 홍석천, 엄마 : 홍진경, 형제자매 : 홍수아
+          이름 : 신사임당, 아빠 : 신동엽, 엄마 : 고두심, 형제자매 : 신하균 
+          이름 : 이순신, 아빠 : 이경영, 엄마 : 이영자, 형제자매 : 이승환,아이유 
+        */
+      };
+
+      /**
+       * 나머지파라미터 : 지정한 속성외 나머지 속성을 새 객체에 담아 반환
+       * 전개연산자 : 객체의 속성을 다른객체 전달
+       */
+      const test5 = () => {
+        const obj = {
+          a: 123,
+          b: "hello",
+          c: true,
+          d: "world",
+        };
+        const { a, b, ...other } = obj;
+        console.log(a, b, other);
+
+        const user = {
+          id: "honggd",
+          email: "honggd@gmail.com",
+        };
+
+        const user2 = {
+          name: "홍길동",
+          ...user,
+        };
+        console.log(user2);
+
+        const user3 = { ...user2 }; // 객체복사
+        console.log(user3);
+      };
+
+      const getAcademy = () => ({
+        name: "KH정보교육원",
+        url: "https://kh-academy.or.kr",
+        tel: ["070-1234-5678", "070-1234-4321"],
+        branches: {
+          "강남 지원": { addr: "서울시 강남구 역삼동 123" },
+          "종로 지원": { addr: "서울시 종로구 탑골동 567" },
+          "당산 지원": { addr: "서울시 영등포구 양화동 888" },
+        },
+      });
+      /**
+       * 교육원이름, url, 대표전화1개, 종로지원의 주소 출력
+       */
+      const test4 = () => {
+        const {
+          name,
+          url,
+          tel: [tel],
+          branches: {
+            "종로 지원": { addr },
+          },
+        } = getAcademy();
+        console.log(name, url, tel, addr);
+      };
+
+      /**
+       * 화살표함수 객체반환시 { return } 생략한다면, 반환할 객체를 소괄호로 감싸야한다.
+       */
+      const getUser = () => ({
+        id: "honggd",
+        nickName: "gd",
+        fullName: {
+          firstName: "길동",
+          lastName: "홍",
+        },
+        age: 33,
+        sns: ["facebook", "instgram", "tiktok"],
+      });
+
+      const test3 = () => {
+        processId(getUser());
+        processName(getUser());
+        processSns(getUser());
+
+        const { id, age } = getUser();
+      };
+
+      const processId = ({ id }) => console.log("아이디 : ", id);
+      const processName = ({ fullName: { firstName, lastName } }) =>
+        console.log("이름 : ", lastName, firstName);
+      const processSns = ({ sns: [mainSns] }) =>
+        console.log("대표 sns : ", mainSns);
+
+      /**
+       * 중첩객체
+       */
+      const test2 = () => {
+        const user = {
+          id: "honggd",
+          nickName: "gd",
+          fullName: {
+            firstName: "길동",
+            lastName: "홍",
+          },
+          age: 33,
+          sns: ["facebook", "instgram", "tiktok"],
+        };
+
+        // const {id, nickName, fullName, age, sns} = user;
+        // console.log(id, nickName, fullName, age, sns);
+
+        const {
+          fullName: { firstName, lastName },
+          sns: [, mainSns],
+        } = user;
+        console.log(firstName, lastName, mainSns);
+        // console.log(fullName); // Uncaught ReferenceError: fullName is not defined
+      };
+
+      /**
+       * 구조분해할당
+       * - 객체의 속성명을 통해 속성값을 변수에 쉽게 담는 문법
+       */
+      const test1 = () => {
+        const obj = {
+          b: "Helloworld",
+          a: 123,
+          c: true,
+        };
+        const { a, b, c, d, e = "eee" } = obj; // obj객체에서 변수명과 동일한 속성값을 찾아 대입
+        // const a = obj.a;
+        // const b = obj.b;
+        // const c = obj.c;
+        console.log(a, b, c, d, e);
+
+        const { a: foo, b: bar } = obj;
+        // const foo = obj.a;
+        // const bar = obj.b;
+        console.log(foo, bar);
+
+        let x = "안녕";
+        let y = 12345;
+        ({ a: x, b: y } = obj); // 기존변수에 대입시 소괄호 감싸 대입할 것.
+        console.log(x, y);
+      };
+    </script>
+
+    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+  </body>
+</html>

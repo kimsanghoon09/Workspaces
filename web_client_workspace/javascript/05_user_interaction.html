@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>사용자 상호작용</title>
+</head>
+<body>
+  <h1>사용자 상호작용</h1>
+  <button onclick="alert('너 경고야~')">alert</button>
+  <button onclick="console.log('개발자용 로그!')">console.log</button>
+
+  <button onclick="test1();">prompt</button>
+  <button onclick="test2();">confirm</button>
+
+  <button onclick="test3();">innerHTML</button>  
+  <button onclick="test4();">innerText</button>  
+  <button onclick="test5();">outerHTML</button>  
+
+  <div id="foo">안녕하세요. 저는 <mark>박혁거세</mark>입니다.</div>
+  <div id="bar"></div>
+
+  <script>
+  /**
+   * innerHTML
+   * - getter html포함해서 자식요소를 반환
+   * - setter 문자열의 html을 파싱처리
+   */
+  function test3() {
+    console.log(foo.innerHTML);
+    // bar.innerHTML = '안녕하세요. 저는 <mark>박혁거세</mark>입니다.';
+    bar.innerHTML = foo.innerHTML;
+  }
+  /**
+   * innerText
+   * - getter html제거된 자식요소를 반환
+   * - setter 문자열의 html을 파싱하지 않고, 문자그대로 추가
+   */
+  function test4() {
+    console.log(foo.innerText);
+    // bar.innerText = '안녕하세요. 저는 <mark>박혁거세</mark>입니다.';
+    bar.innerText = foo.innerHTML;
+  }
+
+  /**
+   * outerHTML
+   * - getter 태그자신을 포함한 html을 반환
+   * - setter 태그자신을 교체
+   */
+  function test5() {
+    console.log(foo.outerHTML);
+    foo.outerHTML = '<div id="zoo">새로 왔습니다.</div>';
+  }
+
+
+  /**
+   * confirm 사용자로부터 boolean결과를 입력받을 수 있는 함수
+   * - 확인 true 반환
+   * - 취소 false 반환
+   */
+  function test2() {
+    const bool = confirm('kh상조에 가입하시겠습니까?');
+    console.log(bool);
+    if(bool) {
+      alert('가입 축하드립니다.');
+    }
+    else {
+      alert('다음에 만나요 😎');
+    }
+  }
+  
+  /**
+   * prompt 팝업을 통해 사용자로부터 한줄입력을 받을 수 있는 함수
+   * - 정상입력후 확인 이름 반환
+   * - 취소한 경우 null 반환
+   * 
+   * 정상입력시 #target에 반갑습니다. 홍길동님 😀 출력
+   * 취소 또는 아무것도 입력하지 않은 경우, 경고창에 '이름을 입력하세요 😡' 출력
+   */
+  function test1() {
+    const name = prompt('당신의 이름이 무엇입니까?', '홍길동');
+    console.log(name);
+
+    if(name == null || name == '') {
+      alert('이름을 입력하세요 😡');
+    }
+    else {
+      const target = document.querySelector("#target");
+      target.innerHTML = `<h2>반갑습니다. ${name}님 😀</h2>`;      
+    }
+    
+  }
+  </script>
+
+  <div id="target"></div>
+</body>
+</html>

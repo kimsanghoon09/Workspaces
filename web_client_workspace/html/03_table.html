@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>테이블관련</title>
+  <style>
+  table {
+    border : 1px solid black;
+  }
+  th, td {
+    border : 1px solid black;
+    padding : 5px;
+  }
+  </style>
+</head>
+<body>
+  <h1>테이블관련</h1>
+  <!-- 
+    table 테이블관련 최상위태그
+
+    thead 헤더행
+    tbody 본문행
+    tfoot 푸터행
+
+    tr    행자체
+      th  행하위 헤더 셀 태그
+      td  행하위 내용 셀 태그
+  -->
+
+  <table>
+    <thead>
+      <!-- tr>th*3 -->
+      <tr>
+        <th>브라우져명</th>
+        <th>회사</th>
+        <th>홈페이지</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>크롬</td>
+        <td>구글</td>
+        <td>
+          <a href="https://google.com">https://google.com</a>
+        </td>
+      </tr>
+      <tr>
+        <td>엣지</td>
+        <td>MS</td>
+        <td>
+          <a href="https://microsoft.com">https://microsoft.com</a>
+        </td>
+      </tr>
+      <tr>
+        <td>사파리</td>
+        <td>애플</td>
+        <td>
+          <a href="https://apple.com">https://apple.com</a>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <th>총개수</th>
+        <th colspan="2">3</th>
+      </tr>
+    </tfoot>
+  </table>
+
+  <h2>행/열 합치기</h2>
+  <!--
+    colspan 열확장(열 합치지) 가로로 확장
+    rowspan 행확장(행 합치기) 세로로 확장
+
+    테이블너비 
+    - 지정을 안하면 cell 내용의 의해 결정
+    - 같은위치에 있는 셀의 style을 따라 적용
+      - 같은 위치의 셀에 동일한 style속성이 적용되면 큰값이 적용
+  -->
+  <table>
+    <thead>
+      <tr>
+        <th colspan="4">자기소개</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- tr>td*4 -->
+      <tr>
+        <td colspan="2" rowspan="2" style="width: 130px; height: 150px;">사진</td>
+        <td style="width: 80px;">이름</td>
+        <td style="width: 200px;"></td>
+      </tr>
+      <tr>
+        <td style="width: 50px;">연락처</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td style="width: 70px;">주소</td>
+        <td colspan="3"></td>
+      </tr>
+      <tr>
+        <td style="width: 100px; height: 100px;">자기소개</td>
+        <td colspan="3"></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>@실습문제 - 통화기준표</h2>
+  <table>
+    <thead style="background-color: beige;">
+      <tr>
+        <th rowspan="2" style="height: 100px;">통화</th>
+        <th rowspan="2">매매<br>기준율</th>
+        <th colspan="2">현찰매매율</th>
+        <th colspan="2">전신환매매율</th>
+        <th rowspan="2">T/C<br>매도율</th>
+      </tr>
+      <tr>
+        <th>매도율</th>
+        <th>매입율</th>
+        <th>매도율</th>
+        <th>매입율</th>
+      </tr>
+    </thead>
+    <tbody>
+      <td style="height: 100px;">미국(USD)</td>
+      <td>1,023.00</td>
+      <td>1,023.00</td>
+      <td>1,023.00</td>
+      <td>1,023.00</td>
+      <td>1,023.00</td>
+      <td>1,023.00</td>
+    </tbody>
+  </table>
+
+  
+  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+</body>
+</html>

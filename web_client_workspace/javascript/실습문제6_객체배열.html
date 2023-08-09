@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>@실습문제 - 객체배열</title>
+    <style>
+    table{border:1px solid black; border-collapse:collapse; margin: 10px 0;}
+    th, td{border:1px solid black; width: 50px; text-align:center; padding: 5px;}
+    th:nth-of-type(2) {width: 200px;}
+    .area {
+        min-height:250px;
+        border:1px solid black;
+        background:lightgray;
+    }
+    input {width:100px;}
+    </style>
+</head>
+<body>
+    <h3>@실습문제 - 객체배열</h3>
+    <table id="tbl-students">
+        <caption><h3>학생 점수 데이터</h3></caption>
+        <thead>
+            <tr>
+                <th>번호</th>
+                <th>이름</th>
+                <th>java</th>
+                <th>oracle</th>
+                <th>html</th>
+                <th>css</th>
+                <th>javascript</th>
+                <th>총점</th>
+                <th>평균</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <button onclick="test1();">성적확인</button>
+    <script>
+    const data = `홍길동/45,76,34,33,56
+유관순/76,34,54,56,22
+임꺽정/43,77,12,76,34
+윤봉길/76,88,55,34,54
+안중근/98,23,76,23,45
+신사임당/34,33,13,54,45
+세종대왕/56,56,34,77,32
+이순신/34,88,77,78,22
+이황/88,90,99,98,97
+장보고/90,56,56,44,34`;
+	/**
+	 * @실습문제 
+	 * 위 csv는 학생별 java, oracle, html, css, js의 점수데이터이다. 
+	 * 이를 바탕으로 학생객체배열(전역)을 생성하세요. 
+	 * - 각 객체에 총합을 구하는 속성 getSum메소드
+	 * - 평균을 구하는 속성 getAvg메소드(소수점첫째자리까지)
+	 * - 모든 속성정보를 출력하는 toString메소드
+	 * 
+	 * 이 객체배열을 table#students에 표로 화면 출력하세요.
+	 */
+	let students = []
+	const test1 = () => {
+        // 1. 생성자함수를 통해 students배열에 Student객체 추가
+        data.split('\n').forEach((row) => {
+            // row "홍길동/45,76,34,33,56"
+            const temp = row.split("/"); // ["홍길동", "45,76,34,33,56"]
+            const name = temp[0]; // "홍길동"
+            // "45,76,34,33,56" -> ["45", "76", "34", "33", "56"]
+            const scores = temp[1].split(",").map((str) => Number(str)); // [45, 76, 34, 33, 56]
+            
+            // const student = new Student(name, scores[0], scores[1], scores[2], scores[3], scores[4]);
+            const student = new Student(name, ...scores); // 전개연산자 
+            console.log(student);
+            students.push(student); 
+        })
+        // 2. table로 변환 : Student -> tr태그  
+        const tbody = document.querySelector("table#tbl-students tbody");
+        tbody.innerHTML = ""; // 초기화
+        students.forEach((student, index) => {
+            tbody.innerHTML += `
+                <tr>
+                    <td>${index + 1}</td>
+                    <td>${student.name}</td>
+                    <td>${student.java}</td>
+                    <td>${student.oracle}</td>
+                    <td>${student.html}</td>
+                    <td>${student.css}</td>
+                    <td>${student.js}</td>
+                    <td>${student.sum()}</td>
+                    <td>${student.avg()}</td>
+                </tr>
+            `;
+        });
+	};
+
+    function Student(name, java, oracle, html, css, js) {
+        this.name = name;
+        this.java = java;
+        this.oracle = oracle;
+        this.html = html;
+        this.css = css;
+        this.js = js;
+    }
+    Student.prototype.sum = function(){
+        return this.java + this.oracle + this.html + this.css + this.js;
+    }
+    Student.prototype.avg = function(){
+        return Math.round(this.sum() / 5 * 10) / 10;
+    }
+    Student.prototype.toString = function(){
+        return `name=${this.name}, java=${this.java}, oracle=${this.oracle}, html=${this.html}, css=${this.css}, js=${this.js}, sum=${this.sum()}, avg=${this.avg()}`;
+    }
+    </script>
+</body>
+</html>

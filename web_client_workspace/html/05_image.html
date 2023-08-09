@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>이미지관련</title>
+</head>
+<body>
+  <h1>이미지관련</h1>
+  <!-- 
+    src속성 : 이미지경로 
+      - 상대경로 : 현재페이지기준 이미지경로
+        - 현재경로 ./ (생략가능)
+        - 부모경로 ../
+      - 절대경로 : 루트디렉토리기준 이미지경로
+        - 웹서버기준 루트디렉토리 /, http://~
+    alt속성 : 대체문자 (이미지불러오기 실패했을때 시각화할 문구, 스크린리더에 해석될 설명문구)
+  -->
+  <img src="../sample/image/flower1.PNG" alt="벚꽃사진" style="width: 300px;"/>
+  <br>
+  <img src="/sample/image/flower2.PNG" alt="데이지꽃사진" style="width:300px;">
+  <br>
+  <img src="http://192.168.20.8:5500/sample/image/flower2.PNG" alt="데이지꽃사진" style="width:300px;">
+  <br>
+  <img src="https://newsimg.sedaily.com/2019/05/26/1VJAI06LPW_1.jpg" alt="팔자좋은사진" style="width:300px;">
+  
+  <h2>상대/절대 크기</h2>
+  <!-- 
+    px 절대크기. 사용하는 기기에 따라 크기가 변하지 않는다.
+    %  상대크기. 부모태그의 전체너비에 따라 상대적으로 크기가 결정된다.
+  -->
+  <!-- div>img[style] -->
+  <div style="border: 3px solid black;">
+    <img src="../sample/image/flower1.PNG" alt="꽃사진1" style="width:150px">
+    <img src="../sample/image/flower2.PNG" alt="꽃사진2" style="width:150px">
+    <img src="../sample/image/flower3.PNG" alt="꽃사진3" style="width:150px">
+    <img src="../sample/image/flower4.PNG" alt="꽃사진4" style="width:150px">
+    <img src="../sample/image/flower5.PNG" alt="꽃사진5" style="width:150px">
+  </div>
+  <div style="border: 3px solid black;">
+    <img src="../sample/image/flower1.PNG" alt="꽃사진1" style="width:15%">
+    <img src="../sample/image/flower2.PNG" alt="꽃사진2" style="width:15%">
+    <img src="../sample/image/flower3.PNG" alt="꽃사진3" style="width:15%">
+    <img src="../sample/image/flower4.PNG" alt="꽃사진4" style="width:15%">
+    <img src="../sample/image/flower5.PNG" alt="꽃사진5" style="width:15%">
+  </div>
+  
+  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+</body>
+</html>

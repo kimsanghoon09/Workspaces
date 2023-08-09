@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>table</title>
+  <style>
+  table {
+    border: 1px solid #000;
+    border-collapse: collapse;
+    width: 500px;
+    table-layout: fixed;
+  }
+  th, td {
+    border: 1px solid #000;
+    padding: 5px 10px; 
+    /* overflow: scroll; */
+    word-break: break-all; /* normal 단어단위로 개행, break-all 단어중간에서라도 개행 */
+    height: 200px;
+    vertical-align: middle; /* top middle bottom */
+  }
+  </style>
+</head>
+<body>
+  <h1>table</h1>
+  <table>
+    <thead>
+      <!-- tr>th*3 -->
+      <tr>
+        <th>브라우져명</th>
+        <th>회사</th>
+        <th>홈페이지</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>크롬</td>
+        <td>구글</td>
+        <td>
+          <a href="https://google.com">https://google.com</a>
+        </td>
+      </tr>
+      <tr>
+        <td>엣지</td>
+        <td>MS</td>
+        <td>
+          <a href="https://microsoft.com">https://microsoft.commmmmmmmmmmmmmmmmmmmmmmmmmm</a>
+        </td>
+      </tr>
+      <tr>
+        <td>사파리</td>
+        <td>애플</td>
+        <td>
+          <a href="https://apple.com">https://apple.com</a>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <th>총개수</th>
+        <th colspan="2">3</th>
+      </tr>
+    </tfoot>
+  </table>
+
+  <h2>일반요소의 vertical-align</h2>
+  <!-- div.box>span{안녕} -->
+  <div class="box">
+    <span>안녕</span>
+  </div>
+  <div class="square">
+    <span>안녕</span>
+  </div>
+  <style>
+    .square {
+      width: 300px;
+      height: 300px;
+      background-color: tomato; 
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .box {
+      width: 300px;
+      height: 300px;
+      background-color: springgreen;
+      text-align: center;
+      display: table;
+    }
+    .box span {
+      display: table-cell;
+      vertical-align: middle;
+    }
+  </style>
+
+  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+</body>
+</html>

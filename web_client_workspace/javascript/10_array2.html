@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>배열2</title>
+  <style>
+  table {
+    border: 1px solid #000;
+    border-collapse: collapse;
+    margin: 10px 0;
+  }
+  th, td {
+    border: 1px solid #000;
+    padding: 5px;    
+  }
+  </style>
+</head>
+<body>
+  <h1>배열2</h1>
+  <button onclick="test1();">유사배열</button>
+  <button onclick="test2();">forEach</button>
+  <button onclick="test3();">filter</button>
+  <button onclick="test4();">map</button>
+  <button onclick="test5();">reduce</button>
+  <ul id="test">
+    <li>Hello</li>
+    <li>안녕</li>
+    <li>Ni hao</li>
+  </ul>
+  <script>
+  /**
+   * reduce(callbackFunction, [초기값])
+   * - 배열의 요소를 차례로 연산해서 하나의 값을 도출해낼때 사용
+   * - 배열요소의 합계구하기
+   * - reduce는 forEach, filter, map을 대체가능
+   * - callbackFunction(aggregate, item, index, arr) 
+   *  - aggreate 연산결과를 담길 매개변수 
+   */
+  function test5() {
+    const arr = [1, 2, 3, 4, 5];
+    const sum = arr.reduce(function(agg, item, index, arr){
+      console.log(agg, item, index, arr);
+      return agg + item;
+    }, 0);
+    console.log(sum);
+
+    const chars = ['ㅋㅋㅋ', '안녕', '하하하', '고마워']; // ㅋㅋㅋ안녕하하하고마워
+    const result = chars.reduce(function(agg, ch, index){
+      console.log(agg, ch, index);
+      return agg + ch;
+    });
+    console.log(result);
+
+    // filter 대신 reduce
+    const nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    const evens = nums.reduce(function(agg, item, index){
+      console.log(agg, item, index);
+      if(item % 2 == 0)
+        agg.push(item);
+      return agg;
+    }, []);
+    console.log(evens);
+
+  }
+  /**
+   * map(callbackFunction)
+   * - 기존배열 - 새배열 요소 연결
+   * - 요소의 값을 변경해서 새배열 생성
+   */
+  function test4() {
+    const arr = [1, 2, 3]; // -> [1, 4, 9]
+    const arr2 = arr.map(function(item, index, arr){
+      return item * item;
+    });
+    console.log(arr2);
+    console.log(arr);
+
+    const names = ['홍길동', '신사임당', '유관순'];
+    const names2 = names.map(function(item, index){
+      return `${index}-${item}`;
+    }); // ['0-홍길동', '1-신사임당', '2-유관순']
+    console.log(names2);
+    console.log(names);
+
+    const list = [...document.querySelectorAll("#test li")];
+    const contents = list.map(function(li){
+      return li.innerText;
+    });
+    console.log(contents);
+  }
+  /**
+   * filter(callbackFunction)
+   * - callbackFunction: boolean반환
+   * - true를 반환한 요소만 새배열 반환
+   */
+  function test3() {
+    const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    const evens = arr.filter(function(item, index, arr){
+      // console.log(item, index, arr);
+      return item % 2 == 0;
+    });
+
+    console.log(evens);
+    console.log(arr);
+
+    // 이름이 3글자인 요소만 추려서 배열에 담고 출력
+    const names = ['홍길동', '강감찬', '신사임당', '허균', '유재석'];
+    const filtered = names.filter(function(item){
+      return item.length === 3;
+    });
+    console.log(filtered);
+  }
+
+  /**
+   * forEach(callbackFunction)
+   * - 각 배열요소에 대해 callbackFunction 호출. 반복문처리 효과
+   * - callbackFunction(요소, index, 배열) 매개변수
+   */
+  function test2() {
+    const arr = ['가', '나', '다', '라', '마'];
+    arr.forEach(function(elem, index, arr){
+      console.log(elem, index, arr);
+    });
+
+    const arr2 = [1, 2, 'A', '가', 3, 'B', 4, 5, 50];
+    const arr3 = [];
+
+    arr2.forEach(function(item, index) {
+      if(item > 0 && item <= 10)
+        arr3.push(item);
+    });
+    console.log(arr3);
+
+    // #test하위의 li태그의 텍스트 출력
+    document.querySelectorAll("#test li").forEach(function(li){
+      console.log(li.innerText);
+    });
+  }
+  
+  /**
+   * 유사배열 
+   * - Array.prototype를 상속하지 않은 배열 
+   * - index, length속성은 있지만, 다른 배열메소드는 사용불가 
+   * - getElementsByName, getElementsByTagName, getElementsByClassName
+   * - querySelectorAll
+   */
+  function test1() {
+    const buttons = document.querySelectorAll("button");
+    console.log(buttons);
+    // buttons.slice(); // Uncaught TypeError: buttons.slice is not a function
+
+    // 유사배열을 진짜 배열로 변환
+    // const arr = Array.from(document.querySelectorAll("li"));
+    const arr = [...document.querySelectorAll("li")];
+    console.log(arr); 
+    while(arr.length)
+      console.log(arr.pop().innerHTML);
+  }
+  </script>
+
+  <button onclick="test6();">@실습문제 - 연락처</button>
+  <button onclick="sortContactByName('asc')">이름 asc</button>
+  <button onclick="sortContactByName('desc')">이름 desc</button>
+  <button onclick="sortContactByAge('asc')">나이 asc</button>
+  <button onclick="sortContactByAge('desc')">나이 desc</button>
+  <table id="contact">
+    <thead>
+      <tr>
+        <th>이름</th>
+        <th>나이</th>
+        <th>전화번호</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+  <script>
+  function sortContactByAge(type) {
+    const trs = Array.from(document.querySelectorAll("table#contact tbody tr"));
+    const compareFunction = 
+      type === 'asc' ? 
+        function(tr1, tr2){
+          const age1 = tr1.querySelector("td:nth-child(2)").innerText;
+          const age2 = tr2.querySelector("td:nth-child(2)").innerText;
+          return age1 - age2;
+        } : 
+          function(tr1, tr2){
+            const age1 = tr1.querySelector("td:nth-child(2)").innerText;
+            const age2 = tr2.querySelector("td:nth-child(2)").innerText;
+            return age2 - age1;
+          };
+    trs.sort(compareFunction);
+    trs.forEach(function(tr) {
+      document.querySelector("table#contact tbody").append(tr);
+    });
+  }
+  function sortContactByName(type) {
+    const trs = Array.from(document.querySelectorAll("table#contact tbody tr"));
+    console.log(trs);
+
+    let compareFunction;
+    if(type === 'asc') {
+      // 이름 오름차순
+      compareFunction = function(tr1, tr2){
+        const name1 = tr1.querySelector("td:first-child").innerText;
+        const name2 = tr2.querySelector("td:first-child").innerText;
+        if(name1 > name2) return 1;
+        if(name1 < name2) return -1;
+        return 0;
+      };
+    }
+    else {
+      // 이름 내림차순
+      compareFunction = function(tr1, tr2){
+        const name1 = tr1.querySelector("td:first-child").innerText;
+        const name2 = tr2.querySelector("td:first-child").innerText;
+        if(name1 > name2) return -1;
+        if(name1 < name2) return 1;
+        return 0;
+      };
+    }
+    trs.sort(compareFunction);
+
+    // DOM tree 구조
+    trs.forEach(function(tr) {
+      document.querySelector("table#contact tbody").append(tr);
+    });
+
+  }
+
+  /**
+   * @실습문제 - 연락처 
+   * - 제공된 csv데이터를 처리하여 table#contact에 렌더하기 
+   * <tr>
+   *  <td>김지영</td>
+   *  <td>25</td>
+   *  <td>010-1234-5678</td>
+   * </tr>
+   */
+  function test6() {
+    const data = `김지영,25,010-1234-5678
+박준호,32,010-9876-5432
+이민지,28,010-5555-5555
+정승훈,45,010-1111-2222
+최현우,19,010-7777-8888
+장수민,37,010-4444-3333
+송지원,31,010-8888-9999
+이도현,26,010-2222-1111
+신영주,42,010-6666-7777
+강현우,23,010-3333-4444
+김지현,29,010-9999-8888
+이승희,35,010-4444-5555
+박동진,41,010-2222-3333
+최진우,20,010-7777-6666
+장윤서,27,010-5555-4444`;
+
+    const arr = data.split('\n');
+    console.log(arr);
+
+    const tbody = document.querySelector("table#contact tbody");
+
+    arr.forEach(function(text){
+      const infos = text.split(',');
+      const name = infos[0];
+      const age = infos[1];
+      const tel = infos[2];
+      const tr = `
+        <tr>
+          <td>${name}</td>
+          <td>${age}</td>
+          <td>${tel}</td>
+        </tr> 
+      `;
+      tbody.innerHTML += tr;
+
+    })
+
+  }
+  </script>
+  
+</body>
+</html>

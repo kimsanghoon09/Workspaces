@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>문자관련</h1>
+    <!-- heading태그(머릿글)-->
+    <!-- h${Helloworld}*6 -->
+    <h1>Helloworld</h1>
+    <h2>Helloworld</h2>
+    <h3>Helloworld</h3>
+    <h4>Helloworld</h4>
+    <h5>Helloworld</h5>
+    <h6>Helloworld</h6>
+
+    <!-- paragraph태그(문단)-->
+    <!-- 
+      html에서는 공백문자, 탭문자, 개행문자가 모두 공백하나로 처리된다.
+    -->
+    <p>
+      안녕하세요. 
+      반갑습니다. 
+      저는 홍길동입니다.
+    </p>
+    ㅋㅋㅋㅋ
+    <p>
+      안녕하세요. <br><!-- 개행태그 -->
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 반갑습니다. <br>
+      <!-- 공백문자(&문자)-->
+      저는 홍길동입니다.
+    </p>
+
+    <!-- 특수문자 작성하기 -->
+    <!-- &문자로 escaping처리해야 한다. -->
+    <!-- &문자표 http://kor.pe.kr/util/4/charmap2.htm -->
+    <p>
+      &quot;특수문자&quot; &amp; &lt;tag&gt;
+    </p>
+
+    <h2 title="html5의 Phrase Tag에 대한 설명입니다.">Phrase Tag</h2>
+    <!-- 
+      html4에서 html5 버젼업하면서 강조된 개념 semantic tag
+      - 태그와 태그의 내용을 매칭해서 사용하기
+      - 단순 시각화뿐 아니라 스크린리더가 해석할 수 있도록 함.
+    -->
+    <!-- 인용구 -->
+    <p>
+      <blockquote cite="https://naver.com/12345">너 자신을 알라</blockquote>
+      <q>간단인용구</q>는 q태그를 쓰세요.
+    </p>
+    <p>
+      <em>기울여서 강조 emphasized</em>
+      <strong>bold체로 강조 strong</strong>
+      <mark>하이라이트 효과로 강조 mark</mark>
+      <ins>밑줄효과로 강조 inserted</ins>
+      <del>취소선처리 deleted</del>
+    </p>
+    <p>
+      <!-- 축약어태그 abbreviation -->
+      <abbr title="Internet of Things">IoT</abbr>개발자 모집
+      <br>
+      <!-- 코드표현 -->
+      <code>System.out.println("안녕");</code> 실행하면, 
+      <br>
+      <!-- 프로그램 출력결과 -->
+      <samp>안녕</samp> 출력됩니다.
+      <br>
+      <!-- 키보드입력 -->
+      복사하려면 <kbd>Ctrl</kbd> + <kbd>C</kbd>를 누르세요.
+    </p>
+    <p>
+      <em><mark>중첩</mark></em>
+      해서 사용이 가능합니다.
+    </p>
+
+    <hr><!-- 수평선태그 -->
+
+    <!-- br*20 -->
+    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+  </body>
+</html>

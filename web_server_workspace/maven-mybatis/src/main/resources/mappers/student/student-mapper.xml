@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="student">
+  <select id="findAll" resultType="student">
+    select 
+    	* 
+    from 
+    	student
+   	order by
+   		id desc
+  </select>
+  
+  <select id="findById" resultType="student">
+  	select
+  		*
+  	from
+  		student
+  	where
+  		id = #{id}
+  </select>
+  
+  <insert id="insertStudent">
+  	insert into
+  		student
+  	values(
+  		seq_student_id.nextval, #{name}, #{tel}, default
+  	)
+  	<selectKey order="AFTER" keyProperty="id" resultType="_int">
+  		select 
+  			seq_student_id.currval
+  		from
+  			dual	
+  	</selectKey>
+  </insert>
+  
+  <update id="updateStudent">
+  	update
+  		student
+  	set
+  		name = #{name},
+  		tel = #{tel}
+  	where
+  		id = #{id}
+  </update>
+  
+  <delete id="deleteStudent">
+  	delete from
+  		student
+  	where
+  		id = #{id} 
+  </delete>
+  
+  <select id="getTotalCount" resultType="_int">
+  	select
+  		count(*)
+  	from
+  		student
+  </select>
+  
+</mapper>

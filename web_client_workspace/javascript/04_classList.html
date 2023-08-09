@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>태그 클래스로 제어하기</title>
+  <style>
+  table {
+    border: 1px solid #000;
+    border-collapse: collapse;
+  }
+  th, td {
+    border: 1px solid #000; 
+    text-align: center;
+    padding: 5px;
+  }
+  .on {
+    background-color: cornflowerblue;
+    color: white;
+  }
+  </style>
+</head>
+<body>
+  <h1>태그 클래스로 제어하기</h1>
+  <table>
+    <tr>
+      <th colspan="5">
+        <h2>수강신청</h2>
+      </th>
+    </tr>
+    <tr>
+      <td colspan="5">
+        <input type="checkbox" id="checkAll" onchange="checkAllSubject();">
+        <label for="checkAll">전체선택/해제</label>
+      </td>
+    </tr>
+    <!-- tr>(td>input:checkbox[name=subject]#subject$+label[for=subject$])*5 -->
+    <tr>
+      <!-- this용법1. 태그객체의 이벤트속성안 this는 태그객체 자신을 가리킨다. -->
+      <td><input type="checkbox" name="subject" id="subject1" value="국어" onchange="checkSubject(this);"><label for="subject1">국어</label></td>
+      <td><input type="checkbox" name="subject" id="subject2" value="영어" onchange="checkSubject(this);"><label for="subject2">영어</label></td>
+      <td><input type="checkbox" name="subject" id="subject3" value="수학" onchange="checkSubject(this);"><label for="subject3">수학</label></td>
+      <td><input type="checkbox" name="subject" id="subject4" value="사회" onchange="checkSubject(this);"><label for="subject4">사회</label></td>
+      <td><input type="checkbox" name="subject" id="subject5" value="과학" onchange="checkSubject(this);"><label for="subject5">과학</label></td>
+    </tr>
+  </table>  
+  <script>
+  /**
+   * 전체 체크박스를 통한 제어
+   * 1. #checkAll
+   * 2. [name=subject]
+   */
+  function checkAllSubject() {
+    const tags = document.querySelectorAll("[name=subject]");
+    for(let i = 0; i < tags.length; i++) {
+      tags[i].checked = checkAll.checked;
+      checkSubject(tags[i]);
+    }
+  }
+
+  /**
+   * 개별체크박스 선택/해제에 따라 부모 td에 .on을 추가/삭제하는 함수
+   */
+  function checkSubject(tag) {
+    console.log(tag);
+
+    const td = tag.parentElement;
+    console.log(td);
+    if(tag.checked) {
+      td.classList.add("on");
+    }
+    else {
+      td.classList.remove("on");
+    }
+  }
+  </script>
+
+  <div id="target">Hello world</div>
+  <button onclick="target.classList.add('on');">add</button>
+  <button onclick="target.classList.remove('on');">remove</button>
+  <button onclick="target.classList.toggle('on');">toggle</button>
+  <button onclick="test1();">contains</button>
+  <script>
+  function test1() {
+    const result = target.classList.contains('on');
+    console.log(result);
+
+    alert( result ? '#target.on' : '#target');
+  }
+  </script>
+
+
+  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+</body>
+</html>

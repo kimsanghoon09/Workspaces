@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO">
+	<!-- Configuration[status] log4j 설정관련 로그 -->
+	
+	<!-- Appenders 실제 로그 출력 담당 -->
+    <Appenders>
+        <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout pattern="[%-5level] %d{yyyy/MM/dd HH:mm:ss.SSS} %c{1.}.%M - %msg%n"/>
+        </Console>
+    </Appenders>
+    
+    <!-- Loggers 로그를 수집 담당 -->
+    <Loggers>
+        <Root level="INFO">
+              <AppenderRef ref="console"/>
+        </Root>
+        <Logger name="com.sh.app" level="TRACE"></Logger>
+    </Loggers>
+</Configuration>

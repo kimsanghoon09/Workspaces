@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DOM</title>
+  <script src="js/jquery-3.7.0.js"></script>
+  <style>
+  .area {
+    background-color: lightskyblue;
+    border: 2px solid #000;
+    padding: 5px;
+    margin: 10px 0;
+    min-height: 50px;
+  }
+  </style>
+</head>
+<body>
+  <h1>DOM</h1>  
+  <button id="btn1">요소추가</button>
+  <div class="area"></div>
+  <script>
+  /**
+   * js
+   * - tag.innerHTML = "<h1>ABC</h1>";
+   * - document.createElement("h1")
+   * 
+   * jquery
+   * - $("<h1></h1>")
+   * - "<h1></h1>"
+   */
+  $(btn1).on('click', (e) => {
+    $(".area").html('<h2>이게 되네...</h2>'); // text | jquery객체 
+
+    const $h2 = $("<h2></h2>").text("와 이게 또 되네....").click(() => {
+      console.log('와  이게 된다구?...');
+    });
+    // $(".area").html($h2);
+    $(".area").append($h2); // 맨 마지막 자식요소로 추가
+
+    // 기존요소에 대해 append하면 이동
+    $(".area").append($(e.target));
+  });
+  </script>
+
+  <button id="btn2">append</button>
+  <button id="btn3">prepend</button>
+  <button id="btn4">after</button>
+  <button id="btn5">before</button>
+  <h2 id="foo"><span>A</span></h2>
+  <script>
+  /**
+   * $부모.append($자식)
+   * $자식.appendTo($부모)
+   * - 마지막 자식요소 추가
+   */
+  $(btn2).click(() => {
+    const $b = $("<span></span>").text("B").css("color", "lime"); 
+    // $(foo).append($b);
+    $b.appendTo($(foo));
+  });
+  /**
+   * $부모.prepend($자식)
+   * $자식.prependTo($부모)
+   * - 첫번째 자식요소로 추가
+   */
+  $(btn3).click(() => {
+    const $b = $("<span></span>").text("B").css("color", "lime"); 
+    // $(foo).prepend($b);
+    $b.prependTo($(foo));
+  })
+  /**
+   * $기존형제.after($새형제)
+   * $새형제.insertAfter($기존형제)
+   * - 다음 형제요소로 추가
+   */
+  $(btn4).click(() => {
+    const $b = $("<span></span>").text("B").css("color", "lime"); 
+    // $(foo).after($b);
+    $b.insertAfter($(foo));
+  });
+  /**
+   * $기존형제.before($새형제)
+   * $새형제.insertBefore($기존형제)
+   * - 이전 형제요소로 추가
+   */
+  $(btn5).click(() => {
+    const $b = $("<span></span>").text("B").css("color", "lime"); 
+    // $(foo).before($b);
+    $b.insertBefore($(foo));
+  });
+  </script>
+
+  <div class="wrapper">
+    <h2 id="bar">B</h2>
+  </div>
+  <button id="btn6">remove</button>
+  <button id="btn7">empty</button>
+  <script>
+  /**
+   * $삭제할요소.remove(): $삭제된 요소 반환
+   */
+  $(btn6).click(() => {
+    $(bar).remove();
+  });
+  /**
+   * $부모요소.empty($자식요소)
+   * - 삭제된요소를 반환하지 않고, $부모요소 다시 반환(메소드체이닝)
+   */
+  $(btn7).click(() => {
+    $(".wrapper").empty()
+  });
+  </script>
+
+
+
+  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>filter</title>
+  <script src="js/jquery-3.7.0.js"></script>
+</head>
+<body>
+  <h1>filter</h1>
+  <div class="wrapper">
+    <!-- p#p$.group1{Hello world$}*5 -->
+    <p id="p1" class="group1">Hello world1</p>
+    <p id="p2" class="group2" title="Hello world2">Hello world2</p>
+    <p id="p3" class="group1">Hello world3</p>
+    <p id="p4" class="group2" title="Hello world2">Hello world4</p>
+    <p id="p5" class="group1 group2">Hello world5</p>
+  </div>
+  <button id="btn1">filter</button>
+  <button id="btn2">first | last | eq | not</button>
+  <button id="btn3">get</button>
+  <button id="btn4">end</button>
+  <script>
+  /**
+   * method chaining 
+   * - 메소드 실행후 현재객체를 다시 반환해서 연속적으로 메소드 호출이 가능하게 함.
+   * 
+   * end(): prevObject
+   */
+  $(btn4).click(() => {
+    const $target = $("p");
+    console.log(
+      $target
+      .filter(":eq(3)").css('color', 'purple')
+      .end().css('font-size', '24px')
+    );
+  });
+
+
+  /**
+   * eq(index): jQuery객체
+   * get(index): js객체
+   */
+  $(btn3).click(() => {
+    const $target = $("p");
+    console.log($target.get(2)); // <p id="p3" class="group1">Hello world3</p>
+    console.log($target[2]); // <p id="p3" class="group1">Hello world3</p>
+    console.log($target.get()); // [p#p1.group1, p#p2.group2, p#p3.group1, p#p4.group2, p#p5.group1.group2]
+    return;
+    console.log(
+      // $target.css("color", "white").css("backgroundColor", "green")
+      $target
+      .eq(2)
+      .css({
+        color : "white",
+        "background-color" : "green"
+      })
+    );
+  });
+
+  /**
+   * first()
+   * last()
+   * eq(n)
+   * not(selector)
+   */
+  $(btn2).click(() => {
+    const $target = $("p");
+    // console.log(
+    //   $target
+    //   // .first()
+    //   // .last()  
+    //   // .eq(2)
+    //   // .not('.group1')
+    //   .css('color', 'tomato')
+    // );
+
+    // filter버젼 
+    console.log(
+      $target
+      // .filter(":first")
+      // .filter(":last")
+      // .filter(":eq(2)")
+      .filter(":not('.group1')")
+      .css('color', 'lime')
+    );
+  });
+  
+  /**
+   * filter(selector)
+   */
+  $(btn1).click(() => {
+    const $selected = $("p").filter(".group1"); // $("p.group1")
+    console.log($selected);
+    $selected.css('color', 'yellowgreen');
+    console.log(
+      $selected.filter(":even").css('text-decoration', 'underline')
+    );
+  });
+  </script>
+
+
+  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+</body>
+</html>

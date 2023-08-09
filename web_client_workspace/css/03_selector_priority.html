@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>선택자 우선순위</title>
+</head>
+<body>
+  <h1>선택자 우선순위</h1>
+  <a href="https://www.w3.org/TR/2018/REC-selectors-3-20181106/#specificity">https://www.w3.org/TR/2018/REC-selectors-3-20181106/#specificity</a>
+  
+  <!-- div.wrapper>div#box.foo[title=박스]{안녕}  -->
+  <div class="wrapper">
+    <div id="box" class="foo" title="박스" style="color : gray;">안녕</div>
+  </div>
+  <style>
+  /* * < 태그선택자 < 속성선택자/클래스선택자 < 아이디선택자 < inline속성 < !important */
+  div {color : red;}
+  .foo {color : blue !important;} /* 덮어쓰기 금지 */
+  #box {color : green;}
+
+  </style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+</body>
+</html>

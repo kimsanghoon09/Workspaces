@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>비동기처리</title>
+</head>
+<body>
+  <h1>비동기처리</h1>
+  <button id="btn1">Timer API</button>
+  <button id="btn2">DOM</button>
+  <script>
+  /**
+   * DOM Tree 요소를 추가/제거하는 작업은 비동기로 처리된다.
+   */
+  btn2.onclick = () => {
+    loadScript('js/func.js', () => abc());
+    // abc(); // Uncaught ReferenceError: abc is not defined
+  };
+
+  const loadScript = (src, callback) => {
+    const script = document.createElement('script');
+    script.src = src;
+    script.onload = () => {
+      // load핸들러안에 후처리 코드 작성
+      console.log(`${src} script load 완료!`);
+      callback();
+    };
+    document.head.append(script); // 비동기식처리 
+  }
+  
+  /**
+   * 동기식 처리 - 함수호출 후 실행결과를 기다렸다가 다음 코드 실행
+   * 비동기식 처리 - 함수호출 후 실행결과를 기다리지 않고 다음 코드 실행 
+   * - DOM관련처리, Timer API처리, 네트워크요청 등이 비동기식으로 작동함. 
+   * 
+   * 자바스크립트 실행구조 
+   * - 싱글스레드로 처리되는 언어. 
+   * - 시간이 소요되거나 종료시점을 알수없는 작업은 백그라운드로 처리를 미루었다 나중에 실행
+   * 
+   */
+  btn1.onclick = () => {
+    // 동기식 처리
+    // let result;
+    // result = foo();
+    // console.log(result);
+
+    // 비동기식처리 
+    let result2;
+    setTimeout(() => {
+      result2 = 200;
+      // 실제 비동기작업 완료후 실행코드 작성!
+      console.log(result2);
+    }, 1000);
+    console.log(result2);
+  };
+
+  const foo = () => 100;
+  </script>
+
+  <div class="box"></div>
+  <button id="btn3">@실습문제 - 배경색</button>
+  <style>
+  .box { 
+    border: 1px solid #000;
+    width: 100px;
+    height: 100px;
+    margin: 30px 0 10px;
+  }
+  </style>
+  <script>
+  /**
+   * @실습문제 - 배경색
+   * - 빨 주 노 초 파 남 보 
+   * - red orange yellow green blue navy violet
+   * - 버튼을 누르면 1초 간격으로 배경색을 변경
+   */
+  btn3.onclick = () => {
+    const box = document.querySelector(".box");
+    box.style.backgroundColor = 'red';
+    // callback hell
+    setTimeout(() => {
+      box.style.backgroundColor = 'orange';
+      setTimeout(() => {
+        box.style.backgroundColor = 'yellow';
+        setTimeout(() => {
+          box.style.backgroundColor = 'green';
+          setTimeout(() => {
+            box.style.backgroundColor = 'blue';
+            setTimeout(() => {
+              box.style.backgroundColor = 'navy';
+              setTimeout(() => {
+                box.style.backgroundColor = 'purple';
+              }, 1000);
+            }, 1000);
+          }, 1000);
+        }, 1000);
+      }, 1000);
+    }, 1000);
+
+  };
+  </script>
+
+
+
+  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+</body>
+</html>

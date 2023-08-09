@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>display</title>
+</head>
+<body>
+  <h1>display</h1>
+  <!-- 
+    display block/inline요소를 구분하는 속성. 
+    요소가 화면에 표현되는 다양한 형식을 지정 
+  -->
+  <!-- .wrapper>.box{$}*5 -->
+  <div class="wrapper">
+    <div class="box d-inline-block">1</div>
+    <div class="box d-inline-block">2</div>
+    <div class="box d-inline-block">3</div>
+    <div class="box d-inline-block">4</div>
+    <div class="box d-inline-block">5</div>
+  </div>
+  <!-- div.wrapper>span.box{$}*5 -->
+  <div class="wrapper">
+    <span class="box d-block">1</span>
+    <span class="box d-block">2</span>
+    <span class="box d-block">3</span>
+    <span class="box d-block">4</span>
+    <span class="box d-block">5</span>
+  </div>
+  <style>
+  /* block요소처럼 width/height지정가능, inline요소처럼 좌우배치 가능 */
+  .d-inline-block {
+    display: inline-block;
+  }
+  .d-inline {
+    display: inline;
+  }
+  .d-block {
+    display: block;
+  }
+  .wrapper {
+    margin: 20px;
+  }
+  .box {
+    width: 150px;
+    height: 150px;
+    background-color: azure;
+    border: 1px solid black;
+  }
+  </style>  
+
+  <h2>요소감추기</h2>
+  <!-- (div.box+hr)*3 -->
+  <div class="box d-none"></div>
+  <hr>
+  <div class="box v-hidden"></div>
+  <hr>
+  <div class="box opacity-0"></div>
+  <hr>
+  <style>
+  .d-none {display: none;}
+  .v-hidden {visibility: hidden;}
+  .opacity-0 {opacity: 0;}
+  .opacity-0:hover {opacity: 1;}
+  /* .d-none:hover {display: block;} */
+  /* .v-hidden:hover {visibility: visible;} */
+  </style>
+
+
+
+
+
+
+
+
+
+
+  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+</body>
+</html>

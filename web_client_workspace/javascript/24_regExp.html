@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>정규표현식</title>
+  <style>
+  .area {
+    background-color: lightgray;
+    border: 2px solid #000;
+    padding: 5px;
+    margin: 10px 0;
+    min-height: 50px;
+  }
+  </style>
+</head>
+<body>
+  <h1>정규표현식</h1>
+  <!-- 
+    Regular Expression 
+    - 특정규칙(패턴)을 가진 문자열에 대한 표현식 
+    - 검색, 유효성검사, 문자열대체 등에 사용. 
+    - 프로그래밍언어 독립적.
+    - 간결하게 표현가능하지만, 문법자체의 숙지는 어려운 편. 
+  -->
+  <button id="btn1">정규표현식객체</button>
+  <script>
+  btn1.addEventListener('click', () => {
+    // 정규표현식 - 숫자 하나를 의미 
+    const re1 = /[0-9]/gi;
+    const re2 = new RegExp(/[0-9]/gi);
+    const re3 = new RegExp("[0-9]", "gi");
+    console.dir(re1);
+    console.dir(re2);
+    console.dir(re3);
+
+    // RegExp#test(str) : boolean
+    console.log(re1.test("abcde123"));
+    console.log(re1.test("abcde"));
+
+    // RegExp#exec(str) : [] 매칭결과 
+    console.log(re1.exec("abcde123"));
+
+    // String#match(re) : [] 매칭결과 
+    console.log("abcde123".match(re1)); // ['1', '2', '3']
+
+    // String#search(re) : number 매칭된 첫번째 인덱스반환
+    console.log("abcde123".search(re1)); // 5 
+
+    // String#replace(re) : string 변환된 문자열 반환
+    console.log("abcde123".replace(re1, "*")); // abcde***
+
+    // String#split(re) : [] 구분자로 문자열 쪼개서 배열반환
+    console.log("a0b1c2d3e".split(re1)); // ['a', 'b', 'c', 'd', 'e']
+
+  });
+  </script>
+  <br><br>
+  <button id="btn2">대체문자 $&</button>
+  <div class="area" id="area2"></div>
+  <script>
+  /**
+   * 정규표현식 매칭결과에 해당하는 문자
+   */
+  btn2.addEventListener('click', () => {
+    const str = 'javascript jquery ajax css sass'; 
+    area2.innerHTML = `${str.replace(/as/, '<mark>$&</mark>')}<br>`;
+    area2.innerHTML += `${str.replace(/as/g, '<mark>$&</mark>')}<br>`;
+    area2.innerHTML += `${str.replace(/as/g, (str) => '<mark>' + str + '</mark>')}<br>`;
+  });
+  </script>
+
+  <button id="btn3">flag</button>
+  <div class="area" id="area3"></div>
+  <script>
+  /**
+   * flag 정규표현식 실행옵션 
+   * - g global 전역비교수행. g가 없다면 매칭된 1건만 처리.
+   * - i ignore 대소문자 무시. 
+   * - m multiline 여러줄 문자열인 경우, 행단위 비교수행
+   */
+  btn3.addEventListener('click', () => {
+    const str = 'Javascript jQuery Ajax sass';
+    area3.innerHTML = `${str.replace(/a/, '<mark>$&</mark>')}<br>`;
+    area3.innerHTML += `${str.replace(/a/g, '<mark>$&</mark>')}<br>`;
+    area3.innerHTML += `${str.replace(/a/gi, '<mark>$&</mark>')}<br>`;
+  });
+  </script>
+
+  <button id="btn4">anchor</button>
+  <div class="area" id="area4"></div>
+  <script>
+  /**
+   * anchor 
+   * ^ 문자열의 시작
+   * $ 문자열의 끝
+   */
+  btn4.addEventListener('click', () => {
+    const str = 'Javascript xxx jQuery ajax';
+    area4.innerHTML = `${str.replace(/j/gi, '<mark>$&</mark>')}<br>`;
+    area4.innerHTML += `${str.replace(/^j/gi, '<mark>$&</mark>')}<br>`;
+    area4.innerHTML += `${str.replace(/x/gi, '<mark>$&</mark>')}<br>`;
+    area4.innerHTML += `${str.replace(/x$/gi, '<mark>$&</mark>')}<br>`;
+
+    const str2 = `Javascript
+xxx
+jQuery
+ajax`;
+    area4.innerHTML += `${str2.replace(/^j/gim, '<mark>$&</mark>')}<br>`;
+    area4.innerHTML += `${str2.replace(/x$/gim, '<mark>$&</mark>')}<br>`;
+  });
+  </script>
+
+  <button id="btn5">.</button>
+  <script>
+  /**
+   * . 임의의 한문자 
+   * 모든 문자 (공백특수문자는 포함, 개행문자는 제외)
+   * 
+   */
+  btn5.addEventListener('click', () => {
+    const re = /^a.b/;
+    console.log('acb', re.test('acb')); // true 
+    console.log('acba', re.test('acbaaaaaaaaaaaaaaa')); // true 
+    console.log('ab', re.test('ab')); // false 
+    console.log('a b', re.test('a b')); // true
+    console.log('a-b', re.test('a-b')); // true
+    console.log('a\nb', re.test('a\nb')); // false
+
+    // 다음결과가 나올수 있는 정규식 작성 - in다음 한글자가 나오고 끝나는 문자열
+    const re2 = /in.$/g;
+    console.log(re2.test("going")); // true
+    console.log(re2.test("I'm in.")); // true
+    console.log(re2.test("inner")); // false
+    console.log(re2.test("holidayin")); // false
+    
+    console.log('====================================');
+    console.log(re2.test("going")); // true
+    console.log(re2.test("I'm in.")); 
+    console.log(/in.$/g.test("I'm in."));
+    console.log('====================================');
+  });
+  </script>
+  
+  <br><br>
+
+  <button id="btn6">[]</button>
+  <div class="area" id="area6"></div>
+  <script>
+  /**
+   * []
+   * - 한글자의 값목록 
+   * - 아스키코드(유니코드)에 근거해 범위를 제시 (1-0 => 0-9, A-z -> A-Za-z)
+   * - [^] carot을 사용하면 해당문자 제외를 의미 
+   * - [A-Z^Q] X
+   * - [ABCDEFGHIJKLMNOPRSTUVWXYZ] O
+   */
+  btn6.addEventListener('click', () => {
+    const str = "Javascript jQuery Ajax 1234567890 안녕 가나다라마바사 뷃궭 ㄱㄴㄷ ㅏㅔㅑㅐㅜ";
+
+    area6.innerHTML = `${str.replace(/[aj]/g, '<mark>$&</mark>')}<br>`;
+    area6.innerHTML += `${str.replace(/[aj]/gi, '<mark>$&</mark>')}<br>`;
+    area6.innerHTML += `${str.replace(/[AaJj]/g, '<mark>$&</mark>')}<br>`;
+    area6.innerHTML += `${str.replace(/[^aj]/g, '<mark>$&</mark>')}<br>`;
+    area6.innerHTML += `${str.replace(/[ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz]/g, '<mark>$&</mark>')}<br>`;
+    area6.innerHTML += `${str.replace(/[A-Za-z]/g, '<mark>$&</mark>')}<br>`;
+    area6.innerHTML += `${str.replace(/[0123456789]/g, '<mark>$&</mark>')}<br>`;
+    area6.innerHTML += `${str.replace(/[0-9]/g, '<mark>$&</mark>')}<br>`;
+    area6.innerHTML += `${str.replace(/[가-힣]/g, '<mark>$&</mark>')}<br>`;
+    area6.innerHTML += `${str.replace(/[가-힣ㄱ-ㅎㅏ-ㅣ]/g, '<mark>$&</mark>')}<br>`;
+
+    // 알파벳소문자로 시작하는 문자열인지 검사하는 정규식 
+    const re1 = /^[a-z]/;
+    console.log(re1.test("abcde")); // true
+    console.log(re1.test("aㅏㅏㅏㅏㅏㅏ")); // true
+    console.log(re1.test("가나다")); // false
+    console.log(re1.test("123abc")); // false
+    console.log(re1.test("Aㅏㅏㅏㅏㅏㅏ")); // false
+    console.log(re1.test("ㄱaaaaaaaa")); // false
+
+    // 숫자4자리인지 검사하는 정규식
+    console.log("---------------------------------")
+    const re2 = /^[0-9][0-9][0-9][0-9]$/;
+    console.log(re2.test("1234")); // true
+    console.log(re2.test("123456")); // false
+    console.log(re2.test("12ab")); // false
+    console.log(re2.test("369")); // false
+  });
+  </script>
+  
+  <button id="btn7">단축문자</button>
+  <div class="area" id="area7"></div>
+  <script>
+  /**
+   * 단축문자 : 문자하나에 대한 표현식
+   * \w 영문자/숫자/_
+   * \d 숫자
+   * \s 공백/개행/탭문자 
+   * 
+   * \W 영문자/숫자/_가 아닌 문자 
+   * \D 숫자가 아닌 문자
+   * \S 공백/개행/탭문자가 아닌 문자
+   * 
+   */
+  btn7.addEventListener('click', () => {
+    const str = `ABCDE efghijkl 1234567890 _!@#$%^&*()+;: 한글
+가 나 다 
+      라 마 바 사`;
+    area7.innerHTML = `${str.replace(/\w/g, '<mark>$&</mark>')}<br>`;
+    area7.innerHTML += `${str.replace(/\W/g, '<mark>$&</mark>')}<br>`;
+    area7.innerHTML += `${str.replace(/\d/g, '<mark>$&</mark>')}<br>`;
+    area7.innerHTML += `${str.replace(/\D/g, '<mark>$&</mark>')}<br>`;
+    area7.innerHTML += `${str.replace(/\s/g, '<mark>$&</mark>')}<br>`;
+    area7.innerHTML += `${str.replace(/\S/g, '<mark>$&</mark>')}<br><br>`;
+
+    area7.innerHTML += `${str.replace(/[A-Za-z0-9_]/g, '<mark>$&</mark>')}<br>`;
+    area7.innerHTML += `${str.replace(/[^A-Za-z0-9_]/g, '<mark>$&</mark>')}<br>`;
+    area7.innerHTML += `${str.replace(/[0-9]/g, '<mark>$&</mark>')}<br>`;
+    area7.innerHTML += `${str.replace(/[^0-9]/g, '<mark>$&</mark>')}<br>`;
+    area7.innerHTML += `${str.replace(/[ \n\t]/g, '<mark>$&</mark>')}<br>`;
+    area7.innerHTML += `${str.replace(/[^ \n\t]/g, '<mark>$&</mark>')}<br><br>`;
+
+  });
+  </script>
+
+  <button id="btn8">() |</button>
+  <div class="area" id="area8"></div>
+  <script>
+  /**
+   * () 그룹핑
+   * | or연산자
+   */
+  btn8.addEventListener('click', () => {
+    const str = '월요일에는 월요병, 화가 부르르르 화요일 홧병, 수수술한잔 하는 수요일, 목이 컥~ 목요일, 금방 오지 않는 금요일, 하지만 오늘은 금요일';
+    area8.innerHTML = `${str.replace(/(수요일|목요일|금요일)/g, "<mark>$&</mark>")}<br>`;
+    area8.innerHTML += `${str.replace(/[수목금]요일/g, "<mark>$&</mark>")}<br>`;
+  });
+  </script>
+
+  <button id="btn9">escaping</button>
+  <div class="area" id="area9"></div>
+  <script>
+  /**
+   * escaping
+   * - 역슬래시와 와일드카드의 조합으로 해당문자를 문자그대로 사용이 가능하다. 
+   * - []안에서는 escaping할 필요 없음(\만 \\로 escaping)
+   */
+  btn9.addEventListener('click', () => {
+    const str = "3.4$";
+    area9.innerHTML = `${str.replace(/\$/, '<mark>$&</mark>')}<br>`;
+    area9.innerHTML += `${str.replace(/\./g, '<mark>$&</mark>')}<br>`;
+    area9.innerHTML += `${str.replace(/[$]/g, '<mark>$&</mark>')}<br>`;
+    area9.innerHTML += `${str.replace(/[.]/g, '<mark>$&</mark>')}<br>`;
+  });
+  </script>
+
+  <button id="btn10">수량자 * + ?</button>
+  <button id="btn10-1">수량자 {}</button>
+  <div class="area" id="area10"></div>
+  <script>
+  /**
+   * 수량자 {}
+   * a{5} a가 5개
+   * a{2,5} a가 2개이상 5개이하
+   * a{2,} a가 2개이상 
+   * 
+   * // a{,5} 문법 없음
+   * 
+   */
+  document.querySelector("#btn10-1").addEventListener('click', () => {
+    const str = "aa aba abba abbba abbbba";
+    area10.innerHTML = `${str.replace(/ab{2}a/g, '<mark>$&</mark>')}<br>`;
+    area10.innerHTML += `${str.replace(/ab{1,3}a/g, '<mark>$&</mark>')}<br>`;
+    area10.innerHTML += `${str.replace(/ab{1,}a/g, '<mark>$&</mark>')}<br><br>`;
+
+    area10.innerHTML += `${str.replace(/ab*a/g, '<mark>$&</mark>')}<br>`;
+    area10.innerHTML += `${str.replace(/ab{0,}a/g, '<mark>$&</mark>')}<br>`;
+    area10.innerHTML += `${str.replace(/ab+a/g, '<mark>$&</mark>')}<br>`;
+    area10.innerHTML += `${str.replace(/ab{1,}a/g, '<mark>$&</mark>')}<br>`;
+    area10.innerHTML += `${str.replace(/ab?a/g, '<mark>$&</mark>')}<br>`;
+    area10.innerHTML += `${str.replace(/ab{0,1}a/g, '<mark>$&</mark>')}<br>`;
+
+    // 정규식 - 숫자4자리인지 검사
+    // const re = /^[0-9]{4}$/;
+    // const re = /^\d{4}$/;
+    const re = /^[\d]{4}$/;
+    console.log(re.test("1234")); // true
+    console.log(re.test("abcd")); // false
+    console.log(re.test("ab12")); // false
+  });
+
+  /**
+   * 수량자 Quantifier
+   * - 직전문자에 대한 수량 표현식
+   * 
+   * a* a가 0개이상
+   * a+ a가 1개이상
+   * a? a가 0, 1개
+   */
+  btn10.addEventListener('click', () => {
+    const str = "aabc abc bc";
+    area10.innerHTML = `${str.replace(/a*b/g, '<mark>$&</mark>')}<br>`;
+    area10.innerHTML += `${str.replace(/a+b/g, '<mark>$&</mark>')}<br>`;
+    area10.innerHTML += `${str.replace(/a?b/g, '<mark>$&</mark>')}<br>`;
+
+    // 정규식작성 - a로 시작하고 z로 끝나는 문자열인지 검사 
+    const re = /^a.*z$/;
+    console.log(re.test("abcdefgxyz")); // true
+    console.log(re.test("a     z")); // true
+    console.log(re.test("az")); // true
+    console.log(re.test("a123z")); // true
+    console.log(re.test("abc")); // false
+    console.log(re.test("xyz")); // false
+
+    // 정규식 작성 - 영문자로만 이루어진 문자열인지 검사 
+    console.log("---------------------------");
+    const re2 = /^[A-Za-z]+$/;
+    console.log(re2.test("abcdefg")); // true
+    console.log(re2.test("x")); // true
+    console.log(re2.test("")); // false
+    console.log(re2.test("abcded1xyz")); // false
+    console.log(re2.test("hello안녕byebye")); // false
+    console.log(re2.test("a k")); // false
+
+  });
+  </script>
+
+  <button id="btn11">역참조</button>
+  <div class="area" id="area11"></div>
+  <script>
+  /**
+   * 역참조 Back Reference
+   * - "(abc)def(ghi)"로 그룹핑후 \1, \2와 같이 참조 가능 
+   * - String#replace에서는 $1, $2와 같이 참조 
+   * 
+   * hello
+   */
+  btn11.addEventListener('click', () => {
+    const str = "hello123 hello456 hello789";
+    area11.innerHTML = `${str.replace(/hello(\d)(\d+)/g, "$1안녕$2")}<br>`;
+
+    const text = `script java script type script x`;
+    // javascript typescript xscript
+    area11.innerHTML += `${text.replace(/(script) (\w+)/g, "$2$1")}<br>`;
+
+    // 동일한 문자를 연속으로 2번이상 반복되는지 여부 
+    const re = /(.)\1+/;
+    console.log(re.test("abcde")); // false
+    console.log(re.test("aabcd")); // true
+    console.log(re.test("1122")); // true
+  });
+  </script>
+
+
+  <button id="btn12">Look Around</button>
+  <div class="area" id="area12"></div>
+  <script>
+  /**
+   * Look Around 탐색 
+   * - 조회만 되고, 최종매칭에는 포함되지 않음. 
+   * - 복합검사에 주로 사용
+   * 
+   * - Look Ahead 전방탐색 
+   *   a(?=b) b가 뒤따르는 a를 탐색
+   *   a(?!b) b가 뒤따르지 않는 a를 탐색
+   * 
+   * - Look Behind 후방탐색 
+   *   (?<=b)a b가 앞에 있는 a를 탐색 
+   *   (?<!b)a b가 앞에 없는 a를 탐색 
+   * 
+   */
+  btn12.addEventListener('click', () => {
+    const str1 = "hello world hello Tom hello Jane hello world";
+    area12.innerHTML = `${str1.replace(/hello(?= world)/g, '<mark>$&</mark>')}<br>`;
+    area12.innerHTML += `${str1.replace(/hello(?! world)/g, '<mark>$&</mark>')}<br>`;
+
+    const str2 = "hello world t world lotte world usim world hello world";
+    area12.innerHTML += `${str2.replace(/(?<=hello )world/g, '<mark>$&</mark>')}<br>`;    
+    area12.innerHTML += `${str2.replace(/(?<!hello )world/g, '<mark>$&</mark>')}<br>`;    
+  });
+  </script>
+
+  <fieldset>
+    <legend>비밀번호 유효성 검사</legend>
+    <input type="password" name="password" id="password" placeholder="비밀번호">
+    <input type="checkbox" id="visible">
+    <label for="visible">👓</label>
+    <button id="btn-password-validation">체크</button>
+  </fieldset>
+  <script>
+  visible.onchange = (e) => {
+    const checked = e.target.checked;
+    password.type = checked ? 'text' : 'password';
+  };
+  /**
+   * 비밀번호 정책 
+   * - 8~12자리 
+   * - 숫자, 영문자, 특수문자(!&/\*@)가 하나이상 포함해야 함.
+   */
+
+  document.querySelector("#btn-password-validation").addEventListener('click', (e) => {
+    const value = password.value;
+    console.log(value);
+
+    // 복합정규식 
+    const re = /^(?=.*\d)(?=.*[A-Za-z])(?=.*[!&/\\*@]).{8,12}$/;
+    if(!re.test(value)){
+      alert("비밀번호는 8~12자리, 숫자/영문자/특수문자를 각각 하나이상 포함해야 합니다.");
+    }
+    else {
+      alert('🎈🎆🎇🧨✨🎉🎊🎃');
+    }
+    return;
+
+    const validations = [
+      {re : /^.{8,12}$/, msg : '비밀번호는 8~12자리여야 합니다.'},
+      {re : /\d/, msg : '비밀번호는 숫자를 하나이상 포함해야합니다.'},
+      {re : /[a-z]/i, msg : '비밀번호는 영문자를 하나이상 포함해야합니다.'},
+      {re : /[!&/\\*@]/, msg : '비밀번호는 특수문자 !&/\\*@ 를 하나이상 포함해야합니다.'},
+    ];
+
+    // 유효성검사 하나에 실패하면 중지
+    // every - break/continue기능이 있는 forEach
+    // - return false -> break
+    // - return true -> continue 
+    const result = validations.every(({re, msg}) => {
+      if(!re.test(value)){
+        alert(msg);
+        return false; // break
+      }
+      return true; // continue
+    });
+
+    if(result)
+      alert('🎈🎆🎇🧨✨🎉🎊🎃');
+
+    // // 1. 자리수 검사 
+    // if(!/^.{8,12}$/.test(value)){
+    //   alert('비밀번호는 8~12자리여야 합니다.');
+    //   return;
+    // }
+    // // 2. 숫자포함여부 검사
+    // if(!/\d/.test(value)){
+    //   alert('비밀번호는 숫자를 하나이상 포함해야합니다.');
+    //   return;
+    // }
+    // // 3. 영문자 포함여부 검사
+    // if(!/[a-z]/i.test(value)){
+    //   alert('비밀번호는 영문자를 하나이상 포함해야합니다.');
+    //   return;
+    // }
+    // // 4. 특수문자 포함여부 검사 
+    // if(!/[!&/\\*@]/.test(value)){
+    //   alert('비밀번호는 특수문자 !&/\\*@ 를 하나이상 포함해야합니다.');
+    //   return;
+    // }
+    // alert('🎈🎆🎇🧨✨🎉🎊🎃');
+  });
+  </script>
+
+
+
+  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+</body>
+</html>

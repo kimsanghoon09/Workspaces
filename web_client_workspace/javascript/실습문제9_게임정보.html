@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>@실습문제.게임정보</title>
+  <style>
+  table {border: 1px solid #000; border-collapse: collapse; margin-top: 10px;}
+  th, td {border: 1px solid #000; text-align: center; min-width: 200px; padding: 5px;}
+  </style>
+  
+</head>
+<body>
+  <h1>@실습문제.게임정보</h1>
+  <fieldset>
+    <legend>@실습문제 : 게임</legend>
+    <button onclick="start();">게임시작</button>
+    <button onclick="end();">게임종료</button>
+    <table>
+      <tbody>
+        <tr>
+          <th>게임명</th>
+          <td id="gameTitle" class="info"></td>
+        </tr>
+        <tr>
+          <th>시작시각</th>
+          <td id="gameStart" class="info"></td>
+        </tr>
+        <tr>
+          <th>소요시간</th>
+          <td id="gameUptime" class="info"></td>
+        </tr>
+        <tr>
+          <th>종료시각</th>
+          <td id="gameEnd" class="info"></td>
+        </tr>
+      </tbody>
+    </table>
+  </fieldset>
+  
+  <script src="js/game.js"></script>
+</body>
+</html>

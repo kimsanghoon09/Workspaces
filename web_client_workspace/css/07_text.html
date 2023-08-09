@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>텍스트</title>
+</head>
+<body>
+  <h1>텍스트</h1>
+  <!-- div.container>(p#p$>lorem)*3 -->
+  <div class="container">
+    <p id="p1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores fugiat itaque neque, deleniti suscipit quisquam nisi, velit exercitationem molestiae minus totam soluta. Nihil qui praesentium deleniti iste, ipsum quisquam soluta.</p>
+    <p id="p2">Molestiae est suscipit nobis quidem sit assumenda ratione sequi velit alias dolorem dolores beatae et, modi commodi odio provident saepe ducimus minima dignissimos optio a rerum? Sunt impedit aliquam dolorem.</p>
+    <p id="p3"><del>Rem </del> id quo recusandae modi eaque assumenda. Dolore consectetur, ab velit error quaerat ducimus porro quos enim rem tempore. Voluptatem aliquid quibusdam accusantium minima voluptates aperiam eveniet. Quae, mollitia modi!</p>
+    <p id="p4">
+      <a href="https://naver.com">네이버</a>
+    </p>
+  </div>
+  <style>
+  #p1 {
+    /* <ins>태그만 스크린리더에 의해 강조 해석될 수 있다. */
+    text-decoration: underline 2px red wavy;
+  }
+  #p2 {
+    /* <del>태그만 스크린리더에 의해 해석될 수 있다. */
+    text-decoration: line-through;
+  }
+  #p3 {
+    text-decoration: overline;
+  }
+  #p4 a {
+    text-decoration: none;
+  }
+  #p4 a:hover {
+    text-decoration: underline;
+  }
+  </style>
+
+  <h2 id="title">text-shadow</h2>
+  <!-- div.bg>span#html$.html-shadow*4 -->
+  <div class="bg">
+    <span id="html1" class="html-shadow">HTML5</span>
+    <br>
+    <span id="html2" class="html-shadow">HTML5</span>
+    <br>
+    <span id="html3" class="html-shadow">HTML5</span>
+    <br>  
+    <span id="html4" class="html-shadow">HTML5</span>
+  </div>
+  <style>
+  #title {
+    /* text-shadow: 가로offset 세로offset 번짐 color */
+    text-shadow: 3px 3px 7px red;
+  }
+
+  .bg {
+    background-color: #000;
+    padding: 50px;
+    color: #fff;
+  }
+  /* 공통내용 클래스 속성 */
+  .html-shadow {
+    font-size: 100px;
+    font-weight: bold;
+  }
+  /* 개별내용 아이디 속성 */
+  #html1 {color: orangered; text-shadow: 5px 5px orange;}
+  #html2 {text-shadow: 0 1px 20px #fff;}
+  #html3 {text-shadow: 1px 1px 20px #6f0;}
+  #html4 {
+    color: #000; 
+    text-shadow: 0px 0px 4px #ccc,
+                0px -5px 4px #ff3,
+                2px -10px 6px #fd3,
+                -2px -15px 11px #f80,
+                2px -19px 18px #f20;
+
+  }
+  </style>
+
+  <h2>줄바꿈 | overflow</h2>
+  <!-- div.container>p>lorem -->
+  <div class="container">
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui modi, consectetur sint eligendi architecto mollitia quia aspernatur a cumque quisquam et sed, nam vitae sequi sit iste tempore reprehenderit expedita.</p>
+  </div>
+  <style>
+  .container {
+    border: 2px solid black;  
+    /* 부모경계 바깥의 자식요소를 감춤 */
+    /* overflow: hidden;  */
+    /* overflow: scroll; */
+    overflow-x: scroll;
+  }
+  .container p {
+    white-space: nowrap;
+  }
+  </style>
+
+
+
+
+  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+</body>
+</html>

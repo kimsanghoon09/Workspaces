@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>jQuery_03_method_실습</title>
+	<!--최신 jquery cdn 사용하기-->
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>    
+</head>
+<body>
+    <h2>Method1</h2>
+    <script>
+        function add(){
+            var title = $("input:eq(0)").val();
+            var content = $("input:eq(1)").val();
+            var owner = $("input:eq(2)").val();
+            
+            // 마지막 tr태그의 다음 형제요소로 추가
+            // $("tr").last().after("<tr><td>"+title+"</td>"+"<td>"+content+"</td>"+"<td>"+owner+"</td></tr>");
+
+            // table태그의 마지막 자식요소로 추가
+            const $tr = $("<tr></tr>");
+            $tr.html(`
+                <td>${title}</td>
+                <td>${content}</td>
+                <td>${owner}</td>
+            `);
+            $("table").append($tr);
+
+            // 초기화
+            $("input:text").val(''); // setter 모든 요소에 대해서 작동
+        }
+        </script>
+    
+    제목 : <input type="text" name="title" /> <br />
+    내용 : <input type="text" name="content" /><br />
+    작성자 : <input type="text" name="owner" /><br /> <br>
+    <input type="button" value="테이블에 추가" onclick="add()" /> <br><br>
+    <table border="1">
+        <tr>
+            <td> 제목 </td>
+            <td> 내용 </td>
+            <td> 작성자 </td>
+        </tr>
+    </table>
+
+    <h2>Method2</h2>
+    <script>
+        var idx = 0;
+        /**
+         * target
+         * - before(Element | html) 이전 형제요소로 추가
+         * - prepend(Element | html) 맨처음 자식요소로 추가
+         * - append(Element | html) 맨마지막 자식요소로 추가
+         * - after(Element | html) 다음 형제 요소로 추가
+         */
+        function addFile(){
+            $(".file-wrapper input").last().after("<input type='file' name='f"+ ++idx +"'/>");
+        }
+        function delFile(){
+            // input:file의 최소개수는 1개로 제한.
+            if($(".file-wrapper input:file").length > 1)
+                $(".file-wrapper input").last().remove();
+        }
+        </script>
+    
+    <div>
+        <div class="file-wrapper" style="margin-bottom: 20px;">
+            <input type="file" name="f0"/>  &nbsp;&nbsp;
+        </div>
+        <input type="button" value="추가" onclick="addFile()" />&nbsp;
+        <input type="button" value="삭제" onclick="delFile()" />
+    </div>
+
+</body>
+</html>

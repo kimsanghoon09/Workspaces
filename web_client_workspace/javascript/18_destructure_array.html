@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>구조분해할당 - 배열</title>
+</head>
+<body>
+  <h1>구조분해할당 - 배열</h1>
+  <!-- 비구조화할당 -->
+  <button onclick="test1();">구조분해할당</button>
+  <button onclick="test2();">매개변수부 | 리턴값</button>
+  <button onclick="test3();">@실습문제 - 산술연산</button>
+  <button onclick="test4();">@실습문제 - 학생점수</button>
+  <script>
+  /**
+   * @실습문제 - 학생점수
+   * - 주어진 csv데이터에서 학생명, 점수를 각각 추출해 학생별 평점을 구하세요.
+   * - 클래스와 구조분해할당을 적절히 활용해서 풀이 
+   * 
+   * - 홍길동(남) 평균 80.0점
+   * - 신사임담(여) 평균 79.3점
+   * - 전봉준(남) 평균 70.7점
+   */
+  const test4 = () => {
+    const data = "홍길동,남,90,80,70|신사임당,여,88,100,50|전봉준,남,55,80,77";
+    const students = [];
+
+    // 2. 데이터 parsing해서 Student객체 생성
+    const temp = data.split('|');
+    // console.log(temp); // ["홍길동,남,90,80,70", "신사임당,여,88,100,50", "전봉준,남,55,80,77"]
+    temp.forEach((str) => {
+      const temp2 = str.split(",");
+      console.log(temp2);
+      const [name, gender, ..._scores] = temp2;
+      // 홍길동 남 ['90', '80', '70']
+      const scores = _scores.map((str) => Number(str)); // [90, 80, 70]
+      // console.log(name, gender, scores);
+      // 3. Student객체 배열에 추가
+      students.push(new Student(name, gender, scores));
+    });
+    console.log(students);
+    
+    // 4. 배열 순회하면서 출력(평점계산) toString, getAvg
+    students.forEach((student) => console.log(`${student}`));
+
+  };
+
+  // 1. Student 클래스 설계
+  class Student {
+    constructor(name, gender, [kor, eng, math]) {
+      this.name = name;
+      this.gender = gender;
+      this.kor = kor;
+      this.eng = eng;
+      this.math = math;
+    }    
+    toString() {
+      return `${this.name}(${this.gender}) 평점 ${this.getAvg()}점`;
+    }
+    getAvg() {
+      return Math.round((this.kor + this.eng + this.math) / 3 * 10) / 10;
+    }
+  }
+
+  /**
+   * @실습문제 - 산술연산 
+   * - 두개의 숫자를 calc에 전달해서 합, 차, 곱, 몫, 나머지 결과를 한번에 반환하기
+   */
+  const test3 = () => {
+    const [a, b, c, d, e] = calc([10, 3]); // 매개변수부, 리턴값에서 구조분해할당 사용하기 
+    console.log(a, b, c, d, e); // 13, 7, 30, 3, 1
+  };
+  
+  const calc = ([a, b]) => [a + b, a - b, a * b, Math.floor(a / b), a % b];
+
+  /**
+   * 매개변수부에서 구조분해할당
+   * 리턴값의 구조분해할당
+   */
+  const test2 = () => {
+    const arr = [1, 2, 3];
+    process(arr);
+    // process(1, 2, 3); // Uncaught TypeError: number 1 is not iterable (cannot read property Symbol(Symbol.iterator))
+    const [a, b, ...c] = process2();
+    console.log(a, b, c);
+  };
+
+  const process2 = () => ['가', '나', '다', '라'];
+
+  const process = ([a, b, c]) => {
+    // console.log(arr[0] + arr[1] - arr[2]);
+    console.log(a + b - c);
+  };
+
+  /**
+   * 구조분해할당 Destructuring Assignment 
+   * - 배열/객체의 요소를 변수에 쉽게 대입하는 문법 
+   */
+  const test1 = () => {
+    const arr = [1, 2, 3];
+    // const a = arr[0];
+    // const b = arr[1];
+    // const c = arr[2];
+    const [a, b, c] = arr;
+    console.log(a, b, c);
+
+    const [d, e] = arr;
+    console.log(d, e); // 0번지, 1번지 값만 가져오기 
+
+    const [, f, g] = arr;
+    console.log(f, g);
+
+    const [h, i, j = 999, k, l = 100] = arr;
+    console.log(h, i, j, k, l); // 1 2 3 undefined 100 
+
+    // 변수 값교환 
+    let m = 10;
+    let n = 20;
+    [m, n] = [n, m];
+    console.log(m, n);
+
+    // 나머지 파라미터 (마지막에 딱 한번만 사용)
+    // 전개연산자 (여러번 사용이 가능)
+    let arr2 = [6, 7, 8, 9, 10];
+    // let [o, p, ...q] = [1, 2, 3, 4, 5];
+    let [o, p, ...q] = [...arr, 4, 5, ...arr2];  // [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]                    
+    console.log(o, p, q); // 1 2 [3, 4, 5, 6, 7, 8, 9, 10] 
+
+    // 기존변수에 값할당
+    let r = 1;
+    let s = 2;
+    [r, s] = [10, 20, 30];
+    console.log(r, s);
+
+  };
+  </script>
+  
+</body>
+</html>

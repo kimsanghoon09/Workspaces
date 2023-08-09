@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>직접 jQuery 만들기</title>
+  <script src="js/352query-1.0.0.js"></script>
+</head>
+<body>
+  <h1>직접 jQuery 만들기</h1>
+  <!-- div.wrapper>p#p${Hello World}*5 -->
+  <div class="wrapper">
+    <p id="p1">Hello World1</p>
+    <p id="p2">Hello World2</p>
+    <p id="p3">Hello World3</p>
+    <p id="p4">Hello World4</p>
+    <p id="p5">Hello World5</p>
+  </div>
+  <button id="btn1">352Query객체</button>
+  <button id="btn2">html</button>
+  <script>
+  btn2.onclick = () => {
+    console.log($("p").html()); // gettter
+    $("p")
+      .html("안녕")
+      .css('color', 'tomato');
+  }
+
+
+  /**
+   * 352Query
+   * - $ 함수로 선언 
+   * - 선택자를 인자로 해서 352Query객체반환
+   * - 인덱스로 태그요소에 접근할 수 있어야 함.
+   */
+  btn1.onclick = () => {
+    const $p3 = $("#p3");
+    $p3.css('color', 'red');
+    console.log($p3);
+    
+    const $p = $("p");
+    console.log($p);
+    $p.css('textDecoration', 'underline');
+  };
+  </script>
+  
+</body>
+</html>

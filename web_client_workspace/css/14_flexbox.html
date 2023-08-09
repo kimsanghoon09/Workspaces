@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>flexbox</title>
+</head>
+<body>
+  <h1>flexbox</h1>
+  <!-- 
+    container 부모요소
+      - display: flex | inline-flex
+      - flex-direction : row(기본값) | column
+      - justify-content : 메인축설정
+      - align-items : 크로스축설정
+      - flex-wrap : nowrap(기본값) | wrap 자식요소 줄바꿈 여부
+      
+      - align-content : 메인축이 여러개인 경우 크로스축 설정
+
+    item 자식요소 
+  -->
+  <!-- ul.test>li{$}*10 -->
+  <ul class="test">
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+    <li>4</li>
+    <li>5</li>
+    <li>6</li>
+    <li>7</li>
+    <li>8</li>
+    <li>9</li>
+    <li>10</li>
+  </ul>
+  <style>
+  ul.test {
+    padding: 0;
+    list-style: none;
+    border: 3px solid #000;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around; /* 메인축(row) */
+    align-items: center;  /* 크로스축(column) */
+    flex-wrap: wrap; /* 줄바꿈 여부 */
+    height: 500px;
+    align-content: center; /* 메인축이 2개 이상인경우 크로스축방향 배치 */
+  }
+  ul.test li {
+    border: 3px solid orangered;
+    width: 50px;
+    /* height: 50px; */
+  }
+  </style>
+
+  <ul class="img-container">
+    <li><img src="../sample/image/flower1.PNG" alt=""></li>
+    <li><img src="../sample/image/flower2.PNG" alt=""></li>
+    <li><img src="../sample/image/flower3.PNG" alt=""></li>
+    <li><img src="../sample/image/flower4.PNG" alt=""></li>
+    <li><img src="../sample/image/flower5.PNG" alt=""></li>
+    <li><img src="../sample/image/flower1.PNG" alt=""></li>
+    <li><img src="../sample/image/flower2.PNG" alt=""></li>
+    <li><img src="../sample/image/flower3.PNG" alt=""></li>
+    <li><img src="../sample/image/flower4.PNG" alt=""></li>
+    <li><img src="../sample/image/flower5.PNG" alt=""></li>
+  </ul>
+  <style>
+  ul.img-container {
+    padding: 0;
+    list-style: none;
+    display: flex;
+    border: 3px solid #000;
+    background-color: lightgray;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .img-container img {
+    width: 150px;
+    height: 105px;
+    margin: 5px;
+  }
+  </style>
+
+
+  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+</body>
+</html>

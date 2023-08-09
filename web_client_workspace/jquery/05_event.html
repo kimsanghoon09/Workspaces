@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>event</title>
+  <script src="js/jquery-3.7.0.js"></script>
+  <style>
+  .outer {
+    width: 200px;
+    height: 200px;
+    background-color: orange;
+    padding: 50px;
+    margin: 20px auto;
+  }
+  .inner {
+    width: 100%;
+    height: 100%;
+    background-color: tomato;
+  }
+  .reverse {
+    color: #fff;
+    background-color: #000;
+  }
+  </style>
+</head>
+<body>
+  <h1 id="title">event</h1>
+  <!-- 
+    js이벤트객체를 감싼 jquery이벤트객체를 사용할 수 있다. 
+  -->  
+  <!-- div.outer>.inner -->
+  <div class="outer">
+    <div class="inner"></div>
+  </div>
+  <script>
+  /**
+   * #title mouseenter시 컬러변경, mouseleave할때 원상복귀
+   */
+  $(title).hover((e) => {
+    // mouseenter
+    // $(e.target).css({
+    //   'color' : 'white',
+    //   'background-color': 'gray'
+    // });
+    $(e.target).addClass('reverse');
+
+  }, (e) => {
+    // mouseleave
+    // $(e.target).css({
+    //   'color' : 'initial',
+    //   'background-color': 'initial'
+    // });
+    $(e.target).removeClass('reverse');
+  });
+
+
+  /**
+   * mouseover - mouseout : 자식요소 진입/탈출시 이벤트발생
+   * 
+   * mouseenter - mouseleave : 자식요소 진입/탈출시 이벤트발생하지 않음
+   * 
+   * hover(mouseenter핸들러, mouseleave핸들러)
+   * - hover이벤트 없음. 핸들러 2개를 동시에 등록하는 편의메소드 
+   */
+  $(".outer")
+    .hover(() => {
+      console.log('mouseenter');
+    }, () => {
+      console.log('mouseleave');
+    });
+    // .mouseenter(() => {
+    //   console.log('mouseenter');
+    // })
+    // .mouseleave(() => {
+    //   console.log('mouseleave');
+    // });
+    // .mouseover((e) => {
+    //   // console.log(e); // jQuery.Event (MouseEvent)
+    //   console.log('mouseover', e.target);
+    // })
+    // .mouseout((e) => {
+    //   console.log('mouseout', e.target);
+    // });
+  </script>
+
+  <button id="btn1">on | off</button>
+  <button id="btn2">one</button>
+  <button id="btn3">5</button>
+  <script>
+  /**
+   * #btn3 클릭시 1씩 감소, 0이 되면 클릭이벤트 중지!
+   */
+  (() => {
+    let cnt = 5;
+    $(btn3).on('click', ({target}) => {
+      cnt--;
+      $(target).html(cnt);
+      if(cnt == 0) $(target).off('click');
+    });
+  })();
+  
+  /**
+   * 일회용 이벤트핸들러 
+   * 
+   */
+  $(btn2).one('click', () => {
+    alert("다음 생에 만나~");
+  });
+
+  /**
+   * on(이벤트, 핸들러)
+   * off(이벤트)
+   */
+  $(btn1).on('click', (e) => {
+    alert('ㅋㅋㅋㅋ');
+
+    $(e.target).off('click');
+  });
+  </script>
+
+  <br><br><br>
+  <!-- 
+    form 사용자입력값 유효성검사 submit 이벤트핸들러 안에 작성 
+    - 유효하지 않은 경우, event.preventDefault() | return false 해서 제출방지!
+  -->
+  <form action="javascript:alert('제출성공!');" name="tweetFrm">
+    <fieldset>
+      <legend>트윗</legend>
+      <div><span id="counter">0</span>/30</div>
+      <div>
+        <textarea 
+          name="content" id="content" cols="30" rows="10"
+          placeholder="30글자 이내로 트윗을 작성하세요."></textarea>
+      </div>
+      <div><button type="submit">제출</button></div>
+    </fieldset>
+  </form>
+  <script>  
+  $(document.tweetFrm).submit((e) => {
+    const $content = $(e.target.content);
+    if($content.val().length > 30)
+      e.preventDefault();
+  });
+
+  $(content).keyup(({target}) => {
+    const contentVal = $(target).val();
+    console.log(contentVal);
+    
+    const $counter = $(counter);
+    $counter.text(contentVal.length);
+
+    if(contentVal.length > 30) {
+      $counter.css('color', 'red');
+    }
+    else {
+      $counter.css('color', 'initial'); 
+    }
+
+  });
+  </script>
+
+
+
+  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+</body>
+</html>

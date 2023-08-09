@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Promise</title>
+</head>
+<body>
+  <h1>Promise</h1>
+  <button id="btn1">Basics</button>
+  <button id="btn2">setTimeout Promise</button>
+  <button id="btn3">DOM Promise</button>
+  <script>
+  /**
+   * DOM관련 처리를 Promise로 만들기 
+   * - load이벤트핸들러 
+   */
+  btn3.onclick = () => {
+    loadScript('js/func.js')
+    .then(() => {
+      abc();
+    });
+  };
+
+  const loadScript = (src) => new Promise((resolve) => {
+    const script = document.createElement('script');
+    script.src = src;
+    script.onload = () => resolve();
+    document.head.append(script);
+  });
+
+  /**
+   * setTimeout을 Promise로 만들기 
+   * - callback함수
+   * - millis초
+   */
+  btn2.onclick = () => {
+    delay(1000)
+    .then(() => {
+      console.log('ㅋㅋㅋ');
+    });
+  }
+
+  const delay = (millis) => new Promise((resolve) => {
+    // 생산코드 
+    setTimeout(() => resolve(), millis);
+  });
+
+  /**
+   * Promise 객체 
+   * - 비동기처리 callback hell을 개선한 문법. (then hell)
+   * - 생산코드/소비코드를 따로 작성후, 연결시키는 객체 
+   * - Producing Code (생산코드/제작코드) 소요시간이 걸리거나 종료시점을 알수 없는 코드 -> Promise 전달하는 함수안에 작성 
+   * - Consuming Code (소비코드) 생산코드의 결과물을 가지고 이어서 작업할 코드 -> then에 전달하는 함수(resolve)안 에 작성 
+   * 
+   * 속성 
+   * - PromiseState : pending -> fulfilled(resolve 호출)
+   * - PromiseResult : undefined -> 생산코드에 마지막에 호출하는 resolve함수에 인자
+   */
+  btn1.onclick = () => {
+    new Promise((resolve) => {
+      // 생산코드 
+      console.log('producing...');
+      // 이후 then절 작성하는 소비코드를 실행
+      resolve(123);
+    })
+    .then((result) => {
+      // 소비코드 
+      console.log('consuming....', result);
+    });
+
+    const promise = getPromise();
+    console.log(promise); // pending -> fulfilled
+    promise.then((result) => {
+      console.log('CONSUMING...', result);
+    });
+  };
+
+
+  const getPromise = () => {
+    return new Promise((resolve) => {
+      console.log('PRODUCING...')
+      resolve(456);
+    });
+  };
+  </script>
+
+  <hr>
+  <button id="btn4">Promise Chain</button>
+  <button id="btn5">배경색변경</button>
+  <div class="box"></div>
+  <style>
+  .box { 
+    border: 1px solid #000;
+    width: 100px;
+    height: 100px;
+    margin: 30px 0 10px;
+  }
+  </style>
+  <script>
+  /**
+   * 배경색변경
+   */
+  btn5.onclick = () => {
+    changeBGColor('red')
+    .then(() => changeBGColor('orange'))
+    .then(() => changeBGColor('yellow'))
+    .then(() => changeBGColor('green'))
+    .then(() => changeBGColor('blue'))
+    .then(() => changeBGColor('navy'))
+    .then(() => changeBGColor('purple'));
+  };
+  
+  const changeBGColor = (color) => new Promise((resolve) => {
+    document.querySelector(".box").style.backgroundColor = color;
+    setTimeout(() => resolve(), 1000);
+  });
+  
+  
+  /**
+   * Promise Chain 
+   * - Promise#then 암묵적으로 Promise객체를 반환. then다음에 연이어 then을 호출할 수 있다.
+   * - Promise#then의 resolve함수의 리턴값 
+   *    - 특정값을 리턴하면, 다음 Promise객체의 result값이 된다. 
+   *    - 명시적으로 Promise객체를 반환 가능
+   */
+  btn4.onclick = () => {
+    // console.log(
+    //   new Promise((resolve) => {
+    //     console.log('producing....');
+    //     resolve(1); // 1 이 현재프라미스의 result값
+    //   }
+    //   .then((result) => {
+    //     console.log('consuming...', result);
+    //     return result + 1; // 암묵적 프라미스의 result값
+    //   })
+    //   .then((result) => {
+    //     console.log('consuming2...', result);
+    //   })
+    // );
+
+
+    // 명시적으로 Promise객체 반환 
+    promiseMaker(1)
+    .then(() => {
+      console.log('소비중...');
+      return promiseMaker(2)
+    })
+    .then(() => {
+      console.log('소비중2...');
+    });
+  };
+
+  const promiseMaker = (id) => new Promise((resolve) => {
+    console.log(`생산중${id}...`);
+    resolve();
+  });
+  </script>
+
+
+
+
+
+  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+</body>
+</html>

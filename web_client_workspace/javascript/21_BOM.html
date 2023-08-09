@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BOM</title>
+</head>
+<body>
+  <h1>BOM</h1>
+  <!-- Browser Object Model -->
+  <button onclick="test1();">navigator</button>
+  <button onclick="test2();">location</button>
+  <fieldset>
+    <legend>history</legend>
+    <button onclick="test3();">history</button>
+    <button onclick="history.back()">back</button>
+    <button onclick="history.forward()">forward</button>
+    <button onclick="history.go(prompt('정수입력', 0))">go</button>
+  </fieldset>
+  <button onclick="test4();">screen</button>
+  <button onclick="test5();">popup</button>
+  <script>
+  /**
+   * 팝업 화면 정가운데 띄우기
+   * 
+   */
+  const test5 = () => {
+    const width = 500;
+    const height = 500;
+    const left = (screen.width - width) / 2 + screen.availLeft;
+    const top = (screen.height - height) / 2 + screen.availTop;
+    console.log(width, height, left, top);
+
+    open("", "popup", `width=${width}px, height=${height}px, left=${left}px, top=${top}px`);
+  };
+
+  /**
+   * screen 
+   * - 모니터(HW)관련 속성을 가진 객체
+   * - width, height, availWidth, availHeight, availLeft, availTop
+   */
+  const test4 = () => {
+    console.log(screen);
+  };
+
+  /**
+   * history 
+   * - 브라우져 방문기록을 가진 객체 
+   * - history.back()
+   * - history.forward()
+   * - history.go(n)
+   */
+  const test3 = () => {
+    console.log(history);
+  }
+  /**
+   * location
+   * - 브라우져 주소창관련 정보 가진 객체 
+   * - location.href
+   * - protocol, hostname, port, pathname, search, hash
+   */
+  const test2 = () => {
+    console.log(location);
+
+    // 페이지 이동
+    // location.href = 'https://naver.com';
+
+    // 페이지 새로고침
+    location.reload(); 
+  };
+
+  /**
+   * navigator 
+   * - 브라우져 관련 정보를 가진 객체 
+   * - user-agent속성 : 브라우져 식별하는 값
+   */
+  const test1 = () => {
+    console.log(navigator);
+    alert(navigator.userAgent); 
+    // 크롬 Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.3롬
+    // 엣지 Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36 Edg/113.0.1774.57
+    // 파이어폭스 Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/113.0
+    // iOS 사파리 Mozilla/5.0 (iPhone; CPU iPhone OS 16_1_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.1 Mobile/15E148 Safari/604.1
+  };
+  </script>
+</body>
+</html>

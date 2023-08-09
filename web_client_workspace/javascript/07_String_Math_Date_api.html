@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>String | Math | Date API</title>
+</head>
+<body>
+  <h1>String | Math | Date API</h1>
+
+  <h2>String</h2>
+  <button onclick="test1();">indexOf | lastIndexOf</button>
+  <button onclick="test2();">substring | substr</button>
+  <button onclick="test3();">charAt</button>
+  <button onclick="test4();">replace</button>
+  <button onclick="test5();">split</button>
+  <button onclick="test6();">padStart | padEnd</button>
+  <button onclick="test7()">@실습문제</button>
+  <div class="result"></div>
+  <script>
+  function isLower(ch) {
+    return (ch >= 'a' && ch <= 'z'); 
+  }
+  function isUpper(ch) {
+    return (ch >= 'A' && ch <= 'Z');
+  }
+  function isAlpha(ch) {
+    return isUpper(ch) || isLower(ch);
+  }
+  /**
+   * @실습문제 - 사용자로 한줄을 입력받고, 문자열에서 알파벳의 개수를 세서 출력하세요. 
+   * - propmpt 사용할 것.
+   * - 정상적으로 입력한 경우만, .result에 출력
+   * - 입력하신 문자열 "안녕, Dave야"에서 알파벳의 개수는 4개입니다.
+   * 
+   */
+  function test7() {
+    const text = prompt("아무 문자열이나 입력하세요", "아무.....abcde....ㅋㅋㅋㅋ");
+
+    // 모든 값/변수는 boolean 자동형변환이 가능 
+    // - 값("abc", 123, -10, [], {})이 존재하면 true
+    // - 값('', 0, undefined, null)이 존재하지 않으면 false
+    if(text) {
+      let cnt = 0;
+      for(let i = 0; i < text.length; i++) {
+        const ch = text[i];
+        if(isAlpha(ch)) {
+          cnt++;
+        }
+      }
+      document.querySelector(".result").innerHTML = `<h2>입력하신 문자열 "${text}"에서 알파벳의 개수는 ${cnt}개입니다.</h2>`;
+    }
+    else {
+      alert("문자열을 입력하세요 😡");
+    }
+
+  }
+  /**
+   * padStart(length, paddingStr) 
+   * padEnd(length, paddingStr)
+   */
+  function test6() {
+    console.log("23".padStart(5, "0")); // 00023
+    console.log("23".padEnd(5, "0")); // 23000
+
+    console.log((23).toString().padStart(5, "0"));
+    const s = 23;
+    console.log(s.toString().padStart(5, "0"));
+  }
+
+  /**
+   * split(구분자) 문자열을 구분자로 쪼개서 배열로 반환
+   */
+  function test5() {
+    const data = "사과, 복숭아, 감자, 배, 오이";
+    const arr = data.split(", ");
+    console.log(arr);
+  }
+
+  /**
+   * replace(검색어, 대체어)
+   * - 새 문자열을 반환(기존 문자열을 수정할 수 없다. immutable)
+   */
+  function test4() {
+    const str = "apple pineapple";
+
+    console.log(str.replace('apple', '사과')); 
+    console.log(str.replaceAll('apple', '사과')); // ecma2021 추가 
+    console.log(str.replace(/apple/g, '사과'));
+
+  }
+  
+  /**
+   * chatAt(index)
+   * js에서는 모든 문자열이 문자배열로 처리 가능하다.
+   * 
+   */ 
+  function test3() {
+    const str = "Hello world"; // ['h', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd']
+    console.log(str.charAt(4));
+    console.log(str[4]);
+    console.log(str.charCodeAt(4)); // 아스키코드값
+
+    for(let i = 0; i < str.length; i++) {
+      console.log(str.charAt(i), str[i]);
+    }
+  }
+  
+  /**
+   * substring(startIndex, endIndex) : startIndex부터 endIndex전까지 잘라내서 반환
+   * substr(startIndex, length) : startIndex부터 length개만치 잘라내서 반환
+   * - 새 문자열을 반환(기존 문자열을 수정할 수 없다. immutable)
+   */
+  function test2() {
+    const str = "안녕하세요, 홍길동님";
+    console.log(str.substring(7, 10));
+    console.log(str.substring(7));
+    console.log(str.substring(7, str.length));
+
+    console.log(str.substr(7, 3));
+    console.log(str.substr(7));
+  }
+
+  /**
+   * indexOf
+   * lastIndexOf
+   */
+  function test1() {
+    const str = "Apple Samsung PineApple";
+    console.log(str.indexOf('Sam')); // 6
+    console.log(str.indexOf('XXX')); // -1
+    console.log(str.indexOf('Apple')); // 0
+    console.log(str.lastIndexOf('Apple')); // 18
+
+    console.log(str.indexOf("사과") > -1 ? "사과 포함" : "사과 미포함");
+  }
+  </script>
+
+  <h2>Math</h2>
+  <button onclick="test8();">floor | ceil | round</button>
+  <button onclick="test9();">random</button>
+  <script>
+
+  /**
+   * Math.random() 
+   * - 0.0이상 1.0미만의 실수 반환
+   */
+  function test9() {
+    const n = Math.random();
+    console.log(n); 
+    // 1 ~ 100사이의 난수 출력
+    console.log(Math.floor(n * 100) + 1);
+
+  }
+  /**
+   * Math.floor 소수점기준 버림
+   * Math.trunc 소수점기준 버림
+   * Math.ceil 소수점기준 올림
+   * Math.round 소수점기준 반올림 
+   */
+  function test8() {
+    const num = 1234.56;
+    console.log(Math.floor(num));
+    console.log(Math.trunc(num));
+    console.log(Math.ceil(num));
+    console.log(Math.round(num));
+
+    console.log(Math.floor(num * 10) / 10);
+    console.log(Math.trunc(num * 10) / 10);
+    console.log(Math.ceil(num * 10) / 10);
+    console.log(Math.round(num * 10) / 10);    
+  }
+  </script>
+  
+  
+  <style>
+  .even {
+    color: hotpink;
+  }
+  </style>
+  <div id="ex">
+    <button onclick="test13();">실행</button>
+    <script>
+    /**
+     * @실습문제 #ex하위의 li태그에 1 ~ 100사이의 난수를 대입하세요.
+     * - 짝수인 경우만 color값을 hotpink를 변경하세요.
+     * - 매번 버튼을 누를때마다 초기화되어야 합니다.
+     */
+    function test13() {
+      const list = document.querySelectorAll("#ex li");
+      for(let i = 0; i < list.length; i++) {
+        const n = Math.floor(Math.random() * 100) + 1;
+        list[i].innerHTML = n;
+        list[i].classList.remove("even");
+        if(n % 2 == 0)
+          list[i].classList.add("even");
+      }
+    } 
+    </script>
+    <ul>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+    </ul>
+  </div>
+
+
+
+
+  <h2>Date</h2>
+  <h3 id="clock"></h3>
+  <button onclick="test10();">Date</button>
+  <button onclick="test11();">Date2</button>
+  <input type="datetime-local" name="when" id="when">
+  <fieldset>
+    <legend>d-day계산기</legend>
+    <input type="date" name="dday" id="dday">
+    <button onclick="test12();">확인</button>
+    <div id="dday-result"></div>
+  </fieldset>
+  <script>
+  /**
+   * @실습문제 
+   * - 오늘은 D-5 입니다.
+   * - 오늘은 D-Day 입니다.
+   * - 오늘은 D+100 입니다.
+   */
+  function test12() {
+    const today = new Date();
+    const dday = new Date(document.querySelector("#dday").value);
+    const diff = (today - dday) / 1000 / 60 / 60 / 24; 
+    console.log(diff);
+    // 지금 - 미래 : 음수
+    // 지금 - 과거 : 양수
+    if(diff >= 0 && diff < 1) {
+      console.log('오늘은 D-Day입니다.');
+    }
+    else {
+      console.log(`오늘은 D${diff > 0 ? '+' : ''}${Math.floor(diff)}입니다.`);
+    }
+  }
+  /**
+   * @실습문제 - 페이지로딩시 #when 현재시각 세팅하기
+   */
+  function init() {
+    const d = new Date();
+    function f(n) {
+      return n.toString().padStart(2, '0');
+    }
+    when.value = `${d.getFullYear()}-${f(d.getMonth() + 1)}-${f(d.getDate())}T${f(d.getHours())}:${f(d.getMinutes())}`;
+    
+    console.log(d.toISOString());    // 2023-05-24T05:27:22.492Z
+    console.log(d.toLocaleString()); // 2023. 5. 24. 오후 2:27:42
+
+  }
+  init();
+
+
+  /**
+   * 특정시각을 가진 Date객체
+   */
+  function test11() {
+    // const d = new Date(2023, 11, 25);
+    // const d = new Date(2023, 11, 25, 1, 1, 1);
+    // const d = new Date('2023-12-25T01:01:01');
+    const d = new Date(when.value);
+    console.log(d);
+
+    // 날짜 차이 구하기 
+    const today = new Date();
+    const dday = new Date(2023, 5, 15);  
+    // Unix Time(UTC Seconds) 1970-01-01 00:00:00부터 흐른 밀리초 
+    console.log(today.getTime(), dday.getTime(), dday.getTime() - today.getTime());  
+    console.log(dday - today); // 밀리초 차이
+
+    const diff = (dday - today) / 1000 / 60 / 60 / 24; // 밀리초 -> 초 -> 분 -> 시간 -> 일
+    console.log(diff);
+    console.log(`D-${Math.ceil(diff)}입니다.`)
+
+    // 밀리초연산
+    console.log(Date.now());
+    const dday2 = new Date(dday.getTime()); // 밀리초를 인자로 하는 생성자 지원
+  }
+  /**
+   * Date 
+   * - 날짜/시각을 관리하는 객체 
+   * - new Date() 현재시각을 가진 객체 
+   * - new Date(year, month, date[, hour, minute, second])
+   * - new Date(dateString)
+   * - new Date(millis)
+   */
+  function test10() {
+    const d = new Date();
+    console.log(d);
+
+    console.log(d.getFullYear());
+    console.log(d.getMonth() + 1); // 0월 ~ 11월로 관리되므로 +1 처리
+    console.log(d.getDate());
+    console.log(d.getHours());
+    console.log(d.getMinutes());
+    console.log(d.getSeconds());
+
+    function f(n) {
+      return n.toString().padStart(2, '0');
+    }
+
+    clock.innerHTML = `${d.getFullYear()}/${f(d.getMonth() + 1)}/${f(d.getDate())} 
+                       ${f(d.getHours())}:${f(d.getMinutes())}:${f(d.getSeconds())}`;
+
+    setTimeout(test10, 1000); // 1초후에 test10함수를 호출하라.                   
+  }
+  </script>
+  
+  
+</body>
+</html>

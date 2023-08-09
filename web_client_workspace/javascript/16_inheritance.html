@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>상속</title>
+</head>
+<body>
+  <h1>상속</h1>
+  <button onclick="test1();">Book</button>
+  <button onclick="test2();">Novel</button>
+  <button onclick="test3();">apply | call | bind</button>
+  <button onclick="test4();">Object.create()</button>
+  <script>
+  /**
+   * Object.create(부모객체)
+   * - 생성자 호출없이 객체를 생성
+   * - 지정한 객체를 부모로 하는 자식객체 
+   */
+  const test4 = () => {
+    console.log(Object.create(Book.prototype)); // Book.prototype을 부모로 하는 객체
+
+    const parent = {
+      name : 'Parent',
+      say() {
+        console.log(`I am ${this.name}`);
+      }
+    };
+    const child = Object.create(parent);
+    child.name = 'Child';
+    console.log(child.name); 
+    child.say();
+  }
+  
+  /**
+   * 함수의 this를 새롭게 binding하는 메소드 
+   * (this는 함수 호출의 기준)
+   * 
+   * 호출
+   * - apply
+   * - call
+   * 
+   * 호출없이 binding후 함수 반환
+   * - bind
+   */
+  const test3 = () => {
+    const foo = function(a, b){
+      console.log(this.name, a, b);
+    };
+    foo(3, 5); // Window, 3, 5
+
+    const obj = {
+      name : '잘나가는 객체'
+    };
+    foo.call(obj, 10, 20);
+    foo.apply(obj, [10, 20]);
+
+    const _foo = foo.bind(obj);
+    _foo(10, 20);
+    
+
+  }
+  /**
+   * 자바스크립트의 상속
+   * - 클래스기반이 아닌 프로토타입기반의 객체모델 
+   * - 프로토타입객체 부모자식관계로 연결됨.
+   * - 최상위에는 Object.prototoype이 존재 
+   */
+  const test2 = () => {
+    // console.log(new Book('매트릭스', 35000, 0.15));
+
+    const novels = [
+      new Novel('매트릭스', 35000, 0.15, '연애'),
+      new Novel('오라클 완전정복', 30000, 0.2, 'SF'),
+      new Novel('네오클래식', 20000, 0, '서사'),
+      new Novel('스미스의 저녁', 15000, 0.1, '심리'),
+    ];
+    novels.forEach((novel) => {
+      console.log(novel);
+      console.log(novel.toString()); // 매트릭스(연애) 29750원(정가: 35000원) 
+    })
+  };
+
+  /**
+   * 상속 
+   * 1. 부모생성자 호출 
+   * 2. 프로토타입객체 생성 
+   * 3. 프로트타입-생성자함수 연결 
+   */
+  function Novel(title, price, discountRate, type) {
+    // 1. 부모생성자 호출 (현재객체 기준)
+    // Book.apply(this, [title, price, discountRate]);
+    Book.call(this, title, price, discountRate);  // 현재객체 new Novel()
+    this.type = type;
+  }
+  // 2. 프로토타입객체생성 (Book.prototype을 상속하는 객체)
+  Novel.prototype = Object.create(Book.prototype);
+  // 3. 프로토타입 - 생성자함수 연결 
+  Novel.prototype.constructor = Novel;
+
+  Novel.prototype.toString = function(){
+    return `${this.title}(${this.type}) - ${this.getSalePrice()}원(정가: ${this.price}원)`;
+  }
+
+  /**
+   * Book
+   */
+  const test1 = () => {
+    const books = [
+      new Book('매트릭스', 35000, 0.15),
+      new Book('오라클 완전정복', 30000, 0.2),
+      new Book('네오클래식', 20000),
+      new Book('스미스의 저녁', 15000, 0.1),
+    ];
+    books.forEach((book) => {
+      console.log(book.toString());
+    });
+  };
+
+  function Book(title, price, discountRate) {
+    this.title = title;
+    this.price = price;
+    this.discountRate = discountRate;
+  }
+  Book.prototype.getSalePrice = function(){
+    return this.discountRate ? 
+      this.price - (this.price * this.discountRate) : 
+        this.price;
+  };
+  Book.prototype.toString = function(){
+    return `${this.title} : ${this.getSalePrice()}원(정가 : ${this.price})`;
+  };
+
+  </script>
+</body>
+</html>

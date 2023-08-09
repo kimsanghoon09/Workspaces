@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>css 효과</title>
+  <script src="js/jquery-3.7.0.js"></script>
+  <script src="https://code.jquery.com/color/jquery.color-2.2.0.js" integrity="sha256-gvMJWDHjgDrVSiN6eBI9h7dRfQmsTTsGU/eTT8vpzNg=" crossorigin="anonymous"></script>
+  <script src="js/jquery.easing.1.3.js"></script>
+  <style>
+  img {
+    width: 500px;
+  }
+  .wrapper {
+    height: 335px;
+  }
+  .menu {
+    width: 300px;
+    height: 30px;
+    border-radius: 10px;
+    text-align: center;
+    border: 1px solid lightgreen;
+    cursor: pointer;
+    padding: 3px;
+    margin: 3px 0;
+  }
+  .content {
+    width: 300px;
+    margin: 3px 0;
+    padding: 3px;
+    border: 1px solid gray;
+    border-radius: 10px;
+    display: none;
+  }
+  .box {
+    width: 200px;
+    height: 200px;
+    background-color: tomato;
+    border: 2px solid #000;
+    margin: 10px 0;
+    position: relative;
+  }
+  </style>
+</head>
+<body>
+  <h1>css 효과</h1>
+  <h2>display</h2>
+  <div class="wrapper">
+    <img src="../sample/image/river1.PNG" alt="">
+  </div>
+  <button id="btn1">show</button>
+  <button id="btn2">hide</button>
+  <button id="btn3">toggle</button>
+  <script>
+   /**
+   * show(speed, easing, cabackFunction)
+   * - display: block | inline...
+   * - easing 속도함수 ease-in | ease-out | ease-in-out | linear
+   */
+  $(btn1).click(() => {
+    $(".wrapper img").show(3000, 'linear', () => {
+      alert("짠!!!");
+    });
+  });
+  /**
+   * hide(speed, easing, cabackFunction)
+   * - display: none
+   */
+  $(btn2).click(() => {
+    $(".wrapper img").hide(3000);
+  });
+
+  $(btn3).click(() => {
+    $(".wrapper img").toggle(3000);    
+  });
+  </script>
+
+  <h2>slide</h2>
+  <!-- div.container>(div.menu+p.content>lorem)*5 -->
+  <div class="container">
+    <div class="menu">HTML</div>
+    <p class="content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia culpa animi hic cum eveniet natus, saepe totam consequatur dignissimos amet exercitationem. Cupiditate eius ipsam explicabo sed, voluptatem voluptas adipisci molestias?</p>
+    <div class="menu">CSS</div>
+    <p class="content">Nihil, quidem dicta. Animi unde ratione minima. Voluptas iusto at animi molestiae adipisci pariatur rem laboriosam enim nesciunt, maxime voluptate, esse error assumenda facere saepe possimus expedita molestias, fugiat nihil.</p>
+    <div class="menu">Javascript</div>
+    <p class="content">Rem eveniet laborum nesciunt excepturi praesentium aperiam mollitia, atque distinctio ea tempore quaerat odit quasi commodi deserunt modi aliquid ad consequatur ex, consequuntur et? Eos saepe eius facere ducimus obcaecati.</p>
+    <div class="menu">jQuery</div>
+    <p class="content">Possimus debitis ab nisi fugit, eum quae consequuntur cum, rem labore nostrum corporis quo eius aliquam eaque nam saepe quaerat autem error reprehenderit aspernatur suscipit illum? Dolores accusantium nam ea!</p>
+    <div class="menu">HTML5 API</div>
+    <p class="content">Atque sequi nemo fugiat! Cupiditate perspiciatis dolorem, doloremque numquam odit eos repudiandae fuga ea accusantium praesentium cum, quidem, voluptates explicabo minima libero! Nostrum nemo optio minima, perferendis enim iusto debitis!</p>
+  </div>
+  <script>
+  $("div.menu").click((e) => {
+    // const $menu = $(e.target);
+    // const $content = $menu.next();
+    // $content.slideDown(); // 보임
+    // $content.slideUp(); // 숨김
+    // $content.slideToggle(500, () => {
+    //   console.log('짜잔~!');
+    // });
+      
+    console.log(
+      $(e.target).next().slideToggle().siblings("p.content").slideUp()
+    );
+  });
+  </script>
+
+  <h2>fade</h2>
+  <div class="wrapper">
+    <img src="../sample/image/river2.PNG" alt="">
+  </div>
+  <!-- button#btn$@4*3 -->
+  <button id="btn4">fadeIn</button>
+  <button id="btn5">fadeOut</button>
+  <button id="btn6">fadeToggle</button>
+  <script>
+  /**
+   * fadeOut(speed, easing, callbackFunction)
+   */
+  $(btn5).click(() => {
+    $(".wrapper:eq(1) img").fadeOut(1000);
+  });
+  $(btn4).click(() => {
+    $(".wrapper:eq(1) img").fadeIn(1000);
+  });
+  $(btn6).click(() => {
+    $(".wrapper:eq(1) img").fadeToggle(1000);
+  });
+  </script>
+
+  <div class="wrapper">
+    <img src="../sample/image/tower1.PNG" alt="" style="opacity: .7;">
+  </div>
+  <script>
+  /**
+   * fadeTo(speed, opacity)
+   */
+  $(".wrapper:eq(2) img").hover((e) => {
+    // mouseenter
+    $(e.target).fadeTo(1000, 1); // opacity
+  }, (e) => {
+    // mouseleave
+    $(e.target).fadeTo(1000, .7);
+  });
+  </script>
+
+  <h2>animate</h2>
+  <div class="box"></div>
+  <button id="btn7">실행</button>
+  <script>
+  /**
+   * animate(styleObj, duration, easing, callbackFunction)
+   * https://www.w3schools.com/jquery/eff_animate.asp
+   */
+  $(btn7).click(() => {
+    $(".box").animate({
+      "width" : "300px",
+      "height" : "300px",
+      "left" : "100px",
+      "background-color" : "yellow"
+    }, 1000, 'easeOutBounce', () => {
+      console.log("애니메이션 완료!");
+      $(".box").animate({
+        "width" : "200px",
+        "height" : "200px"
+      }, 1000, 'easeInQuint', () => {
+        console.log("애니메이션2 완료!");
+      });
+    });
+  });
+  </script>
+
+
+
+  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+</body>
+</html>

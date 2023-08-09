@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="ko">
+ <head>
+  <meta charset="UTF-8">
+  <title>HTML 종합 실습 문제1</title>
+ </head>
+ <body>
+	<form>
+		<fieldset>
+			<legend>납품자 정보</legend>
+			<ol>
+				<li>
+					<label for="name">납품자명(필수) : </label>
+					<input type="text" name="name" id="name" required></li><br>
+				<li>
+					<label for="email">email(필수) : </label>
+					<input type="email" placeholder="answer@naver.com" name="email" id="email" required></li><br>
+				<li>
+					<label for="homepage">홈페이지 : </label>
+					<input type="url" value="http://" name="homepage" id="homepage"></li><br>
+				<li>
+					<label for="region">지역 : </label> 
+					<select name="region" id="region">
+						<optgroup label="한국">
+							<option value="seoul">서울</option>
+							<option value="busan" selected>부산</option>
+						</optgroup>
+						<optgroup label="중국">
+							<option value="beijing">북경</option>
+							<option value="sanghai">상해</option>
+						</optgroup>
+					</select>
+				</li>
+			</ol>
+		</fieldset>
+		<fieldset>
+			<legend>납품 정보</legend>
+				<ul>
+					<li>
+						<label for="pName">상품명(필수) :</label>
+						<input type="text" name="pName" id="pName" required>
+					</li>
+					<li>
+						<label for="amount">납품수량(필수) : </label>
+						<input type="number" name="amount" id="amount" min=100 placeholder="최소 100" required>
+					</li>
+					<li>
+						<label for="pGrade">납품등급(필수) : </label>
+						<input type="range" name="pGrade" id="pGrade" required>
+					</li>
+					<li>
+						<label for="etc">기타사항 : </label>
+						<textarea name="etc" id="etc" rows=2></textarea>
+					</li>
+				</ul>
+		</fieldset>
+		<br>
+		<input type="submit" value="send message">
+	</form>
+ </body>
+</html>

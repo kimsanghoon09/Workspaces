@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>position</title>
+  <style>
+  .outer {
+    background-color: lightgray;
+    border: 1px solid #000;
+  }
+  .first {
+    width: 300px;
+    height: 300px;
+    background-color: thistle;
+  }
+  .second {
+    width: 200px;
+    height: 200px;
+    background-color: violet;
+    top: 50px;
+    left: 50px;
+  }
+  .third {
+    width: 100px;
+    height: 100px;
+    background-color: magenta;
+    top: 100px;
+    left: 100px;
+  }
+  
+  </style>
+</head>
+<body>
+  <h1>position</h1>
+  <!--
+    position 요소를 문서에 배치하는 것
+    - static(기본값) 문서에 정의된 대로 화면에 배치. 위에서 아래로, 좌에서 우로. offset 적용안됨.
+    - relative 문서에 정의된 대로 화면에 배치. 위에서 아래로, 좌에서 우로. offset 적용.
+    - absolute static이 아닌 가장 가까운 부모요소기준으로 offset 적용
+    - fixed 브라우져 viewport기준으로 offset 적용
+    - sticky relative처럼 작동하다가 특정 offset에 다다르면 fixed처럼 작동
+  -->
+  <h2 class="p-sticky">sticky</h2>
+  <style>
+  .p-sticky {
+    background-color: yellowgreen;
+    color: #000;
+    position: sticky;
+    top: 0px;
+    z-index: 10;
+  }
+  </style>
+
+
+  <h2>static</h2>
+  <!-- .outer>.first+.second+.third -->
+  <div class="outer">
+    <div class="first"></div>
+    <div class="second"></div>
+    <div class="third"></div>
+  </div>
+  <h2>relative</h2>
+  <div class="outer">
+    <div class="first"></div>
+    <div class="second p-relative"></div>
+    <div class="third p-relative"></div>
+  </div>
+  <style>
+  .p-relative {
+    position: relative;
+  }
+  </style>
+
+  <br><br><br><br><br><br><br><br><br><br>
+  <h2>absolute</h2>
+  <div class="outer p-relative">
+    <div class="first"></div>
+    <div class="second p-absolute"></div>
+    <div class="third p-absolute"></div>
+  </div>
+  <style>
+  .p-absolute {
+    position: absolute;
+  }
+  </style>
+
+
+  <h2>fixed</h2>
+  <div class="p-fixed"></div>
+  <style>
+  .p-fixed {
+    width: 50px;
+    height: 50px;
+    background-color: tomato;
+    position: fixed;
+    /* top: 50px;
+    left: 50px; */
+    bottom: 50px;
+    right: 50px;
+  }
+  </style>
+
+  <h2>z-index</h2>
+  <!--
+    페이지안 요소를 z축 방향으로 쌓는 속성
+    기본값 0 
+    z-index를 명시하지 않은 경우, 문서상 나중에 작성한 요소가 위에 배치된다.
+    position: static에서는 작동하지 않는다.
+  -->
+  <!-- div#wrapper>.z-test.z-test${안녕}*3 -->
+  <div id="wrapper" class="p-relative">
+    <div class="z-test z-test1">안녕</div>
+    <div class="z-test z-test2">안녕</div>
+    <div class="z-test z-test3">안녕</div>
+  </div>
+  <style>
+  .z-test {
+    width: 150px;
+    height: 100px;
+    border: 1px solid #000;
+    position: absolute;
+  }
+  .z-test1 {
+    background-color: fuchsia;
+    z-index: 20;
+  }
+  .z-test2 {
+    background-color: hotpink;
+    top: 20px;
+    left: 20px;
+    z-index: 10;
+  }
+  .z-test3 {
+    background-color: pink;
+    top: 40px;
+    left: 40px;
+  }
+  </style>
+
+
+  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+</body>
+</html>

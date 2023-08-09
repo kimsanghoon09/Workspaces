@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DOM</title>
+</head>
+<body>
+  <h1>DOM</h1>
+  <!-- 
+    Document Object Model 
+    - document객체를 가리킨다.
+    - document하위에 작성한 html태그들이 태그객체로 변환되어 계층구조로 관리된다.
+    - getElementById, getElementsByTagName, getElementsByClassName, getElementsByName
+    - querySelector, querySelectorAll 
+    - 모든 태그객체는 Element.prototype, Node.prototype 상속하고 있다. 
+   -->
+  <div id="sample">
+    <span>Helloworld</span>
+    <!-- 주석주석주석 -->
+  </div>
+  <button onclick="test1();">태그객체</button>
+  <button onclick="test2();">태그생성 - 텍스트노드</button>
+  <button onclick="test3();">태그생성 - img</button>
+  <script>
+  /**
+   * img태그 생성
+   */
+  const test3 = () => {
+    const img = document.createElement("img"); // <img />
+    img.src = "../sample/image/city1.PNG"; 
+    img.style = "width: 200px;"; // <img style='width: 200px'/>
+    
+    // 사용자속성 - 대소문자구분하지 않는다.
+    // img.secondName = "도시사진";
+    img.setAttribute("secondName", "도시사진");
+    
+    document.body.append(img);
+
+    console.log(img.getAttribute("secondname"));
+
+  };
+
+  /**
+   * TextNode를 가진 태그생성하기
+   */
+  const test2 = () => {
+    // document.body.innerHTML += '<h3>Byebyeworld</h3>';
+
+    // 태그생성 document.createElement
+    const h2 = document.createElement("h2"); // <h2></h2>
+    const textNode = document.createTextNode("Helloworld"); // "Helloworld"
+    h2.append(textNode); // <h2>Helloworld</h2>
+    // DOM Tree에 추가 
+    document.body.append(h2);
+    // 이벤트핸들링하기 좋다.
+    h2.onclick = () => {
+      h2.style.color = "yellowgreen";
+    };
+    console.log(h2.onclick);
+    
+    
+  };
+
+  /**
+   * 태그객체
+   */
+  const test1 = () => {
+    const sample = document.querySelector("#sample");
+    console.dir(sample);
+    console.dir(sample.childNodes); // 자식노드
+    console.dir(sample.children); // 자식요소
+  };
+  </script>
+
+  <!-- div#foo>p{안녕$}*5 -->
+  <div id="foo">
+    <p>안녕1</p>
+    <p>안녕2</p>
+    <p id="target">안녕3</p>
+    <p>안녕4</p>
+    <p>안녕5</p>
+  </div>
+  <button onclick="test4();">요소삭제</button>
+  <button onclick="test5();">자식요소삭제</button>
+  <script>
+  /**
+   * removeChild(자식요소)
+   * - 지정한 자식요소를 삭제
+   */
+  const test5 = () => {
+    // document.querySelector("#foo").removeChild(document.querySelector("#target")); 
+    
+    // 모든 자식요소삭제
+    // 엘레먼트단위
+    while(foo.firstElementChild)
+      foo.removeChild(foo.firstElementChild);
+
+    // 노드단위
+    while(foo.firstChild)
+      foo.removeChild(foo.firstChild);
+  };
+
+  /**
+   * remove
+   * - 요소자신을 삭제
+   */
+  const test4 = () => {
+    document.querySelector("#target").remove();
+    console.log(document.querySelector("#target")); // null 객체를 기대했는데, 값없는 경우
+  };
+  </script>
+
+  <h2>DOM Traversing</h2>
+  <!-- 
+    DOM Tree를 따라 부모방향, 자식방향, 형제방향을 태그들을 찾아가는 것
+  -->
+  <!-- div.wrapper>p#p${Summer$}*5 -->
+  <div class="wrapper">
+    <p id="p1">Summer1</p>
+    <p id="p2">Summer2</p>
+    <p id="p3">Summer3</p>
+    <p id="p4">Summer4</p>
+    <p id="p5">Summer5</p>
+  </div>
+  <button onclick="test6();">Node</button>
+  <button onclick="test7();">Element</button>
+  
+  <script>
+ 
+  /**
+   * Node단위 
+   * - textNode, element, commentNode
+   * 
+   * - 자식노드 firstChild | lastChild | childNodes
+   * - 부모노드 parentNode
+   * - 형제노드 nextSibling | previousSibling
+   */
+  const test6 = () => {
+    console.log(
+      document.querySelector(".wrapper")
+        // .firstChild
+        // .nextSibling
+        // .nextSibling
+        // .childNodes
+        .lastChild
+        .previousSibling
+        .parentNode // 항상 태그객체(텍스트노드, 커멘트노드는 자식요소를 가질수 없다.)
+    );
+  };
+
+  /**
+   * Element단위
+   * - element 
+   * 
+   * 부모요소 parentElement
+   * 자식요소 firstElementChild | lastElementChild | children
+   * 형제요소 nextElementSibling | previousElementSibling
+   */
+  const test7 = () => {
+    const src = document.querySelector('.wrapper');
+    // const dest = src.firstElementChild.nextElementSibling;
+    // const dest = src.lastElementChild.previousElementSibling.parentElement; // parentNode와 같다.
+    const dest = src.children;
+    console.log(dest);
+  }
+  </script>
+
+  <div class="container">
+    <p id="foo1">안녕43</p>
+    <p id="foo2">안녕22</p>
+    <p id="foo3">
+      안녕17
+      <span>안녕32</span>
+      <span>안녕25</span>
+    </p>
+    <p id="foo4">안녕28</p>
+    <p id="foo5">안녕50</p>
+  </div>
+  <button onclick="test8();">@실습문제 - 짝수만 제거하기</button>
+  <script>
+  /**
+   * @실습문제 - 짝수만 제거하기
+   * - .container부터 traversing을 통해 텍스트의 숫자가 짝수인 경우 숫자를 제거한다. 
+   * - innerHTML 사용하지 않기
+   */
+  const f = (tag) => {
+    [...tag.children].forEach((t) => {
+      // t
+      // console.dir(t.firstChild
+      // t.firstChild.data
+      if(t.firstChild.data.replace("안녕", "") % 2 == 0) {
+        t.firstChild.remove();
+        t.append(document.createTextNode("안녕"));
+      }
+      if(t.children.length)
+        f(t);
+    });
+  }
+  const test8 = () => {
+    const container = document.querySelector(".container");
+    f(container);
+
+    // [...container.children].forEach((tag) => {
+    //   if(tag.firstChild.data.replace("안녕", "") % 2 == 0){
+    //     tag.firstChild.remove(); // 텍스트노드 제거 
+    //     const text = document.createTextNode("안녕");
+    //     tag.append(text);
+    //   }
+    //   if(tag.children.length) {
+    //     [...tag.children].forEach((t) => {
+    //       if(t.firstChild.data.replace("안녕", "") % 2 == 0) {
+    //         t.firstChild.remove();
+    //         t.append(document.createTextNode("안녕"));
+    //       }
+    //     });
+    //   }
+    // });
+  };
+  </script>
+
+
+
+
+  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+</body>
+</html>

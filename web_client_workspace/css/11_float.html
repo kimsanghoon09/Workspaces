@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>float</title>
+</head>
+<body>
+  <h1>float</h1>
+  <!-- 요소를 둥둥 띄워 좌우배치를 실현한다. 부모요소에 인식되지 않으면서 자리를 차지한다. -->
+  <div class="wrapper">
+    <img class="float-left" src="../sample/image/flower1.PNG" alt="">
+    <h3>Flower1</h3>
+    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quo est similique, amet dolores velit laboriosam necessitatibus labore, hic at aliquid eligendi! Nemo ex voluptate ullam nisi, deleniti sed nobis perspiciatis!</p>
+    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ullam voluptas obcaecati animi ab illum cum officia voluptatum sed esse, impedit doloremque consectetur nostrum, neque corporis iure, distinctio voluptate fugit molestiae?</p>
+  </div>
+  <div class="wrapper">
+    <img class="float-right" src="../sample/image/flower1.PNG" alt="">
+    <h3>Flower1</h3>
+    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quo est similique, amet dolores velit laboriosam necessitatibus labore, hic at aliquid eligendi! Nemo ex voluptate ullam nisi, deleniti sed nobis perspiciatis!</p>
+    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ullam voluptas obcaecati animi ab illum cum officia voluptatum sed esse, impedit doloremque consectetur nostrum, neque corporis iure, distinctio voluptate fugit molestiae?</p>
+  </div>
+  <div class="wrapper">
+    <img class="float-left" src="../sample/image/flower1.PNG" alt="">
+    <h3 class="clear-float">Flower1</h3>
+    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quo est similique, amet dolores velit laboriosam necessitatibus labore, hic at aliquid eligendi! Nemo ex voluptate ullam nisi, deleniti sed nobis perspiciatis!</p>
+    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ullam voluptas obcaecati animi ab illum cum officia voluptatum sed esse, impedit doloremque consectetur nostrum, neque corporis iure, distinctio voluptate fugit molestiae?</p>
+  </div>
+  <style>
+  .wrapper img {
+    width: 200px;
+    margin: 10px;
+  }
+  .float-left {
+    float: left;
+  }
+  .float-right {
+    float: right;
+  }
+  .clear-float {
+    clear: both; /* left | right | both */
+  }
+  </style>
+
+
+  <h2>menu구현</h2>
+  <nav>
+    <ul class="menu">
+      <li><a href="#">Home</a></li>
+      <li><a href="#">HTML5</a></li>
+      <li>
+        <a href="#">CSS3</a>
+        <ul>
+          <li><a href="#">Bootstrap</a></li>
+          <li><a href="#">Foundation</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#">Javascript6</a>
+        <ul>
+          <li><a href="#">React.js</a></li>
+          <li><a href="#">Vue.js</a></li>
+          <li><a href="#">Svelte.js</a></li>
+        </ul>
+      </li>
+      <li><a href="#">jQuery</a></li>
+    </ul>
+  </nav>
+  <style>
+    nav > ul.menu {
+      width: 80vw;
+      padding: 0px;
+      margin: 0 auto;
+    }
+    nav > ul.menu li {
+      list-style-type: none; /* bullet 제거 */
+      float: left;
+      width: 6em;
+      height: 2.5em;
+      background-color: #c9c9c9;
+      border-right: 1px solid #818181;
+      text-align: center;
+    }
+    nav > ul.menu li > a {
+      text-decoration: none;
+      color: #292929;
+      display: block;
+      padding: 0.5em;
+    }
+    
+    nav > ul.menu > li:hover {
+      background-color: #333;
+    }
+    nav > ul.menu > li:hover > a {
+      color: #fff;
+    }
+    nav > ul.menu > li:first-child {
+      border-top-left-radius: 0.5em;
+      border-bottom-left-radius: 0.5em;
+    }
+    nav > ul.menu > li:last-child {
+      border-top-right-radius: 0.5em;
+      border-bottom-right-radius: 0.5em;
+      border: 0;
+    }
+
+    nav > ul.menu ul {
+      padding-left: 0;
+      margin-top: 3px;
+      display: none;
+    }
+
+    nav > ul.menu > li:hover ul {
+      display: block;
+    }
+
+    nav > ul.menu > li:hover li {
+      border-right: 0;
+      border-bottom: 1px solid #818181;
+    }
+
+
+  
+  </style>
+
+
+
+
+
+  
+  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+</body>
+</html>

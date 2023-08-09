@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>함수고급</title>
+</head>
+<body>
+  <h1>함수고급</h1>
+  <button onclick="test1();">함수고급 - 매개인자</button>
+  <button onclick="test2();">함수고급 - 리턴값</button>
+  <button onclick="test3();">@실습문제 - tagMaker</button>
+  <div id="target">
+    <!-- 
+      <p>안녕하세요</p>
+      <mark>형광펜</mark>
+      <button>실행</button> 
+    -->
+  </div>
+  <script>
+  /**
+   * @실습문제 - tagMaker
+   */
+  const test3 = () => {
+    const writeP = tagMaker("p");
+    const writeMark = tagMaker("mark");
+    const writeButton = tagMaker("button");
+
+    target.innerHTML = writeP("안녕하세요.");
+    target.innerHTML += writeMark("형광펜");
+    target.innerHTML += writeButton("실행");
+  }
+  
+  // const tagMaker = (tagName) => ((content) => `<${tagName}>${content}</${tagName}>`);
+
+  const tagMaker = (tagName) => {
+    return (content) => {
+      return `<${tagName}>${content}</${tagName}>`;
+    };
+  };
+  
+  /**
+   * 함수가 함수를 리턴할 수 있다.
+   */
+  const test2 = () => {
+    const f = funcMaker();
+    const k = f;
+    console.log(f, typeof(f));
+    f(100);
+    k(100);
+    
+    const sayHello = greetingMaker('안녕');
+    sayHello('철수');
+    sayHello('영희');
+
+    const sayGoodbye = greetingMaker('잘가');
+    sayGoodbye('철수');
+    sayGoodbye('영희');
+
+    const loanMoney = greetingMaker('돈 좀 꿔줄래?');
+    console.log(loanMoney);
+    loanMoney('철수');
+    loanMoney('영희');
+
+  };
+
+  const greetingMaker = (say) => {
+    return (name) => {
+      console.log(`${say}, ${name}`);
+    };
+  };
+
+  const funcMaker = () => {
+    return (n) => {
+      console.log("Hello world" + n);
+    };
+  };
+
+  /**
+   * 함수는 값이다. (1급시민객체)
+   * - 변수에 대입 (함수표현식)
+   * - 함수 호출시 전달 (매개인자) 
+   * - 함수 리턴값으로 사용
+   */
+  const f = (n) => {
+    console.log('Hello world' + n);
+  };
+
+  const test1 = () => {
+    runner(f);
+
+    console.log(calc((a, b) => a + b, 10, 20)); // 30
+    console.log(calc((a, b) => a - b, 100, 30)); // 70
+    console.log(calc((a, b) => a * b, 5, 6)); // 30
+    console.log(calc((a, b) => Math.floor(a / b), 10, 3)); // 3
+    console.log(calc((a, b) => a % b, 10, 3)); // 1
+  };
+
+  const calc = (func, m, n) => func(m, n);
+
+  const runner = (foo) => {
+    console.log(foo);
+    for(let i = 0; i < 10; i++)
+      foo(i);
+  }; 
+  </script>
+
+
+
+  <script>
+  //1
+  let z = 50;
+  (() => {
+      let z = 55;
+      z += 45;
+      console.log(`z = ${z}`); // 100
+  })();              
+  console.log(`z = ${z}`); // 50
+  
+  //2
+  let y = 99;
+  (() => {
+      let x = 100;
+      let y = 9;
+      z = 1;
+      console.log(`x + y + z = ${x + y + z}`); // 100 + 9 + 1
+  })();
+  console.log(`y + z = ${y + z}`); // 100
+  // console.log(`x + y + z = ${x + y + z}`); // Uncaught ReferenceError: x is not defined
+  
+  //3
+  let i; // 전역 i
+  for (i = 1; i <= 10; i++) {
+    console.log(i); // 1~10까지 출력
+  }
+  
+  (() => {
+    console.log(`i = ${i}`); // 11
+  })();
+      
+  //4 
+  function foo(){
+    const num = 100;
+    return () => {
+        console.log(`num = ${num}`);
+    }
+  }
+  const num = 200;
+  const too = foo(); 
+  too(); // 100
+  
+  </script>
+  
+</body>
+</html>

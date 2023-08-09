@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hello js</title>
+  <script src="js/index.js"></script>
+  <script>
+  // javascript 영역
+  // 한줄 주석 
+  /* 
+    여러줄 주석
+  */
+  console.log('12345');
+  </script>
+</head>
+<body>
+  <h1>Hello js</h1>
+  <!-- 
+    Brendan Eich 개발자 lisp언어에 착안해서 10일만에 만들어 발표한 언어. 
+    mocha -> livescript -> javascript
+    java언어와는 아무 연관이 없다. 
+    c++언어 베이스로 작성된 언어.
+  -->
+
+  <ul>
+    <li>태그의 이벤트속성에 작성후 <button type="button" onclick="alert('안녕');">실행</button></li>
+    <li>내부 script파일을 통해 실행 <button type="button" onclick="foo();">실행</button></li>
+    <li>외부 script파일을 통해 실행 <button type="button" onclick="bar();">실행</button></li>
+  </ul>
+
+  <script>
+  // 내부 script태그를 작성하기 가장 좋은 위치 - body종료태그 전
+  console.log(67890);
+
+  function foo(){
+    console.log('foooooooooooooooooooo!');
+  }
+  </script>  
+</body>
+</html>

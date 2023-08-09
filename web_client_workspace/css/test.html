@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CSS3 Transition</title> 
+  <style>
+    body > h1 {
+        margin-left: 35px;
+    }
+    .prod-list {
+        /* border: 2px solid black; */
+        transition: .5s;
+    }
+    #container > .prod-list > li > .wrapper img{
+        width: 400px;
+        height: 280px;
+        /* overflow: hidden; */
+    }
+    #container > .prod-list > li > .wrapper{
+        width: 400px;
+        height: 280px;
+        /* text-align: center; */
+        overflow: hidden;
+    }
+    .caption {
+        padding-top: 50px;
+        width: 400px;
+        height: 280px;
+        text-align: center;
+        visibility: hidden;
+        transition: all .6s;
+    }
+    #container > .prod-list li {
+        display: inline-block;
+    }
+    #container > .prod-list > li:hover .caption{
+        width: 400px;
+        height: 280px;
+        transform: translateY(-285px);
+        visibility: visible;
+        background-color: rgb(51, 51, 51);
+        color: #fff;
+        opacity: 0.7;
+    } 
+
+  </style>
+</head>
+<body>
+  <h1>신상품 목록</h1>
+	<div id="container">
+		<ul class="prod-list">
+      <li>
+        <div class="wrapper">
+          <img src="../sample/test/prod/prod_color_eggs.jpg">
+          <div class="caption">
+              <h1>칼라달걀</h1>
+              <p>신선한 무항생제 달걀</p>
+              <p>가격 : 12,345원</p>
+            </div>
+        </div>
+      </li>
+      <li>
+        <div class="wrapper">
+          <img src="../sample/test/prod/prod_potatoes.jpg">
+          <div class="caption">
+            <h1>감자</h1>
+            <p>css의 감을 잡자</p>
+            <p>가격 : 12,345원</p>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="wrapper">
+          <img src="../sample/test/prod/prod_tomato.jpg">
+          <div class="caption">
+            <h1>방토</h1>
+            <p>건강식품의 끝판왕</p>
+            <p>가격 : 12,345원</p>
+          </div>
+        </div>
+      </li>
+    </ul>
+	</div>
+</body>
+</html>

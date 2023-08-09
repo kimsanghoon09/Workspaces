@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JS 실행구조</title>
+</head>
+<body>
+  <h1>JS 실행구조</h1>
+  <img src="js실행환경.png" alt="" style="width: 500px;">
+  <!--  
+    js는 싱글쓰레드에 의해 처리되는 단일 callstack구조이다. 
+    - 작성한 코드는 heap에 변수/객체등을 적재한다.
+    - 함수호출, 이벤트등이 발생하면 동기함수는 call stack에서 바로 실행(한번에 하나씩 LIFO방식)
+    - DOM관련, Event관련, http요청, Timer Api등은 바로 실행되지 않고 백그라운드(Web API)로 보내진다. 
+      - callback queue에 순서대로 적재가 되고, 
+      - callstack이 비워지면 event loop에 의해서 callstack으로 보내져 실행된다.
+  -->
+
+
+  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+</body>
+</html>

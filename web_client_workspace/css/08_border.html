@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>경계영역</title>
+</head>
+<body>
+  <h1>경계영역</h1>
+  <div class="box"></div>
+
+  <input type="text" name="username" id="username" placeholder="username">
+  <style>
+    .box {
+      width: 300px;
+      height: 300px;
+      /* border: 2px solid red; */
+      border-top: 2px solid red;
+      border-right: 3px dashed springgreen;
+      border-bottom: 4px solid blue;
+      border-left: 5px dotted blueviolet;
+    }
+    input[name=username] {
+      border-top: none;
+      border-right: none;
+      border-left: none;
+      outline: none; /* 포커스되었을때 경계 */
+    }
+  </style>
+  
+  <h2>경계 둥글림 처리</h2>
+  <div class="square"></div>
+  <style>
+  .square {
+    width: 200px;
+    height: 200px;
+    border: 3px solid blue;
+    /* top-left top-right bottom-right bottom-left */
+    /* border-radius: 10px 20px 30px 40px;  */
+    /* border-radius: 30px; */
+    border-radius: 50%;
+  }
+  </style>
+
+  <img id="dog" src="../sample/image/hyunta.jpg" alt="">
+  <style>
+    #dog {
+      width: 200px;
+      border-radius: 50%;
+    }
+  </style>
+
+
+
+
+
+  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+</body>
+</html>

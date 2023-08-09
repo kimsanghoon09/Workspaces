@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+    <h1>@실습문제 - 상속</h1>
+    <button onclick="test1();">Beverage</button>
+    <script>
+    /**
+     * 1. 음료 생성자함수를 작성하고, 다음과 같이 출력하세요.
+     * 
+     * 삼다수 : 1500원
+     * 새로 : 5000원
+     * 딸바 : 2500원
+     * 켈리 : 5000원
+     */
+    const test1 = () => {
+      const beverages = [
+        new Beverage('삼다수', 1500),
+        new Beverage('새로', 5000),
+        new Beverage('딸바', 2500),
+        new Beverage('켈리', 5000),
+      ];
+      beverages.forEach((beverage) => {
+        // console.log(beverage.toString());
+        console.log(`${beverage}`);
+        // console.log(beverage);
+      })
+    };
+    function Beverage(name, price) {
+      this.name = name;
+      this.price = price;
+    }
+    Beverage.prototype.toString = function() {
+      return `${this.name} : ${this.price}원`;
+    };
+    </script>
+    <button onclick="test2();">Beer</button>
+    <script>
+     /**
+     * Beverage를 상속하는 Beer 생성자 함수를 작성하세요.
+     * 
+     * 하이네켄 : 6000원, 종류 : Lager, 알콜도수 : 5.5%
+     * 에델바이스 : 7000원, 종류 : Weizen, 알콜도수 : 5.5%
+     * 기네스 드래프트 : 11000원, 종류 : Stout, 알콜도수 : 4.2%
+     * 기네스 호프 하우스 13 라거 : 8000원, 종류 : Lager, 알콜도수 : 5%
+     */
+     const test2 = () => {
+      const beers = [
+        new Beer("하이네켄", 6000, "Lager", 5.5),
+        new Beer("에델바이스", 7000, "Weizen", 5.5),
+        new Beer("기네스 드래프트", 11000, "Stout", 4.2),
+        new Beer("기네스 호프 하우스 13 라거", 8000, "Lager", 5),
+      ];
+      beers.forEach(beer => {
+        console.log(`${beer}`); 
+      })
+    }
+
+    function Beer(name, price, type, alcohol) {
+      Beverage.call(this, name, price); // Beverage생성자 함수를 this(new Beer())기준으로 호출
+      this.type = type;
+      this.alcohol = alcohol;
+    }
+    Beer.prototype = Object.create(Beverage.prototype);
+    Beer.prototype.constructor = Beer;
+    Beer.prototype.toString = function() {
+      return `${Beverage.prototype.toString.call(this)}, 종류 : ${this.type}, 알콜도수 : ${this.alcohol}%`;
+    }
+
+
+    </script>
+
+    <button onclick="test3();">Juice</button>
+    <script>
+    /**
+     * 3. Beverage를 상속하는 Juice 생성자 함수를 작성하세요.
+     *
+     * 출력결과 : 
+     * 딸바 : 6000원, 포함과일 : 딸기,바나나
+     * 아바 : 7000원, 포함과일 : 아보카도,바나나
+     * 파바 : 11000원, 포함과일 : 파인애플,바나나
+     */
+    const test3 = () => {
+      const juices = [
+        new Juice("딸바", 6000, "딸기", "바나나"),
+        new Juice("아바", 7000, "아보카도", "바나나"),
+        new Juice("파바", 11000, "파인애플", "바나나"),
+      ];
+      juices.forEach(juice => console.log(`${juice}`));
+    };
+
+    function Juice(name, price, ...fruits) {
+      Beverage.call(this, name, price);
+      this.fruits = fruits;
+    }
+    Juice.prototype = Object.create(Beverage.prototype);
+    Juice.prototype.constructor = Juice;
+    Juice.prototype.toString = function() {
+      return `${Beverage.prototype.toString.call(this)}, 포함과일: ${this.fruits}`;
+    }
+
+    </script>
+</body>
+</html>

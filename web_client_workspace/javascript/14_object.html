@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>객체</title>
+</head>
+<body>
+  <h1>객체</h1>
+  <button onclick="test1()">객체생성 {}</button>  
+  <button onclick="test2()">객체생성 new Object()</button>  
+  <script>
+    
+  /**
+   * 생성자 호출로 객체 생성
+   */
+  const test2 = () => {
+    const obj = new Object();
+    obj.id = 'honggd';
+    obj.name = '홍길동';
+    obj.hobby = ['넷플릭스', '애플아케이드'];
+    console.log(obj);
+
+    // 속성값 제거
+    obj.name = undefined;
+    // 속성 제거
+    delete obj.hobby;
+  };
+
+  /**
+   * 객체 
+   * - (속성명:속성값)을 하나의 요소를 관리하는 자료형
+   * - 자바 컬렉션 Map과 비슷. 
+   * - 동일한 속성명/속성값을 대입, 이전속성값이 대체된다.
+   * - 속성명 : 식별자 혹은 문자열 추천 (모든 타입 가능)
+   * - 속성값 : 모든 타입 가능
+   * 
+   * - 리터럴로 생성 혹은 생성자 호출 
+   * - 모든 속성은 동적으로 추가/삭제 가능하다.
+   */
+  const test1 = () => {
+    const obj = {
+      id : 'honggd',
+      name : '홍길동',
+      married : true,
+      hobby : ['넷플릭스', '게임'],
+      pet : {
+        name : '구리구리',
+        breed : '푸들'
+      },
+      123 : 456,
+      'user-friend' : '봉수'
+    };
+    obj.car = '소나타';
+
+    console.log(obj);
+
+    // 1. dot notation 
+    console.log(obj.id);
+    console.log(obj.name);
+    console.log(obj.married); 
+    console.log(obj.hobby);
+    console.log(obj.hobby[0], obj.hobby[1]);
+    console.log(obj.pet);
+    console.log(obj.pet.name, obj.pet.breed);
+    console.log(obj.car);
+
+    // 2. bracket notation
+    console.log(obj['id']); // obj[id] id변수에 담긴 값을 속성명으로 조회
+    console.log(obj['name']);
+    console.log(obj['married']);
+    console.log(obj['hobby']);
+    console.log(obj['pet']);
+    console.log(obj['pet'].name, obj['pet']['name']);
+    console.log(obj['car']);
+    // console.log(obj.123);
+    // console.log(obj.user-friend);
+    console.log(obj[123]);
+    console.log(obj['user-friend']);
+
+  };
+  </script>
+  <br><br>
+
+  <button onclick="test3()">메소드</button>
+  <button onclick="test4()">반복처리</button>
+  <button onclick="test5()">namespace</button>
+  <button onclick="test6()">단축속성</button>
+  <script>
+  /**
+   * 객체 단축 속성 등록
+   * - ES6 지원
+   * - 객체에 변수를 등록하면, 변수명: 변수값의 형식으로 속성등록된다.
+   */
+  const test6 = () => {
+    const name = "홍길동";
+    const lang = "javascript";
+    // const obj = {
+    //   name : name,
+    //   lang : lang
+    // };
+    const obj = {
+      name,
+      lang
+    };
+    console.log(obj);
+  }
+  
+  /**
+   * Namespace
+   * - 객체를 메소드 묶음으로 사용할 수 있다.
+   * - 객체는 메소드에 접근하는 이름(Namespace)역할을 한다.
+   */
+  const test5 = () => {
+    const add = (a, b, c) => a + b + c; // 이름충돌을 namespace를 통해서 방지한다.
+
+    const calcOperator = {
+      add(a, b){
+        return a + b;
+      },
+      subtract(a, b){
+        return a - b;
+      },
+      multiply(a, b) {
+        return a * b;
+      },
+      divide(a, b){
+        return Math.floor(a / b);
+      },
+      remainder(a, b){
+        return a % b;
+      }
+    };
+
+    const calc = (f, a, b) => f(a, b);
+
+    console.log(calc(calcOperator.add, 10, 20)); // 30
+    console.log(calc(calcOperator.subtract, 100, 30)); // 70
+    console.log(calc(calcOperator.multiply, 5, 6)); // 30
+    console.log(calc(calcOperator.divide, 10, 3)); // 3
+    console.log(calc(calcOperator.remainder, 10, 3)); // 1 
+  }
+
+
+  /**
+   * 반복처리 
+   * - for in 키값을 변수에 받아 반복처리 
+   * - Object.keys(obj):[key, ...]
+   * - Object.values(obj):[value, ...]
+   */
+  const test4 = () => {
+    const obj = {
+      name : '홍길동',
+      age : 33,
+      married : false
+    };
+    // 1. for in
+    for(let key in obj){
+      console.log(key, obj[key]); // bracket notation만 사용가능
+    }
+
+    // 2. Object.keys()
+    const keys = Object.keys(obj);
+    console.log(keys);
+    keys.forEach((key, index) => {
+      console.log(key, obj[key]);
+    });
+
+    // 3. Object.values()
+    const values = Object.values(obj);
+    console.log(values);
+    values.forEach((val) => {
+      console.log(val);
+    })
+
+
+  };
+
+  // this용법4. 전역의 this는 window객체이다.
+  console.log(this);
+  console.log(window);
+  /**
+   * 메소드
+   * - 객체안에 선언된 함수 속성을 메소드라 한다. 
+   * - 객체안의 메소드는 화살표함수로 선언하지 말것(this이슈).
+   */
+  const test3 = () => {
+    const pet = {
+      petname : '복실이',
+      run : function(){
+        // 메소드 
+        // this용법3. 객체안 메소드의 this는 현재객체를 가리킨다.
+        console.log(`${this.petname} 달려달려!`);
+      }, 
+      eat(food){
+        // 메소드 단축문법 
+        // 일반익명함수를 선언한 것으로 this는 현재객체이다.
+        console.log(`${this.petname}이/가 ${food}을/를 먹는중...`);
+      },
+      jump : () => {
+        console.log(this); // Window 
+        console.log(`${this.petname} 점프점프!`); // undefined 
+      }
+    };
+    
+    pet.run(); // dot notation 
+    pet['run'](); // bracket notation 
+    
+    pet.eat('개껌');
+
+    pet.jump();
+
+  };
+  </script>
+
+
+  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+</body>
+</html>

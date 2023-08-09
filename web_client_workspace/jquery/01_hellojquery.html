@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>jQuery개요</title>
+  <!-- cdn -->
+  <!-- <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script> -->
+  <!-- download & 직접제공 -->
+  <script src="js/jquery-3.7.0.js"></script>
+  <script>
+    // jquery용 window.load함수
+    jQuery(document).ready(() => {
+      console.log('페이지 로딩완료!');
+    });
+    jQuery(() => {
+      console.log('페이지 로딩완료2!');
+    });
+  </script>
+</head>
+<body>
+  <h1>jQuery개요</h1>
+  <!-- 
+    javascript library.
+    javascript를 사용해 유용한 기능들을 미리 만들어 제공. 
+    존레식을 주축으로 하는 개발팀이 생성관리
+
+    장점
+    - DOM관련 처리 쉽게할 수 있다. 
+    - 네트워크통신, 이벤트처리등로 쉽게 구현가능.
+    - jQuery기반의 잘만들어진 라이브러리가 풍부(챠트표현, 테이블구현, 슬라이드쇼...)
+
+    단점
+    - 페이지전체 요소를 관리할 수 없다. (요소 파편화)
+  -->
+  <button id="btn1">사용</button>
+  <button id="btn2">jQuery확인</button>
+  <script>
+  $("#btn2").click((e) => {
+    // console.log(e); // jQueryEvent
+    
+    console.log($, typeof $); // function
+    console.log($("#btn2")); // jquery객체(배열) - #btn2태그 
+    console.log(document.querySelector("#btn2") === $('#btn2')[0]); // true
+    
+    console.log($ === jQuery); // true
+  });
+
+  /**
+   * jQuery.js를 로드후 사용
+   * 1. cdn
+   * 2. 다운로드후 서버내 js 로드
+   */
+  $("#btn1").click(() => {
+    console.log('btn1 클릭!');
+  });
+  </script>
+  
+</body>
+</html>

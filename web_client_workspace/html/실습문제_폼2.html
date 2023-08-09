@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="ko">
+ <head>
+  <meta charset="UTF-8">
+  <title>html 종합 실습 문제1</title>
+ </head>
+ <body>
+	<form>
+		<label for="name">고객명 : </label>
+		<input type="text" name="name" id="name"><br><br>
+		<label for="phone">전화번호(필수) : </label>
+		<input type="tel" name="phone" id="phone" required><br><br>
+		<label for="email">E-mail : </label>
+		<input type="email" name="email" id="email"><br><br>
+		<label for="pizza">피자선택(필수) : </label>
+			<select name="pizza" id="pizza" required>
+				<option value="" disabled selected>피자를 선택하세요</option>
+				<!--value=""가 반드시 작성할것. 필수항목이기때문에 ""는 부적합처리됨 (없는 경우, pizza가 전송안됨) -->
+				<option value="combi">콤비네이션피자</option>
+				<option value="hawaiian">하와이안피자</option>
+				<option value="cheese">치즈피자</option>
+			</select>
+		<br><br>
+		<fieldset>
+			<legend>피자 사이즈(필수)</legend>
+			<input type="radio" id="small" name="size" value="small"><label for="small">Small</label><br><br>
+			<input type="radio" id="medium" name="size" value="medium" checked><label for="medium">Medium</label><br><br>
+			<input type="radio" id="large" name="size" value="large"><label for="large">Large</label><br><br>
+		</fieldset>
+		<fieldset>
+			<legend>토핑 선택</legend>
+			<input type="checkbox" name="topping" id="bacon" value="bacon"><label for="bacon">베이컨</label><br><br>
+			<input type="checkbox" name="topping" id="cheese" value="cheese"><label for="cheese">치즈</label><br><br>
+			<input type="checkbox" name="topping" id="onion" value="onion"><label for="onion">양파</label><br><br>
+			<input type="checkbox" name="topping" id="mushroom" value="mushroom"><label for="mushroom">버섯</label><br><br>
+		</fieldset>
+		<br>
+		<label for="time">희망 배송 시간 : </label>
+		<input type="time" name=time id="time"><br><br>
+		<label for="etc">배송시 요청사항 : </label>
+		<textarea name="etc" id="etc" rows="3"></textarea><br><br>
+		<button type="submit">주문하기</button>
+	</form>
+ </body>
+</html>

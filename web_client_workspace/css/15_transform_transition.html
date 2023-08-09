@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>transform</title>
+</head>
+<body>
+  <h1>transform</h1>
+  <!--
+    transform 요소의 위치, 크기, 회전정도등을 변경하는 속성. 변경된 상태를 작성.
+    transition 두 상태를 부드럽게 연결해서 동영상효과를 만듬.
+    animation 여러개의 상태를 연결해서 동영상효과를 만듬.
+  -->
+  <!-- div.wrapper>(img+hr)*5 -->
+  <div class="wrapper">
+    <img src="../sample/image/flower1.PNG" alt="">
+    <hr>
+    <img src="../sample/image/flower2.PNG" alt="">
+    <hr>
+    <img src="../sample/image/flower3.PNG" alt="">
+    <hr>
+    <img src="../sample/image/flower4.PNG" alt="">
+    <hr>
+    <div class="img-wrapper">
+      <img src="../sample/image/flower5.PNG" alt="">
+    </div>
+    <hr>
+  </div>
+
+  <style>
+  .wrapper {
+    text-align: center;
+  }
+  .wrapper img {
+    width: 200px;
+    margin: 30px;
+  }
+  .wrapper > img:first-child:hover {
+    /* translate 이동 */
+    transform: translate(-50px, -50px); 
+  }
+  .wrapper img:nth-of-type(2):hover {
+    /* scale 확대/축소 */
+    transform: scale(1.5, 1.5);
+  }
+  .wrapper img:nth-of-type(3):hover {
+    /* rotaet 회전(양수: 시계방향, 음수: 반시계방향 */
+    /* transform: rotate(45deg); */
+    transform: rotate(-315deg);
+  }
+  .wrapper img:nth-of-type(4) {
+    transition-duration: 1s;
+    transition-delay: .5s;
+    transition-property: all; /* transition 적용할 속성 */
+    transition-timing-function: ease; /* ease ease-in ease-in-out ease-out linear */
+    /* transition: property duration timing-function delay */
+    transition: all 1s ease .5s;
+  }
+  .wrapper img:nth-of-type(4):hover {
+    transform: scale(1.5, 1.5);
+  }
+
+  .img-wrapper {
+    margin: 0 auto;
+    width: 210px;
+    padding: 3px;
+    border: 2px solid #000;
+    overflow: hidden;
+  }
+  .img-wrapper img {
+    margin: 0;
+    transition: .3s
+  }
+  .img-wrapper img:hover {
+    transform: scale(1.2, 1.2)
+  }
+  </style>
+
+  <h2>card</h2>
+  <div class="card">
+    <h1>Lorem Ipsum</h1>
+    <h2 class="text-transition">Lorem ipsum dolor sit amet consectetur adipisicing elit.</h2>
+    <p class="text-transition">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum non voluptate tenetur rerum voluptatum placeat illum nesciunt aliquam, cum eius facilis reiciendis, officiis, praesentium veritatis accusamus ipsa aperiam aut alias.</p>
+  </div>
+  <div class="card">
+    <h1>Lorem Ipsum</h1>
+    <h2 class="text-transition">Lorem ipsum dolor sit amet consectetur adipisicing elit.</h2>
+    <p class="text-transition">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum non voluptate tenetur rerum voluptatum placeat illum nesciunt aliquam, cum eius facilis reiciendis, officiis, praesentium veritatis accusamus ipsa aperiam aut alias.</p>
+  </div>
+  <div class="card">
+    <h1>Lorem Ipsum</h1>
+    <h2 class="text-transition">Lorem ipsum dolor sit amet consectetur adipisicing elit.</h2>
+    <p class="text-transition">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum non voluptate tenetur rerum voluptatum placeat illum nesciunt aliquam, cum eius facilis reiciendis, officiis, praesentium veritatis accusamus ipsa aperiam aut alias.</p>
+  </div>
+  <style>
+  .card {
+    display: inline-block;
+    width: 380px;
+    height: 380px;
+    margin: 10px;
+    padding: 30px;
+    background-color: #99aeff;
+    cursor: pointer;
+    color: #fff;
+    box-shadow: 0 35px 77px -17px rgba(0, 0, 0, .4);
+    overflow: hidden;
+    transition: .5s;
+  }
+  .card h1 {
+    font-weight: bold;
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, .3);
+  }
+  .card h2 {
+    font-weight: 100;
+    font-style: italic;
+    transform: translateX(380px);
+  }
+  .card p {
+    font-weight: 300;
+    transform: translateX(-380px);
+    transition-delay: .2s
+  }
+  .text-transition {
+    opacity: .3;
+    transition: all .6s;
+  }
+  .card:hover .text-transition {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  .card:hover {
+    box-shadow: 0 35px 77px -17px rgba(0, 0, 0, .8);
+  }
+
+  </style>
+
+  
+  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+</body>
+</html>

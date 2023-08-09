@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>attr | prop</title>
+  <style>
+  img {
+    width: 300px;
+    margin: 5px;
+  }
+  </style>
+  <script src="js/jquery-3.7.0.js"></script>
+</head>
+<body>
+  <h1>attr | prop</h1>
+  <!-- 
+    attr attribute 태그 인라인에 작성된 속성
+    prop property 자바스크립트로 제어하는 속성. 주로 true/false로 처리하는 경우
+  -->
+  <div class="img-wrapper">
+    <img src="../sample/image/flower1.PNG" alt="">
+    <img src="../sample/image/flower2.PNG" alt="">
+  </div>
+  <button id="btn1">attr</button>
+  <script>
+  /**
+   * jQuery메소드 attr(), prop(), val(), html(), text()
+   * - getter jQuery객체 하위의 첫번째 요소의 값 반환
+   * - setter jQuery객체 하위의 모든 요소 값 설정
+   */
+  $(btn1).click(() => {
+    // attr
+    const $img = $("img");
+    console.log($img);
+    console.log($img.attr('src')); // ../sample/image/flower1.PNG
+
+    $img.attr('src', '../sample/image/flower3.PNG');
+  });
+  </script>
+
+  <fieldset>
+    <legend>피자주문</legend>
+    <input type="checkbox" id="checkAll">
+    <label for='checkAll'>전체선택</label>
+    <hr>
+    <!-- (input:checkbox[name=pizza]#pizza$+label[for=pizza$])*3 -->
+    <input type="checkbox" name="pizza" id="pizza1" value="페페로니"><label for="pizza1">페페로니</label>
+    <input type="checkbox" name="pizza" id="pizza2" value="슈프림"><label for="pizza2">슈프림</label>
+    <input type="checkbox" name="pizza" id="pizza3" value="콤비네이션"><label for="pizza3">콤비네이션</label>
+    <br>
+    <input type="button" value="주문" id="btn2">
+  </fieldset>
+  <script>
+  $(checkAll).change((e) => {
+    const checked = $(e.target).prop('checked');
+    $("[name=pizza]").prop('checked', checked);
+  });
+
+  $(btn2).click(() => {
+    const $pizza = $(":checkbox[name=pizza]");
+    // console.log($pizza);
+    // console.log($pizza.prop('checked')); // getter
+    // $pizza.prop('checked', true); // setter
+    
+    // 주문서 
+    let order = '';
+    $pizza.each((index, pizza) => {
+      // console.log(index);
+      // console.log(pizza); // js태그객체
+      // $(pizza).prop('checked', true);
+
+      // 체크되있는 경우 order에 value속성값을 추가
+      if($(pizza).prop('checked')) {
+        order += $(pizza).val() + " ";
+      }
+    });
+    alert(order);
+  });
+  </script>
+  
+
+
+  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+</body>
+</html>

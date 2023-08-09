@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+  <properties resource="datasource.properties"></properties>
+  
+  <settings>
+  	<setting name="mapUnderscoreToCamelCase" value="true"/>
+  	<setting name="jdbcTypeForNull" value="NULL"/>
+  	<setting name="callSettersOnNulls" value="true"/>
+  </settings>
+  
+  <typeAliases>
+  	<!-- <typeAlias type="com.sh.app.student.entity.Student" alias="student"/> -->
+  	<!-- <typeAlias type="com.sh.app.emp.entity.Emp" alias="emp"/> -->
+  	<!-- 패키지하위 모든 클래스를 소문자로 시작하는 alias 등록 -->
+  	<package name="com.sh.app"/>
+  </typeAliases>
+  
+  <environments default="development">
+    <environment id="development">
+      <transactionManager type="JDBC"/>
+      <dataSource type="POOLED">
+        <property name="driver" value="${driver}"/>
+        <property name="url" value="${url}"/>
+        <property name="username" value="${username}"/>
+        <property name="password" value="${password}"/>
+      </dataSource>
+    </environment>
+  </environments>
+  
+  <mappers>
+    <mapper resource="mappers/student/student-mapper.xml"/>
+    <mapper resource="mappers/emp/emp-mapper.xml"/>
+  </mappers>
+</configuration>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>변수 스코프</title>
+  <script>
+  // console.log(k); // Uncaught ReferenceError: k is not defined
+
+
+  </script>
+</head>
+<body>
+  <h1>변수 스코프</h1>
+  <h2>var | let | const</h2>
+  <!-- 
+    var 변수 선언키워드. 중복선언 가능. 함수스코프 지원
+    let | const ES6에 도입한 변수/상수 선언 키워드. 블럭스코프 지원
+  -->
+  <script>
+  var a = 10;
+  var a = 20;
+  console.log(a);
+
+  let b = 10;
+  // let b = 20; // Uncaught SyntaxError: Identifier 'b' has already been declared
+
+  // 전역공간 
+  // 변수 선언시, 모든 페이지 접근이 가능. REPL에서도 접근이 가능.
+  let k = 9;
+
+  if(true) {
+    let m = 10; // 지역변수
+    console.log(m);
+  }
+  // console.log(m); // Uncaught ReferenceError: m is not defined 블럭스코프
+
+  function foo() {
+    let k = 99; // 지역변수
+    console.log(k);
+
+    if(true) {
+      let k = 999;
+      console.log(k);
+    }
+
+    console.log(k);
+
+  }
+
+
+  </script>
+  
+  <script>
+  console.log(k); 
+
+
+  </script>
+
+
+
+
+</body>
+</html>

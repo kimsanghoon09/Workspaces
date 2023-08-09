@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>객체배열 | 생성자</title>
+</head>
+<body>
+  <h1>객체배열</h1>
+  <button onclick="test1();">literal</button>
+  <script>
+  /**
+   * 객체를 리터럴 {} 로 생성 
+   */
+  const test1 = () => {
+    const pets = [];
+    pets.push({
+      name : '구리구리',
+      breed : '푸들',
+      weight: 3,
+      age: 10,
+      color: ['white'],
+      bark(){
+        return this.weight < 10 ? '왈왈' : '멍멍';
+      }
+    });
+    pets.push({
+      name : '황구',
+      breed : '진돗개',
+      weight: 15,
+      age: 7,
+      color: ['brown', 'white'],
+      bark(){
+        return this.weight < 10 ? '왈왈' : '멍멍';
+      }
+    });
+    pets.push({
+      name : '사랑이',
+      breed : '코카스파니엘',
+      weight: 11,
+      age: 3,
+      color: ['white', 'brown'],
+      bark(){
+        return this.weight < 10 ? '왈왈' : '멍멍';
+      }
+    });
+
+    console.log(pets);
+
+    pets.forEach((pet, index) => {
+      console.log(pet);
+      // console.log(pet.name);
+      // console.log(pet.breed);
+      // console.log(pet.weight);
+      // console.log(pet.age);
+      // console.log(pet.color);
+      // console.log(pet.bark());
+    })
+
+  };
+  </script>
+
+
+  <h1>생성자</h1>
+  <button onclick="test2();">생성자함수</button>
+  <button onclick="test3();">생성자함수 파헤치기</button>
+  <button onclick="test4();">constructor | prototype | instance</button>
+  <script>
+  /**
+   * 생성자함수
+   * 프로토타입
+   * 생성객체 
+   */
+  const test4 = () => {
+    const a = new A('Al Pacino');
+    const aa = new A('홍길동');
+    a.hello();
+    aa.hello();
+
+    console.dir(A);
+    console.log(A.prototype);
+    console.log(a);
+    console.log(aa);
+
+    // static 생성자함수의 속성 
+    A.num = 100; 
+    A.printNum = function(){
+      // this용법6. 생성자함수에 등록된 속성(메소드)안 this는 생성자함수 객체를 가리킨다.
+      console.log(this.num);
+    };
+
+    console.log(A.num);
+    A.printNum();
+  };
+
+  function A(username){
+    // 생성자함수안 this는 현재객체를 가리킨다. 
+    this.username = username;
+    // this.hello = function(){
+    //   console.log(`hello, ${this.username}`);
+    // }
+  }
+
+  A.prototype.hello = function(){
+    console.log(`hello, ${this.username}`);
+  }
+
+  /**
+   * 생성자함수 - 프로토타입 
+   */
+  const test3 = () => {
+    const lee = new Duck('효리', '이');
+    // const lee = Duck('효리', '이'); // 일반함수처럼 호출해서는 안된다.(this는 window를 가리키게됨.)
+    console.log(lee);
+    // console.log(lee.firstName); // 효리
+    // console.log(lee.lastName);  // 이
+
+    const donald = new Duck('도날드', '트럼프');
+
+    console.log(Duck); 
+    console.log(Duck.prototype);
+    console.log(Duck.prototype.constructor === Duck);
+
+    console.log(lee.__proto__ === Duck.prototype);
+    console.log(donald.__proto__ === Duck.prototype);
+    console.log(lee.__proto__ === donald.__proto__); // 부모 Duck.prototype 가 같다
+
+
+  };
+
+  function Duck(firstName, lastName){
+    this.firstName = firstName;
+    this.lastName = lastName;
+  }
+
+  /**
+   * 생성자함수 
+   * - 대문자로 시작하는 이름(관례상)
+   * - new연산자와 함께 호출
+   * - 생성된 객체를 반환 
+   * - 자바스크립트에서는 프로토타입기반의 상속모델을 가진다.
+   * - 생성자함수.prototype이 부모객체이므로, 공통된 코드를 여기에 작성한다.
+   */
+  const test2 = () => {
+    const pets = [];
+    pets.push(new Pet('구리구리', '푸들', 3, 10, ['white']));
+    pets.push(new Pet('황구', '진도', 13, 7, ['brown', 'white']));
+    pets.push(new Pet('사랑이', '코카스패니얼', 11, 3, ['white', 'brown']));
+    console.log(pets);
+
+    pets.forEach((pet) => {
+      console.log(pet.bark());
+    });
+  };
+
+  function Pet(name, breed, weight, age, colors) {
+    // this용법5. 생성자함수의 this는 현재객체를 가리킨다. 
+    this.name = name;
+    this.breed = breed;
+    this.weight = weight;
+    this.age = age;
+    this.colors = colors;
+    // 현재객체 작성(비효율)
+    // this.bark = function(){
+    //   return this.weight < 10 ? '왈왈' : '멍멍';
+    // }
+  }
+  // 부모객체(Pet.prototype)에 작성(자식객체에서 선언없이 모두 사용가능)
+  Pet.prototype.bark = function(){
+    return this.weight < 10 ? '왈왈' : '멍멍';
+  };
+
+  </script>
+  
+
+
+  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+</body>
+</html>

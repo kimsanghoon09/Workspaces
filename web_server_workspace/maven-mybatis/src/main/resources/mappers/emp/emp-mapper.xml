@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="emp">
+  <select id="findAll" resultType="emp">
+    select 
+    	* 
+    from 
+    	emp
+   	order by
+   		emp_id
+  </select>
+  
+  <select id="search1" resultType="emp">
+  	select 
+    	* 
+    from 
+    	emp
+    <if test="searchType != null and searchType != '' and searchKeyword != null and searchKeyword != ''">
+	    where
+	    	${searchType} like '%' || #{searchKeyword} || '%'  
+	    order by
+	    	${searchType}
+    </if>
+  </select>
+  
+  <!-- 
+  	where태그 
+  	- 내부의 if절이 하나라도 없다면, where 키워드를 삭제한다. 
+  	- where 태그 내부에 시작하는 and/or를 삭제한다. 
+  -->
+  <select id="search2" resultType="empDto">
+  	select
+  		*
+  	from(
+		select 
+			e.*,
+			decode(substr(emp_no, 8, 1), '1', '남', '3', '남', '여') gender
+		from
+			emp e	
+  		)
+  	<where>
+  		<if test="gender != null">
+	  		gender = #{gender}
+  		</if>
+  		<if test="salary != null and salary != ''">
+  			<choose>
+  				<when test="salaryCompare eq 'le'">
+  				and salary <![CDATA[ <= ]]> #{salary}
+  				</when>
+  				<when test="salaryCompare eq 'ge'">
+  				and salary <![CDATA[ >= ]]> #{salary}
+  				</when>
+  				<otherwise></otherwise>
+  			</choose>
+  		</if>  	
+  	</where>
+  </select>
+  
+  <select id="search3" resultType="empDto">
+  	select
+  		*
+  	from(
+		select 
+			e.*,
+			decode(substr(emp_no, 8, 1), '1', '남', '3', '남', '여') gender
+		from
+			emp e	
+  		)
+  	<where>
+  		<if test="jobCodes != null">
+  			job_code in 
+  			<foreach 
+  				collection="jobCodes"
+  				item="jobCode"
+  				open="("
+  				close=")"
+  				separator=",">
+  				#{jobCode}
+  			</foreach>
+  		</if>
+  	</where>
+  </select>
+  
+</mapper>
+

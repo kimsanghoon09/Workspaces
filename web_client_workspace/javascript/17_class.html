@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>클래스</title>
+</head>
+<body>
+  <h1>클래스</h1>
+  <button onclick="test1();">클래스</button>
+  <button onclick="test2();">상속</button>
+
+  <script>
+  
+
+  /**
+   * 클래스 ES6
+   * - 생성자함수의 Syntactic Sugar(문법적 설탕 : 어려운 문법을 쉽게 작성/읽어내도록 하는 쉬운 문법)
+   * 
+   * - 1. 생성자함수 
+   * - 2. 생성자함수.prototype 생성 
+   * - 3. constructor, 필드에 작성된 내용을 토대로 객체를 생성
+   */
+  const test1 = () => {
+    const p = new Person('홍길동', '010-1234-1234');
+    console.log(Person, typeof Person); // function
+    console.log(Person.prototype);
+    console.log(p);
+    console.log(Person.type);
+    // console.log(p.__proto__.constructor.type);
+    console.log(p.toString());
+    p.run();
+  };
+
+  class Person {
+    static type = '인간';
+
+    constructor(name, phone){
+      this.name = name;
+      this.phone = phone;
+    }
+
+    // Person.prototype.run 등록
+    run() {
+      console.log(`${this.name}이 달린다....`);
+    }
+
+    toString() {
+      return `${this.name}(${this.phone})`;
+    }
+  }
+
+  /**
+   * 상속 
+   * - extends 부모클래스 
+   * - super 호출가능 
+   *   - super() 부모생성자 호출
+   *   - super.xxx() 부모메소드 호출
+   */
+   const test2 = () => {
+    const devs = [
+      new Dev('홍길동', '010-1234-5678', 'Java', 'Javascript'),
+      new Dev('신사임당', '010-9999-8888', 'Python'),
+    ];
+    devs.forEach((dev) => {
+      console.log(dev.toString());
+    });
+  };
+
+  class Dev extends Person {
+    constructor(name, phone, ...langs) {
+      super(name, phone);
+      this.langs = langs;
+    }
+
+    toString() {
+      return `${super.toString()}, ${this.langs}개발자`;
+    }
+  }
+
+
+  // function Person (name, phone) {
+  //   this.name = name;
+  //   this.phone = phone;
+  // }
+  // Person.prototype.run = function() {
+  //   console.log(`${this.name}이 달린다....`);
+  // }
+  // Person.type = '인간'; // static필드
+  </script>
+
+
+
+
+
+
+
+
+  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+</body>
+</html>
